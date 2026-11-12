@@ -1,0 +1,3 @@
+/* Entrada del CSS: Tailwind más los tokens de diseño. Se compila a public/assets/css/styles.css. */
+@import "tailwindcss";
+@import "./theme.css";

@@ -1,0 +1,121 @@
+/*
+ * Tokens de diseño de ERD: única fuente de valores.
+ * Los conceptos y el uso de cada token están en DESIGN.md.
+ * Origen de cada valor: (manual) PDF de marca, (web) web HTML entregada,
+ * (medido) medido sobre una ilustración del manual. Si chocan, manda el manual.
+ */
+
+@theme {
+  /* Se vacían las paletas y escalas por defecto de Tailwind: solo existen los tokens de ERD. */
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+
+  /* Colores (manual) */
+  --color-erd-red: #e0040b;
+  --color-erd-ink: #1d1f25;
+  --color-erd-cacao: #2b201c;
+  --color-erd-sand: #f1e7e1;
+  --color-erd-line: #f2b8b5;
+  --color-erd-stone: #cecbc6;
+  --color-erd-flour: #faf8f6;
+
+  /* Colores que el manual no recoge (web) */
+  --color-erd-red-dark: #b80309;
+  --color-erd-muted: #6b625d;
+  --color-erd-muted-sand: #5e5651;
+  --color-erd-border-light: rgb(255 255 255 / 0.32);
+  --color-white: #ffffff;
+
+  /* Colores medidos en el manual, fuera de la paleta (medido) */
+  --color-erd-border: #d9ccc6;
+  --color-erd-input-border: #8a8580;
+
+  /* Tipografías: Agrandir no tiene archivo; la web usa Hanken Grotesk como reserva (web) */
+  --font-display: "Agrandir", "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  /* Escala tipográfica de escritorio (manual) con interlineado y espaciado de la web */
+  --text-title-1: 5rem;
+  --text-title-1--line-height: 1;
+  --text-title-1--letter-spacing: -0.02em;
+  --text-title-1--font-weight: 300;
+
+  --text-title-2: 3.375rem;
+  --text-title-2--line-height: 1.05;
+  --text-title-2--letter-spacing: -0.015em;
+  --text-title-2--font-weight: 400;
+
+  --text-title-3: 1.875rem;
+  --text-title-3--line-height: 1.12;
+  --text-title-3--font-weight: 700;
+
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+
+  --text-label: 1.1875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.12em;
+  --text-label--font-weight: 600;
+
+  --text-button: 0.875rem;
+  --text-button--line-height: 1;
+  --text-button--letter-spacing: 0.08em;
+  --text-button--font-weight: 600;
+
+  /* Escala en tableta y móvil (web): el manual solo define escritorio */
+  --text-title-1-tablet: 3.625rem;
+  --text-title-1-tablet--line-height: 1;
+  --text-title-1-tablet--letter-spacing: -0.02em;
+  --text-title-1-tablet--font-weight: 300;
+
+  --text-title-1-mobile: 2.625rem;
+  --text-title-1-mobile--line-height: 1.05;
+  --text-title-1-mobile--letter-spacing: -0.02em;
+  --text-title-1-mobile--font-weight: 300;
+
+  --text-title-2-tablet: 2.625rem;
+  --text-title-2-tablet--line-height: 1.05;
+  --text-title-2-tablet--letter-spacing: -0.015em;
+  --text-title-2-tablet--font-weight: 400;
+
+  --text-title-2-mobile: 2.125rem;
+  --text-title-2-mobile--line-height: 1.05;
+  --text-title-2-mobile--letter-spacing: -0.015em;
+  --text-title-2-mobile--font-weight: 400;
+
+  --text-body-mobile: 0.9375rem;
+  --text-body-mobile--line-height: 1.6;
+  --text-body-mobile--font-weight: 400;
+
+  /* Maquetación (web): 1280 px de contenido más 2 × 64 px de margen */
+  --container-site: 88rem;
+  --spacing-gutter: 4rem;
+  --spacing-gutter-tablet: 2rem;
+  --spacing-gutter-mobile: 1.25rem;
+  --spacing-section: 7.5rem;
+  --spacing-section-tablet: 6rem;
+  --spacing-section-mobile: 4.5rem;
+
+  /* Puntos de corte, mobile first con min-width (web) */
+  --breakpoint-sm: 40rem;
+  --breakpoint-lg: 68.75rem;
+
+  /* Formas */
+  --radius-card: 1.25rem; /* (manual) */
+  --radius-field: 0.25rem; /* (manual; la web usaba más) */
+  --radius-submit: 0.5625rem; /* (medido) botón de envío del formulario, no es una píldora */
+
+  /* Elevación (web) */
+  --shadow-card-hover: 0 30px 60px -36px rgb(43 32 28 / 0.45);
+}
+
+/* Duraciones de movimiento (web). No generan utilidades de Tailwind: se usan con var(). */
+:root {
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+}
