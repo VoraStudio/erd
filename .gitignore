@@ -1,0 +1,31 @@
+# Client material (LOPD): brand PDFs, logos, reference web and renders are never pushed
+sdd-local/brand/
+sdd-local/sections/
+
+# Backup of the old site (payment gateway code, extranet, newsletter): never pushed
+web_vella/
+
+# Personal Claude Code settings (the shared .claude/settings.json and .claude/skills/ are versioned)
+.claude/settings.local.json
+
+# OS and editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Build output: the CSS is compiled in CI and never committed
+public/assets/css/styles.css
+
+# Dependencies
+node_modules/
+
+# Python cache (router and design scripts)
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.env.*
+!.env.example
