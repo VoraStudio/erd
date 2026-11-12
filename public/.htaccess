@@ -1,0 +1,18 @@
+# Sin listado de directorios
+Options -Indexes
+DirectoryIndex index.html
+
+# Cabeceras de seguridad
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Páginas de error locales
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# Se deniegan los archivos ocultos y los documentos internos
+<FilesMatch "^\.|\.md$">
+    Require all denied
+</FilesMatch>

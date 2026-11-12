@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sustituir al publicar: añadir un <url> por cada página pública con URLs absolutas, por ejemplo
+     <url><loc>https://dominio/</loc></url>
+     Una web estática no tiene ejecución en el servidor, así que este archivo se rellena a mano. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+</urlset>

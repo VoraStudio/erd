@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ERD · Menys intuïció. Més resultats.</title>
+  <meta name="description" content="Ajudem les empreses a créixer amb dades, criteri i acompanyament, des del primer dia i a peu de planta.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script type="module" src="/assets/js/main.js"></script>
+</head>
+<body class="bg-erd-flour font-body text-erd-cacao">
+  <a class="sr-only focus:not-sr-only" href="#contingut">Salta al contingut</a>
+
+  <site-header class="block"></site-header>
+
+  <main id="contingut">
+    <section class="px-gutter-mobile py-section-mobile sm:px-gutter-tablet sm:py-section-tablet lg:px-gutter lg:py-section">
+      <h1 class="font-display text-title-1-mobile text-erd-ink sm:text-title-1-tablet lg:text-title-1">Menys intuïció. Més resultats.</h1>
+      <p class="mt-6 max-w-2xl text-body-mobile lg:text-body">Ajudem les empreses a créixer amb dades, criteri i acompanyament, des del primer dia i a peu de planta.</p>
+      <a class="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-erd-red px-7 font-body text-button text-white uppercase hover:bg-erd-red-dark focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-erd-red" href="#contacte">Reserva la teva hora</a>
+    </section>
+
+    <section id="contacte" class="bg-erd-sand px-gutter-mobile py-section-mobile sm:px-gutter-tablet sm:py-section-tablet lg:px-gutter lg:py-section">
+      <h2 class="font-display text-title-2-mobile text-erd-red sm:text-title-2-tablet lg:text-title-2">Parlem del teu negoci.</h2>
+      <p class="mt-4 text-body-mobile lg:text-body">La primera hora, va per nosaltres.</p>
+
+      <form class="mt-10 grid max-w-lg grid-cols-1 gap-5 rounded-card border border-erd-border bg-erd-flour p-8" action="/contact.php" method="post">
+        <h3 class="font-body text-title-3 text-erd-ink">Escriu-nos</h3>
+
+        <label class="grid gap-2">
+          <span class="text-sm font-medium">Nom</span>
+          <input class="h-10 w-full rounded-field border border-erd-input-border bg-erd-flour px-4 focus:outline-2 focus:outline-erd-red" name="nom" autocomplete="name" maxlength="100" required>
+        </label>
+
+        <label class="grid gap-2">
+          <span class="text-sm font-medium">Correu electrònic</span>
+          <input class="h-10 w-full rounded-field border border-erd-input-border bg-erd-flour px-4 focus:outline-2 focus:outline-erd-red" name="correu" type="email" autocomplete="email" maxlength="254" required>
+        </label>
+
+        <label class="grid gap-2">
+          <span class="text-sm font-medium">Deixa'ns un missatge</span>
+          <textarea class="min-h-24 w-full rounded-field border border-erd-input-border bg-erd-flour px-4 py-3 focus:outline-2 focus:outline-erd-red" name="missatge" maxlength="5000"></textarea>
+        </label>
+
+        <!-- Campo trampa contra robots: las personas no lo ven. -->
+        <div class="hidden" aria-hidden="true">
+          <label>Web <input name="web" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <label class="flex items-start gap-3">
+          <input class="mt-1" type="checkbox" name="privadesa" required>
+          <span class="text-sm">He llegit i accepto la política de privadesa.</span>
+        </label>
+
+        <button class="inline-flex min-h-12 w-full items-center justify-center rounded-submit bg-erd-red px-6 py-3 font-body text-button text-white uppercase hover:bg-erd-red-dark focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-erd-red" type="submit">Envia</button>
+      </form>
+    </section>
+  </main>
+
+  <site-footer class="block"></site-footer>
+</body>
+</html>

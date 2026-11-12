@@ -1,0 +1,5 @@
+# Sustituir al publicar: esto bloquea a todos los robots hasta que la web esté lista.
+# Al publicar, cambiar «Disallow: /» por «Allow: /» y añadir la línea Sitemap:
+#   Sitemap: https://<dominio>/sitemap.xml
+User-agent: *
+Disallow: /
