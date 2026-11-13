@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/code-rules.mjs\"",
+            "timeout": 10,
+            "statusMessage": "Comprobando las reglas de código"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -3,6 +3,7 @@
   "private": true,
   "description": "Web de ERD. Solo compila el CSS con Tailwind; el resto es PHP y JavaScript sin dependencias.",
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
     "build": "tailwindcss -i src/css/main.css -o public/assets/css/styles.css --minify",
     "dev": "tailwindcss -i src/css/main.css -o public/assets/css/styles.css --watch"
   },

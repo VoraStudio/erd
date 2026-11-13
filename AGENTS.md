@@ -67,7 +67,7 @@ Si el boceto choca con `DESIGN.md` o con estas reglas (por ejemplo, su CSS es de
 - **Fuera de la carpeta pública:** `src/` (`Env`, `Config` y `ContactForm`) y `tests/`. En el servidor, `public/` es `/web` y `src/` cuelga de la raíz del FTP, junto a `/web`.
 - **Recursos:** `public/assets/css/` (solo el `styles.css` compilado), `public/assets/js/` (`main.js`, `components/` y `modules/`), `fonts/` e `img/` (con los logotipos en `img/logo/`).
 - **Estilos:** el código fuente está en `src/css/` (`theme.css` y la entrada `main.css`), fuera de `public/`.
-- **Carpetas fijas:** `openspec/` (decisiones), `.claude/skills/` (skills del proyecto).
+- **Carpetas fijas:** `openspec/` (decisiones), `.claude/skills/` (skills del proyecto), `.claude/hooks/` y `.githooks/` (hooks).
 - **Pruebas de PHP:** `php tests/run.php` (sin dependencias).
 - **Configuración:** `.env` (local, fuera de git) y, en el servidor, en la raíz del FTP. Claves: `ERD_MAIL_RECIPIENT` (quién recibe los mensajes) y `ERD_MAIL_SENDER` (remitente). Plantilla en `.env.example`.
 
@@ -82,10 +82,10 @@ Impeccable está instalada sin su binario ni sus hooks. Es normal que avise de q
 
 ## 5. Hooks y OpenSpec
 
-Los hooks del proyecto se configuran en `.claude/settings.json`. Estado: definidos, aún sin implementar.
+Dos hooks, activos:
 
-- **OpenSpec Commit:** cada commit lleva su nota en `openspec/decisiones/<categoria>/NNN.md`, en español. El formato y las categorías están en `openspec/README.md`. El hook bloquea el commit si falta la nota.
-- **Code Rules:** bloquea al escribir HTML, CSS o JS que rompa estas reglas: `<style>` o `<script>` en línea, atributos `on*=`, hexadecimales fuera de `theme.css`, `var` y `console.log`.
+- **OpenSpec Commit** (hook de git, `.githooks/pre-commit`): cada commit añade una nota nueva en `openspec/decisiones/<categoria>/NNN.md`, en español. El formato y las categorías están en `openspec/README.md`. Si falta la nota, el commit se bloquea, lo haga un agente o Pau. Es un hook de git porque se ejecuta después del `git add`, cuando ya se sabe qué entra en el commit. `npm install` lo activa (`git config core.hooksPath .githooks`).
+- **Code Rules** (Claude Code, `.claude/settings.json` y `.claude/hooks/code-rules.mjs`): bloquea al escribir HTML, CSS o JS que rompa estas reglas: `<style>` o `<script>` en línea, atributos `on*=` y `style=""`, hexadecimales fuera de `theme.css`, `var` y `console.log`. No revisa `sdd-local/`, `node_modules/`, `.claude/skills/` ni las carpetas `vendor/`.
 
 ## 6. Idiomas y despliegue
 

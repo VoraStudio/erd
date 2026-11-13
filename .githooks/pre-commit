@@ -1,0 +1,3 @@
+#!/bin/sh
+# Hook de git del proyecto. Se activa con: git config core.hooksPath .githooks (lo hace npm install).
+node .githooks/openspec-commit.mjs
