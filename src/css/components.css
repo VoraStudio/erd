@@ -12,6 +12,13 @@
     }
   }
 
+  /* Las animaciones laterales parten desplazadas fuera de la pantalla: sin recorte, la página ganaría scroll horizontal.
+     clip (y no hidden) no crea un contenedor de scroll, así que no rompe position: sticky ni los pines de GSAP.
+     Va en main y no en body: en body se propagaría al visor y se trataría como hidden. */
+  main {
+    overflow-x: clip;
+  }
+
   /* Con el menú abierto, la página de debajo no se desplaza. */
   html:has(dialog[open]) {
     overflow: hidden;
@@ -62,6 +69,7 @@
     letter-spacing: var(--text-button--letter-spacing);
     text-align: center;
     text-transform: uppercase;
+    white-space: nowrap;
     transition:
       background-color var(--duration-fast),
       color var(--duration-fast),
@@ -102,6 +110,7 @@
   .btn-submit {
     width: 100%;
     border-radius: var(--radius-submit);
+    white-space: normal;
   }
 
   /* ---------- Campos (DESIGN.md: 40 px, borde de 1 px, esquina de 4 px) ---------- */

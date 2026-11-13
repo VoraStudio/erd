@@ -1,0 +1,389 @@
+/*
+ * Bloques de página que se repiten en varias páginas: títulos, cabecera de página, banda, filas «Què fem»,
+ * tarjetas, pasos, resultado y rejillas de proyectos. Mobile first: la base es móvil y se amplía con sm: y lg:.
+ * Solo tokens de theme.css. Cuando el boceto choca con DESIGN.md, manda DESIGN.md
+ * (por ejemplo, la caja roja no lleva sombra: el diseño es plano).
+ */
+
+@layer components {
+  /* ---------- Tipografía ---------- */
+  .title-1 {
+    @apply font-display text-title-1-mobile text-erd-ink sm:text-title-1-tablet lg:text-title-1;
+  }
+
+  .title-2 {
+    @apply font-display text-title-2-mobile text-erd-red sm:text-title-2-tablet lg:text-title-2;
+  }
+
+  .lead {
+    @apply font-display text-lead-mobile text-erd-ink lg:text-lead;
+  }
+
+  .eyebrow {
+    @apply text-eyebrow text-erd-red uppercase;
+  }
+
+  .text-soft {
+    @apply text-body-mobile text-erd-muted lg:text-body;
+  }
+
+  .index {
+    @apply font-display text-index;
+  }
+
+  /* ---------- Secciones ---------- */
+  .section {
+    @apply py-section-mobile sm:py-section-tablet lg:py-section;
+  }
+
+  .section-sand {
+    @apply bg-erd-sand;
+  }
+
+  .section-head {
+    @apply mb-11 flex flex-col items-start gap-4.5 sm:flex-row sm:items-end sm:justify-between sm:gap-8;
+  }
+
+  /* ---------- Cabecera de página: la línea ERD y el título ---------- */
+  .page-hero {
+    @apply relative pt-3 sm:pt-10;
+  }
+
+  .page-hero-art {
+    @apply relative mb-1.5 h-22 sm:h-38;
+  }
+
+  .page-hero-art svg {
+    @apply size-full;
+  }
+
+  .page-hero-lead {
+    @apply grid gap-4 pt-7 pb-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start lg:gap-14 lg:pt-10 lg:pb-18;
+  }
+
+  .page-hero-text {
+    @apply max-w-[38.75rem] text-body-mobile text-erd-muted lg:text-body;
+  }
+
+  /* ---------- Banda con foto o gráfico y caja roja ---------- */
+  .band {
+    @apply relative grid h-130 place-items-center overflow-hidden bg-erd-sand p-4 sm:h-150 sm:px-6 sm:py-10;
+  }
+
+  .band > img,
+  .band > svg {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  .band-box {
+    @apply relative z-10 grid w-full max-w-190 justify-items-center gap-4.5 rounded-box bg-erd-red px-6 py-9 text-center text-white sm:px-16 sm:py-14;
+  }
+
+  .band-box h2 {
+    @apply font-display text-band-mobile sm:text-band;
+  }
+
+  .band-box p {
+    @apply max-w-[35rem] text-body-mobile sm:text-body;
+  }
+
+  .band-box .wordmark {
+    @apply font-display text-title-2-mobile sm:text-title-2;
+  }
+
+  .band-box .wordmark b {
+    @apply font-bold;
+  }
+
+  /* ---------- «Què fem»: bloque rojo con filas ---------- */
+  .what {
+    @apply bg-erd-red py-section-mobile text-white sm:py-section-tablet lg:py-section;
+  }
+
+  .what h2 {
+    @apply mb-12 font-display text-title-2-mobile sm:text-title-2-tablet lg:text-title-2;
+  }
+
+  .rows {
+    @apply border-t border-erd-border-light;
+  }
+
+  .rows li {
+    @apply grid gap-1.5 border-b border-erd-border-light py-5.5 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:items-baseline sm:gap-x-6 lg:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.3fr)] lg:py-6.5;
+  }
+
+  .rows .index {
+    @apply hidden opacity-70 sm:block;
+  }
+
+  .rows b {
+    @apply text-subtitle-mobile font-semibold lg:text-body;
+    font-family: var(--font-body);
+  }
+
+  .rows p {
+    @apply text-body-mobile opacity-90 sm:col-start-2 lg:col-start-auto lg:text-body;
+  }
+
+  /* ---------- Tarjetas ---------- */
+  .card {
+    @apply flex flex-col gap-3 rounded-card bg-erd-sand px-6.5 py-7 lg:min-h-72;
+  }
+
+  .section-sand .card {
+    @apply bg-white;
+  }
+
+  .card .index {
+    @apply text-erd-red;
+  }
+
+  .card h3 {
+    @apply font-display text-subtitle-mobile text-erd-ink lg:text-card;
+  }
+
+  .card p {
+    @apply mt-2.5 text-body-mobile text-erd-muted-sand lg:mt-auto;
+  }
+
+  .card-red {
+    @apply flex flex-col gap-2.5 rounded-card bg-erd-red p-7 text-white lg:min-h-58;
+  }
+
+  .card-red .index {
+    @apply opacity-80;
+  }
+
+  .card-red h3 {
+    @apply font-display text-subtitle-mobile sm:text-subtitle;
+  }
+
+  .card-red p {
+    @apply mt-2.5 text-body-mobile opacity-90 lg:mt-auto;
+  }
+
+  /* Tarjeta de servicio de la página Serveis: se rellena de rojo al pasar el ratón. */
+  .service-card {
+    @apply relative flex flex-col gap-3 rounded-card bg-erd-sand p-6.5 text-erd-red lg:min-h-60;
+    transition:
+      background-color var(--duration-base),
+      color var(--duration-base),
+      transform var(--duration-base);
+  }
+
+  .service-card .index {
+    @apply text-erd-red;
+  }
+
+  .service-card h3 {
+    @apply font-display text-subtitle-mobile text-erd-red sm:text-subtitle;
+  }
+
+  .service-card p {
+    @apply text-small text-erd-muted-sand;
+  }
+
+  .service-card .plus {
+    @apply mt-auto;
+  }
+
+  .service-card:hover,
+  .service-card:focus-visible {
+    @apply -translate-y-1 bg-erd-red text-white;
+  }
+
+  .service-card:hover .index,
+  .service-card:hover h3,
+  .service-card:hover p,
+  .service-card:focus-visible .index,
+  .service-card:focus-visible h3,
+  .service-card:focus-visible p {
+    @apply text-white;
+  }
+
+  .service-card:hover .plus,
+  .service-card:focus-visible .plus {
+    @apply bg-white text-erd-red;
+  }
+
+  /* Botón circular de la esquina de una tarjeta. */
+  .plus {
+    @apply grid size-10 flex-none place-items-center rounded-full bg-erd-red text-white;
+    transition:
+      transform var(--duration-base),
+      background-color var(--duration-base),
+      color var(--duration-base);
+  }
+
+  /* Texto de una fila «lista con flechas» de la página de Estratègia IA. */
+  .info-row {
+    @apply grid gap-2 rounded-card bg-erd-sand p-5.5 sm:px-7.5 sm:py-6.5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] lg:items-baseline lg:gap-8;
+  }
+
+  .info-row b {
+    @apply font-display text-subtitle-mobile font-normal text-erd-ink lg:text-card;
+  }
+
+  .info-row p {
+    @apply text-erd-muted-sand;
+  }
+
+  /* ---------- Resultado y notas ---------- */
+  .result {
+    @apply mt-10 flex flex-col gap-2.5 border-t border-b border-t-erd-red border-b-erd-line py-6.5 font-display text-subtitle-mobile text-erd-red lg:flex-row lg:items-baseline lg:gap-4;
+  }
+
+  .result b {
+    @apply flex-none text-eyebrow uppercase;
+    font-family: var(--font-body);
+  }
+
+  .note {
+    @apply mt-4.5 text-small text-erd-muted;
+  }
+
+  /* ---------- Pasos con flecha ---------- */
+  .steps {
+    @apply grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-16;
+  }
+
+  .steps > h2 {
+    @apply lg:sticky lg:top-10;
+  }
+
+  .steps-list {
+    @apply grid gap-9;
+  }
+
+  .steps-list li {
+    @apply grid grid-cols-[auto_minmax(0,1fr)] gap-4.5;
+  }
+
+  .step-arrow {
+    @apply grid h-8 w-11.5 flex-none place-items-center rounded-full bg-erd-sand text-erd-red;
+  }
+
+  .section-sand .step-arrow,
+  .what .step-arrow {
+    @apply bg-white;
+  }
+
+  .steps-list b {
+    @apply mt-1.5 mb-2 block text-eyebrow text-erd-red uppercase;
+  }
+
+  .steps-list p {
+    @apply text-body-mobile text-erd-muted-sand lg:text-body;
+  }
+
+  .what .steps-list b,
+  .what .steps-list p {
+    @apply text-white;
+  }
+
+  .what .steps-list p {
+    @apply opacity-90;
+  }
+
+  /* ---------- Tarjetas de proyecto y de artículo ---------- */
+  .project-card {
+    @apply flex flex-col gap-3;
+  }
+
+  .project-card-image {
+    @apply relative aspect-[16/10.5] overflow-hidden rounded-card bg-erd-stone;
+  }
+
+  .project-card-image > img,
+  .project-card-image > svg {
+    @apply absolute inset-0 size-full object-cover;
+    transition: transform var(--duration-base);
+  }
+
+  .project-card:hover .project-card-image > img {
+    @apply scale-105;
+  }
+
+  .project-card h3 {
+    @apply font-display text-subtitle-mobile text-erd-ink lg:text-card;
+  }
+
+  .project-card p {
+    @apply text-body-mobile text-erd-muted;
+  }
+
+  .more-link {
+    @apply mt-1 inline-flex items-center gap-2 text-eyebrow text-erd-red uppercase;
+  }
+
+  .more-link .icon {
+    @apply size-4;
+  }
+
+  /* Etiqueta (chip) de sector o categoría. */
+  .chip {
+    @apply inline-flex h-7.5 items-center self-start rounded-full bg-erd-red px-3.5 text-eyebrow text-white uppercase;
+  }
+
+  .chip-sand {
+    @apply bg-erd-sand text-erd-red;
+  }
+
+  .pending-tag {
+    @apply inline-flex h-7 items-center gap-2 rounded-full bg-erd-sand px-3 text-small text-erd-muted-sand;
+  }
+
+  /* Tarjeta de recurso: sube y proyecta sombra al pasar el ratón (DESIGN.md). */
+  .resource-card {
+    @apply flex flex-col overflow-hidden rounded-card bg-erd-sand;
+    transition:
+      transform var(--duration-base),
+      box-shadow var(--duration-base);
+  }
+
+  .resource-card:hover {
+    @apply -translate-y-1 shadow-card-hover;
+  }
+
+  .resource-card-image {
+    @apply relative aspect-[900/460] overflow-hidden;
+  }
+
+  .resource-card-image > svg {
+    @apply absolute inset-0 size-full;
+  }
+
+  .resource-card-body {
+    @apply flex flex-1 flex-col gap-3 px-6.5 pt-6 pb-7;
+  }
+
+  .resource-card-body b {
+    @apply text-eyebrow text-erd-red uppercase;
+  }
+
+  .resource-card-body p {
+    @apply text-body-mobile text-erd-muted-sand;
+  }
+
+  .resource-card-body .btn {
+    @apply mt-auto self-start;
+  }
+
+  /* ---------- Filtros de proyectos ---------- */
+  .filter-chip {
+    @apply h-10 rounded-full px-4.5 text-small font-medium text-erd-cacao;
+    box-shadow: inset 0 0 0 1px var(--color-erd-line);
+    transition:
+      background-color var(--duration-fast),
+      color var(--duration-fast);
+  }
+
+  .filter-chip:hover {
+    @apply bg-erd-sand;
+  }
+
+  .filter-chip[aria-pressed='true'] {
+    @apply bg-erd-red text-white;
+    box-shadow: none;
+  }
+}

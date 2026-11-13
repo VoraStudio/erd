@@ -63,6 +63,17 @@ La paleta por defecto de Tailwind está desactivada: solo existen los tokens de 
 | `--text-body` | Texto de cuerpo. Inter Regular. |
 | `--text-label` | Etiqueta. Inter, en mayúsculas. |
 | `--text-button` | Texto de botón. Inter seminegrita, mayúsculas y con espaciado entre letras (web). |
+| `--text-lead` | Frase destacada bajo un título de página. Agrandir Light (web). Variante `-mobile`. |
+| `--text-subtitle` | Subtítulo de bloque, como «Escriu-nos» o el lema del contacto. Agrandir Regular (web). Variante `-mobile`. |
+| `--text-card` | Título de tarjeta. Agrandir Regular (web). |
+| `--text-band` | Título de la caja roja de una banda. Agrandir Regular (web). Variante `-mobile`. |
+| `--text-headline` | Título de una fila de la lista de artículos. Agrandir Regular (web). Variante `-mobile`. |
+| `--text-display` | Título grande del bloque rojo «Com és el teu procés». Agrandir Regular (web). |
+| `--text-marquee` | Frase que pasa sola en la Home. Agrandir Light (web). Variante `-mobile`. |
+| `--text-figure` | Cifra grande de la ficha de proyecto. Agrandir Light (web). Variante `-mobile`. |
+| `--text-index` | Número de orden (01, 02…) de filas y tarjetas. Agrandir Light (web). |
+| `--text-small` | Texto secundario, notas y etiquetas de campo. Inter (web). |
+| `--text-eyebrow` | Rótulo corto en mayúsculas sobre un título o un texto. Inter seminegrita (web). |
 
 - La escala del manual está definida para escritorio. La web la reduce en dos saltos al estrechar la pantalla (títulos 1 y 2). Como el CSS es mobile first, la base es la escala pequeña y se amplía con `min-width`. Los valores concretos están en `theme.css`. Los títulos 1 y 2 y el cuerpo tienen variantes `-tablet` y `-mobile` (por ejemplo `--text-title-1-mobile`).
 
@@ -174,5 +185,6 @@ Sección propia de ERD: el estándar de `DESIGN.md` no la prevé, y la animació
 - **Tipografía:** el manual dice Agrandir + Inter y el brandboard dice Open Sauce. Falta el archivo de Agrandir.
 - **Estado «pulsado»:** no está definido en ningún sitio.
 - **Altura de los campos:** unos 40 px según el manual. Si la accesibilidad táctil pide más, hay que decidirlo.
-- **Radios medidos pero no escritos:** caja roja y botón de envío del formulario.
+- **Radio de la caja roja:** el manual pide una esquina menor que la de la tarjeta, pero el valor medido no está escrito. Se usa `--radius-box` (12 px) como valor **provisional**. La web entregada usaba 28 px, mayor que la tarjeta, y por eso no se sigue.
+- **Sombra de la caja roja:** la web entregada le ponía una sombra grande. `DESIGN.md` define el diseño plano y no se sigue.
 - **Escala tipográfica móvil:** se deriva de la web, porque el manual solo define escritorio.

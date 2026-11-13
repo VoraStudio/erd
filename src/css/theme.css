@@ -109,6 +109,62 @@
   --text-eyebrow--letter-spacing: 0.12em;
   --text-eyebrow--font-weight: 600;
 
+  /* Tamaños de las secciones de página (web), de escritorio y de móvil */
+  --text-lead: 1.625rem;
+  --text-lead--line-height: 1.35;
+  --text-lead--font-weight: 300;
+
+  --text-lead-mobile: 1.3125rem;
+  --text-lead-mobile--line-height: 1.35;
+  --text-lead-mobile--font-weight: 300;
+
+  --text-card: 1.625rem;
+  --text-card--line-height: 1.15;
+  --text-card--font-weight: 400;
+
+  --text-index: 1.375rem;
+  --text-index--line-height: 1;
+  --text-index--font-weight: 300;
+
+  --text-band: 2.5rem;
+  --text-band--line-height: 1.12;
+  --text-band--letter-spacing: -0.01em;
+  --text-band--font-weight: 400;
+
+  --text-band-mobile: 1.875rem;
+  --text-band-mobile--line-height: 1.12;
+  --text-band-mobile--letter-spacing: -0.01em;
+  --text-band-mobile--font-weight: 400;
+
+  --text-headline: 2.125rem;
+  --text-headline--line-height: 1.15;
+  --text-headline--font-weight: 400;
+
+  --text-headline-mobile: 1.5rem;
+  --text-headline-mobile--line-height: 1.15;
+  --text-headline-mobile--font-weight: 400;
+
+  --text-display: 4rem;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 400;
+
+  --text-marquee: 2.5rem;
+  --text-marquee--line-height: 1.1;
+  --text-marquee--font-weight: 300;
+
+  --text-marquee-mobile: 1.75rem;
+  --text-marquee-mobile--line-height: 1.1;
+  --text-marquee-mobile--font-weight: 300;
+
+  --text-figure: 3.5rem;
+  --text-figure--line-height: 1;
+  --text-figure--font-weight: 300;
+
+  --text-figure-mobile: 2.75rem;
+  --text-figure-mobile--line-height: 1;
+  --text-figure-mobile--font-weight: 300;
+
   /* Maquetación (web): 1280 px de contenido más 2 × 64 px de margen */
   --container-site: 88rem;
   --spacing-gutter: 4rem;
@@ -126,6 +182,7 @@
   --radius-card: 1.25rem; /* (manual) */
   --radius-field: 0.25rem; /* (manual; la web usaba más) */
   --radius-submit: 0.5625rem; /* (medido) botón de envío del formulario, no es una píldora */
+  --radius-box: 0.75rem; /* PROVISIONAL: DESIGN.md pide la caja roja con esquina menor que la tarjeta; el valor medido no está escrito */
 
   /* Elevación (web) */
   --shadow-card-hover: 0 30px 60px -36px rgb(43 32 28 / 0.45);

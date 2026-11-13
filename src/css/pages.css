@@ -1,0 +1,425 @@
+/*
+ * Piezas propias de una página concreta: Home, Sobre ERD, Projectes y Actualitat.
+ * Mobile first, solo tokens. Las animaciones de scroll las hace GSAP (public/assets/js/modules/).
+ * Sin JavaScript, los paneles y la imagen que crece se ven apilados y completos.
+ */
+
+@layer components {
+  /* ---------- Home: logotipo recortado con la foto ---------- */
+  .hero-logo {
+    @apply relative mt-2 aspect-[2556/1096] w-full bg-erd-red;
+    -webkit-mask: url('/assets/img/logo/erd-white.svg') center / contain no-repeat;
+    mask: url('/assets/img/logo/erd-white.svg') center / contain no-repeat;
+  }
+
+  .hero-logo img {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  .hero-intro {
+    @apply grid gap-5 pt-14 pb-16 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end lg:gap-16;
+  }
+
+  /* ---------- Home: frase que pasa sola ---------- */
+  .marquee {
+    @apply overflow-hidden border-y border-erd-border py-4 font-display text-marquee-mobile whitespace-nowrap text-erd-red sm:py-5.5 lg:text-marquee;
+  }
+
+  .marquee-track {
+    @apply inline-flex will-change-transform;
+  }
+
+  .marquee-track span {
+    @apply pr-14;
+  }
+
+  /* ---------- Home: tarjetas que se abren ---------- */
+  .accordion-card {
+    @apply relative flex min-h-50 flex-col rounded-card bg-erd-sand px-6.5 py-7 sm:min-h-75;
+  }
+
+  .accordion-card h3 {
+    @apply font-display text-subtitle-mobile text-erd-red sm:text-card;
+  }
+
+  .accordion-trigger {
+    @apply text-left;
+  }
+
+  /* La tarjeta entera es clicable: el pseudoelemento del botón cubre toda la tarjeta. */
+  .accordion-trigger::after {
+    content: '';
+    @apply absolute inset-0 rounded-card;
+  }
+
+  /* Cerrada, la tarjeta oculta su texto también a los lectores de pantalla (visibility), no solo a la vista. */
+  .accordion-panel {
+    @apply invisible grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows var(--duration-base),
+      visibility 0s linear var(--duration-base);
+  }
+
+  .accordion-panel > div {
+    @apply overflow-hidden;
+  }
+
+  .accordion-panel p {
+    @apply pt-4 text-body-mobile text-erd-muted-sand;
+  }
+
+  .accordion-card .plus {
+    @apply mt-auto;
+  }
+
+  .accordion-card:has([aria-expanded='true']) .accordion-panel {
+    @apply visible;
+    grid-template-rows: 1fr;
+    transition-delay: 0s;
+  }
+
+  .accordion-card:has([aria-expanded='true']) .plus {
+    @apply rotate-45;
+  }
+
+  /* ---------- Home: escala de fotos ---------- */
+  .stair {
+    @apply grid items-end gap-4 pt-6 sm:grid-cols-3;
+  }
+
+  .stair figure {
+    @apply relative h-75 overflow-hidden rounded-card text-white;
+  }
+
+  .stair figure:nth-child(1) {
+    @apply sm:h-70 lg:h-90;
+  }
+
+  .stair figure:nth-child(2) {
+    @apply sm:h-85 lg:h-115;
+  }
+
+  .stair figure:nth-child(3) {
+    @apply sm:h-100 lg:h-140;
+  }
+
+  .stair figure > img,
+  .stair figure > svg {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  /* Degradado para que el texto se lea sobre la foto. */
+  .stair figure::after {
+    content: '';
+    @apply absolute inset-0 bg-linear-to-t from-erd-ink/60 from-0% to-transparent to-50%;
+  }
+
+  .stair figcaption {
+    @apply absolute inset-x-6 bottom-5.5 z-10 font-display text-subtitle-mobile lg:text-subtitle;
+  }
+
+  /* ---------- Home y Sobre ERD: bloque rojo del proceso ---------- */
+  .process {
+    @apply grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-18;
+  }
+
+  .process h2 {
+    @apply mb-0 font-display text-title-2-mobile text-erd-cacao sm:text-title-2-tablet lg:text-display;
+  }
+
+  .process mark {
+    @apply -mx-1.5 my-1 inline-block rounded-full bg-erd-flour px-4.5 pb-1 text-erd-cacao;
+  }
+
+  /* ---------- Serveis: fila de Estratègia IA y llamada a la acción ---------- */
+  .ia-card {
+    @apply flex flex-col items-start justify-between gap-6 rounded-card bg-erd-sand p-7.5 sm:flex-row sm:items-center;
+  }
+
+  .ia-card h3 {
+    @apply font-display text-subtitle-mobile text-erd-red sm:text-subtitle;
+  }
+
+  .ia-card h3 b {
+    @apply font-semibold;
+  }
+
+  .cta-card {
+    @apply flex flex-col justify-between gap-5 rounded-card p-7.5;
+    box-shadow: inset 0 0 0 1px var(--color-erd-line);
+  }
+
+  .cta-card p {
+    @apply text-body-mobile lg:text-body;
+  }
+
+  /* ---------- Sobre ERD ---------- */
+  .about-hero {
+    @apply grid gap-8 pt-10 pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-end lg:gap-14 lg:pt-18 lg:pb-24;
+  }
+
+  /* El título va primero en el HTML (orden de lectura); en escritorio se coloca a la derecha. */
+  .about-hero h1 {
+    @apply lg:col-start-2 lg:row-start-1 lg:text-right;
+  }
+
+  .about-hero > div {
+    @apply lg:col-start-1 lg:row-start-1;
+  }
+
+  .about-hero p {
+    @apply max-w-[44ch] text-body-mobile text-erd-muted lg:text-body;
+  }
+
+  .about-hero-actions {
+    @apply mt-6.5 flex flex-wrap gap-3;
+  }
+
+  .help {
+    @apply relative overflow-hidden;
+  }
+
+  .help .steps {
+    @apply relative z-10;
+  }
+
+  .help-mark {
+    @apply pointer-events-none absolute -bottom-22 -left-15 z-0 w-[38.75rem] max-w-none opacity-10;
+  }
+
+  .help-text {
+    @apply mt-5 max-w-[46ch] text-body-mobile text-erd-muted lg:text-body;
+  }
+
+  /* Paneles con scroll horizontal. Sin JavaScript (o con movimiento reducido) se apilan. */
+  .hs {
+    @apply relative bg-erd-ink;
+  }
+
+  .hs-track {
+    @apply flex flex-col;
+  }
+
+  .hs-panel {
+    @apply relative grid min-h-[80svh] place-items-center overflow-hidden px-6 py-10;
+  }
+
+  .hs-panel > img,
+  .hs-panel > svg {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  .hs-panel-chip {
+    @apply relative z-10 inline-flex h-11.5 items-center rounded-full bg-erd-red px-5 font-display text-body-mobile tracking-wide text-white uppercase whitespace-nowrap sm:h-16 sm:px-8.5 sm:text-subtitle;
+  }
+
+  .glass {
+    @apply relative z-10 grid w-full max-w-120 justify-items-center gap-3 rounded-card bg-erd-flour/85 px-9 py-10 text-center backdrop-blur-sm;
+  }
+
+  .glass .index {
+    @apply text-erd-red;
+  }
+
+  .glass h3 {
+    @apply font-display text-title-2-mobile text-erd-red sm:text-band;
+  }
+
+  .glass p {
+    @apply text-body-mobile text-erd-cacao lg:text-body;
+  }
+
+  .hs-dots {
+    @apply absolute bottom-7 left-1/2 z-20 hidden -translate-x-1/2 gap-2;
+  }
+
+  .hs-dots span {
+    @apply size-2 rounded-full bg-white/40;
+    transition:
+      background-color var(--duration-base),
+      width var(--duration-base);
+  }
+
+  .hs-dots span[aria-current='true'] {
+    @apply w-6.5 bg-white;
+  }
+
+  /* JavaScript activa el modo horizontal: un panel por pantalla, fijado mientras se hace scroll. */
+  .hs.is-horizontal {
+    @apply h-screen overflow-hidden;
+  }
+
+  .hs.is-horizontal .hs-track {
+    @apply h-full flex-row will-change-transform;
+  }
+
+  .hs.is-horizontal .hs-panel {
+    @apply h-full min-h-0 w-screen flex-none;
+  }
+
+  .hs.is-horizontal .hs-dots {
+    @apply flex;
+  }
+
+  /* ---------- Projectes ---------- */
+  .filters {
+    @apply mb-9 flex flex-wrap gap-2;
+  }
+
+  .crumbs {
+    @apply mb-7 flex items-center gap-2.5 text-small text-erd-muted;
+  }
+
+  .crumbs a {
+    transition: color var(--duration-fast);
+  }
+
+  .crumbs a:hover {
+    @apply text-erd-red;
+  }
+
+  .crumbs .icon {
+    @apply size-3.5;
+  }
+
+  .detail-top {
+    @apply grid gap-8 pt-6 pb-18 lg:grid-cols-2 lg:items-start lg:gap-16;
+  }
+
+  .figure-grid {
+    @apply mb-14 grid gap-5 sm:grid-cols-3;
+  }
+
+  .figure-card {
+    @apply rounded-card bg-erd-sand p-7;
+  }
+
+  .figure-card b {
+    @apply block font-display text-figure-mobile text-erd-red lg:text-figure;
+  }
+
+  .figure-card span {
+    @apply mt-3 block text-body-mobile text-erd-muted-sand;
+  }
+
+  .detail-images {
+    @apply grid gap-6 sm:grid-cols-2;
+  }
+
+  .detail-images > div {
+    @apply relative aspect-[4/3] overflow-hidden rounded-card;
+  }
+
+  .detail-images img {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  .detail-next {
+    @apply mt-10 flex justify-end;
+  }
+
+  /* ---------- Actualitat ---------- */
+  .news-hero {
+    @apply mx-auto max-w-190 pt-10 pb-14 text-center lg:pt-18 lg:pb-22;
+  }
+
+  .news-hero p {
+    @apply mt-5.5 text-body-mobile text-erd-muted lg:text-body;
+  }
+
+  .blog {
+    @apply bg-erd-red pt-18 pb-section-mobile text-white sm:pb-section-tablet lg:pb-section;
+  }
+
+  .blog-list {
+    @apply border-t border-erd-border-light;
+  }
+
+  .blog-row {
+    @apply grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-6 border-b border-erd-border-light py-7 text-left;
+    transition: padding var(--duration-base);
+  }
+
+  .blog-row:hover {
+    @apply pl-3;
+  }
+
+  .blog-list small {
+    @apply mb-2 block text-eyebrow uppercase opacity-80;
+  }
+
+  .blog-list b {
+    @apply block font-display text-headline-mobile lg:text-headline;
+  }
+
+  .blog-list span {
+    @apply mt-2 block text-body-mobile opacity-90;
+  }
+
+  .blog-list .icon {
+    @apply size-10 stroke-[1.4] sm:size-15;
+    transition: transform var(--duration-base);
+  }
+
+  .blog-row:hover .icon {
+    @apply translate-x-1 -translate-y-1;
+  }
+
+  .blog .project-card h3,
+  .blog .project-card p,
+  .blog .more-link {
+    @apply text-white;
+  }
+
+  .blog .chip {
+    @apply bg-white text-erd-red;
+  }
+
+  .blog .project-card-image {
+    box-shadow: 0 0 0 1px var(--color-erd-border-light);
+  }
+
+  /* Imagen que crece al bajar: GSAP anima el recorte (clip-path), sin tocar el layout. */
+  .grow {
+    @apply relative h-screen;
+  }
+
+  /* Solo con animación hace falta recorrido extra de scroll (lo añade JavaScript). */
+  .grow.is-growing {
+    @apply h-[150svh];
+  }
+
+  .grow-sticky {
+    @apply sticky top-0 grid h-screen place-items-center overflow-hidden;
+  }
+
+  .grow-frame {
+    @apply relative size-full overflow-hidden text-white;
+  }
+
+  .grow-frame > img {
+    @apply absolute inset-0 size-full object-cover;
+  }
+
+  .grow-frame::after {
+    content: '';
+    @apply absolute inset-0 bg-linear-to-r from-erd-ink/15 to-erd-ink/55;
+  }
+
+  .grow-content {
+    @apply absolute inset-0 z-10 flex flex-col justify-between p-6.5 sm:p-12;
+  }
+
+  .grow-content > div {
+    @apply flex flex-col items-end;
+  }
+
+  .grow-content h2 {
+    @apply max-w-[16ch] text-right font-display text-title-2-mobile sm:text-title-2;
+  }
+
+  .grow-content .btn {
+    @apply mt-5;
+  }
+}
