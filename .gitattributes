@@ -2,6 +2,5 @@
 
 # Los archivos internos no entran en los paquetes de publicación (git archive)
 /openspec export-ignore
-/.github export-ignore
 /.gitattributes export-ignore
 /tests export-ignore

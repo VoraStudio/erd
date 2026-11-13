@@ -15,7 +15,7 @@ desktop.ini
 .vscode/
 .idea/
 
-# Build output: the CSS is compiled in CI and never committed
+# Build output: the CSS is compiled locally (npm run build) and never committed
 public/assets/css/styles.css
 
 # Dependencies

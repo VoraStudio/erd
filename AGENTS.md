@@ -28,7 +28,7 @@ ERD es la web corporativa de una consultoría de empresa con más de 20 años de
 
 ## 2. Reglas duras
 
-- **Git:** ningún `commit`, `push`, `merge`, `checkout` ni `rebase` sin orden explícita de Pau. Un push a `main` lanza el despliegue a producción.
+- **Git:** ningún `commit`, `push`, `merge`, `checkout` ni `rebase` sin orden explícita de Pau. No hay despliegue automático: un push no publica nada.
 - **Commits:** convencionales, en español (el tipo en inglés: `feat:`, `fix:`) y sin atribución a IA. Un cambio lógico por commit.
 - **Confidencialidad:** ninguna credencial ni dato del cliente en el repo. `.env` y `sdd-local/brand/` están fuera de git.
 - **Colores:** solo los tokens de `theme.css`. La paleta por defecto de Tailwind está desactivada y no se escriben hexadecimales sueltos.
@@ -53,13 +53,13 @@ ERD es la web corporativa de una consultoría de empresa con más de 20 años de
 | Animación | GSAP: animaciones de entrada y de salida, y de scroll |
 | Servidor | PHP plano, sin Composer ni framework, solo donde hace falta: el gestor del formulario de contacto (`public/contact.php`). La conexión al CMS queda para más adelante y, si su API necesita un token, se hará desde el servidor |
 
-- **Compilación:** `npm run build` genera `public/assets/css/styles.css`. Ese archivo no se versiona: se genera en el despliegue.
+- **Compilación:** `npm run build` genera `public/assets/css/styles.css`. Ese archivo no se versiona: se compila en local antes de cada subida.
 - **Carpeta pública:** `public/` es lo único que se publica. Su raíz se mantiene limpia: `index.html`, `contact.php`, `.htaccess`, `robots.txt` y `sitemap.xml` (estos dos se rellenan a mano al lanzar), las páginas de error y `assets/`. Cada página nueva va en su propia carpeta: `public/<pagina>/index.html`.
-- **Portada provisional:** `public/index.html` es una página «Properament» (logotipo centrado). El trabajo real se hace en `public/index-v2.html`. El despliegue no sube `index-v2.html` ni `contact.php` mientras dure la portada provisional (exclusiones en `deploy.yml`). Al lanzar, `index-v2.html` pasa a ser `index.html` y se quitan las exclusiones.
+- **Portada provisional:** `public/index.html` es una página «Properament» (logotipo centrado). El trabajo real se hace en `public/index-v2.html`. Mientras dure la portada provisional no se suben al servidor `index-v2.html` ni `contact.php`. Al lanzar, `index-v2.html` pasa a ser `index.html` y se sube también `contact.php`.
 - **Fuera de la carpeta pública:** `src/` (`Env`, `Config` y `ContactForm`) y `tests/`. En el servidor, `public/` es `/web` y `src/` cuelga de la raíz del FTP, junto a `/web`.
 - **Recursos:** `public/assets/css/` (solo el `styles.css` compilado), `public/assets/js/` (`main.js`, `components/` y `modules/`), `fonts/` e `img/` (con los logotipos en `img/logo/`).
 - **Estilos:** el código fuente está en `src/css/` (`theme.css` y la entrada `main.css`), fuera de `public/`.
-- **Carpetas fijas:** `openspec/` (decisiones), `.claude/skills/` (skills del proyecto) y `.github/workflows/` (despliegue).
+- **Carpetas fijas:** `openspec/` (decisiones), `.claude/skills/` (skills del proyecto).
 - **Pruebas de PHP:** `php tests/run.php` (sin dependencias).
 - **Configuración:** `.env` (local, fuera de git) y, en el servidor, en la raíz del FTP. Claves: `ERD_MAIL_RECIPIENT` (quién recibe los mensajes) y `ERD_MAIL_SENDER` (remitente). Plantilla en `.env.example`.
 
@@ -83,7 +83,7 @@ Los hooks del proyecto se configuran en `.claude/settings.json`. Estado: definid
 
 | Qué | Idioma |
 | --- | --- |
-| Nombres de archivos | Inglés (`header.js`, `theme.css`, `deploy.yml`) |
+| Nombres de archivos | Inglés (`header.js`, `theme.css`, `package.json`) |
 | Variables, funciones y métodos | Español (`abrirMenu`, `animarEntrada`) |
 | Tokens de diseño (variables CSS) | Inglés, con los nombres del manual de marca (`--color-erd-red`) |
 | Comentarios, documentos `.md`, OpenSpec y commits | Español |
@@ -91,6 +91,6 @@ Los hooks del proyecto se configuran en `.claude/settings.json`. Estado: definid
 
 Lo que imponen las tecnologías se queda como está: etiquetas y atributos HTML, propiedades CSS, clases de Tailwind, APIs de GSAP y JavaScript, y los nombres estándar de archivo.
 
-**Despliegue.** `.github/workflows/deploy.yml` comprueba PHP, ejecuta las pruebas, compila el CSS y sube por FTPS `public/` a `/web` y `src/` a la raíz del FTP, con cada push a `main`. Las credenciales van en los Secrets de GitHub (`FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_REMOTE_DIR`), sin comillas. El `.env` local, que no se versiona, usa los mismos nombres.
+**Despliegue.** Manual: lo hace Pau por FTP, sin GitHub Actions ni Secrets. El hosting solo ofrece FTP sin cifrar (no admite FTPS). Antes de subir: `npm run build` y `php tests/run.php`. Se sube `public/` a `/web` y `src/` a la raíz del FTP, junto a `/web`. Nunca se sobrescribe ni se borra el `.env` del servidor, y no se suben `index-v2.html` ni `contact.php` mientras la portada sea provisional. Las credenciales del FTP no se guardan en el repo ni se pegan en el chat.
 
 **Memoria.** Engram guarda el contexto entre sesiones y OpenSpec guarda las decisiones en git.
