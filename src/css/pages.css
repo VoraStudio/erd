@@ -23,12 +23,28 @@
     @apply overflow-clip;
   }
 
-  /* Estado inicial del zoom. Solo si hay JavaScript (si no, nadie lo encogería) y no se pide menos movimiento.
-     Lo pone el CSS y no el JS para que no haya un parpadeo con el logotipo pequeño antes de ampliarse. */
+  /* Estado inicial de las animaciones del hero (las anima GSAP, modules/hero-animations.js). Solo si hay
+     JavaScript (si no, nadie las reproduciría) y no se pide menos movimiento. Lo pone el CSS y no el JS
+     para que no haya un parpadeo: el logotipo pequeño antes de ampliarse y el titular visible antes de ocultarse. */
   @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
     .hero-logo[data-hero-zoom]:not(.is-settled) {
       scale: var(--hero-zoom-scale);
     }
+
+    /* Titular oculto hasta que SplitText lo parte en líneas y las coloca bajo su máscara.
+       El texto de la derecha, hasta que GSAP lo hace aparecer. */
+    [data-hero-titular],
+    [data-hero-texto] {
+      visibility: hidden;
+    }
+  }
+
+  /* Máscara de cada línea del titular (la crea SplitText). Con el interlineado ajustado, la cola de letras como
+     la «y» sobresale por debajo de la línea y la máscara la cortaría: el relleno de abajo le deja sitio y el
+     margen negativo lo compensa, así que el diseño no se mueve. */
+  .hero-line-mask {
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
   }
 
   .hero-intro {

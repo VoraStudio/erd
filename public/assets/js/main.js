@@ -10,7 +10,7 @@ import { iniciarEnlacesQueSeDibujan } from '/assets/js/modules/draw-link.js';
 import { iniciarElevacionAlPasarElRaton } from '/assets/js/modules/hover-lift.js';
 import { iniciarAnimacionesDeLaCabecera } from '/assets/js/modules/header-animations.js';
 import { iniciarAnimacionesDelPie } from '/assets/js/modules/footer-animations.js';
-import { iniciarZoomDelHero } from '/assets/js/modules/hero-zoom.js';
+import { iniciarAnimacionesDelHero } from '/assets/js/modules/hero-animations.js';
 import { iniciarFrasePasante } from '/assets/js/modules/marquee.js';
 import { iniciarScrollHorizontal } from '/assets/js/modules/horizontal-scroll.js';
 import { iniciarImagenQueCrece } from '/assets/js/modules/grow-image.js';
@@ -26,7 +26,7 @@ iniciarFiltros();
 iniciarEnlacesQueSeDibujan();
 iniciarElevacionAlPasarElRaton();
 iniciarAnimacionesDeLaCabecera();
-iniciarZoomDelHero();
+iniciarAnimacionesDelHero();
 
 // Los efectos de scroll van al final, cuando la página ya tiene su forma definitiva.
 iniciarFrasePasante();
