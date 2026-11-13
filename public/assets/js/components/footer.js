@@ -11,7 +11,7 @@ const LEGALES = [
 
 function crearLista(enlaces) {
   return enlaces
-    .map((enlace) => `<li><a class="hover:underline hover:underline-offset-3" href="${enlace.url}">${enlace.texto}</a></li>`)
+    .map((enlace) => `<li data-pie-elemento><a class="hover:underline hover:underline-offset-3" href="${enlace.url}">${enlace.texto}</a></li>`)
     .join('');
 }
 
@@ -32,25 +32,25 @@ class PieSitio extends HTMLElement {
     ).join('');
 
     return `
-      <footer class="bg-erd-red pt-16 pb-9 text-white">
+      <footer class="overflow-clip bg-erd-red pt-16 pb-9 text-white">
         <div class="wrap">
           <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <img class="w-30" src="/assets/img/logo/erd-white.svg" alt="ERD" width="120" height="51">
-              <p class="mt-4.5 max-w-[16ch] font-display text-subtitle-mobile font-light">Menys intuïció. Més resultats.</p>
+            <div class="flex items-center gap-8 sm:block">
+              <img class="w-30" src="/assets/img/logo/erd-white.svg" alt="ERD" width="120" height="51" data-pie-logo>
+              <p class="max-w-[16ch] font-display text-subtitle-mobile font-light sm:mt-4.5" data-pie-subtitulo>Menys intuïció. Més resultats.</p>
             </div>
-            <nav aria-labelledby="peu-navega">
-              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-navega">Navega</h2>
-              <ul class="grid gap-2 text-body-mobile">${crearLista(PAGINAS)}</ul>
+            <nav aria-labelledby="peu-navega" data-pie-grupo>
+              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-navega" data-pie-elemento>Navega</h2>
+              <ul class="flex flex-wrap gap-x-8 gap-y-3 text-body-mobile sm:grid sm:gap-2">${crearLista(PAGINAS)}</ul>
             </nav>
-            <nav class="lg:col-span-2" aria-labelledby="peu-serveis">
-              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-serveis">Serveis</h2>
+            <nav class="lg:col-span-2" aria-labelledby="peu-serveis" data-pie-grupo>
+              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-serveis" data-pie-elemento>Serveis</h2>
               <ul class="grid gap-2 text-body-mobile lg:grid-cols-2 lg:gap-x-10">${crearLista(SERVEIS)}</ul>
             </nav>
           </div>
           <div class="mt-14 flex flex-wrap justify-between gap-5 border-t border-erd-border-light pt-5.5 text-small">
-            <p>&copy; ${anio} ERD · Disseny i web: Vora Studio</p>
-            <nav class="flex flex-wrap gap-5.5" aria-label="Legal">${legales}</nav>
+            <p data-pie-legal>&copy; ${anio} ERD · Disseny i web: Vora Studio</p>
+            <nav class="flex flex-wrap gap-5.5" aria-label="Legal" data-pie-legal>${legales}</nav>
           </div>
         </div>
       </footer>`;
