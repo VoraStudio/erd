@@ -172,16 +172,64 @@
     cursor: pointer;
   }
 
-  /* ---------- Navegación ---------- */
-  .nav-link {
+  /* ---------- Enlace que se dibuja ---------- */
+  /* Pieza reutilizable: al pasar el ratón, la línea de abajo se dibuja de izquierda a derecha y el texto
+     cambia de color con una máscara horizontal, a la vez. El módulo modules/draw-link.js (GSAP) anima
+     --draw-progress de 0 a 1 y de ese único número salen la línea y el color: por eso van siempre a la par.
+     Se personaliza con tres variables en el propio elemento (los valores por defecto son los de la cabecera):
+       --draw-link-base   color del texto en reposo
+       --draw-link-hover  color al que cambia el texto
+       --draw-link-line   color de la línea (por defecto, el mismo que --draw-link-hover)
+     El texto es transparente y el degradado se recorta con la forma de las letras (background-clip: text);
+     la parte ya recorrida va en --draw-link-hover y el resto en --draw-link-base. */
+  .draw-link {
+    --draw-progress: 0;
+    --draw-link-base: var(--color-erd-red);
+    --draw-link-hover: var(--color-erd-red-dark);
+    --draw-link-line: var(--draw-link-hover);
+
+    position: relative;
     padding-block: 0.5rem;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color var(--duration-fast);
+    color: transparent;
+    background: linear-gradient(
+      90deg,
+      var(--draw-link-hover) calc(var(--draw-progress) * 100%),
+      var(--draw-link-base) 0
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 
-  .nav-link:hover,
-  .nav-link[aria-current] {
-    border-bottom-color: var(--color-erd-red);
+  .draw-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1.5px;
+    background-color: var(--draw-link-line);
+    transform: scaleX(var(--draw-progress));
+    transform-origin: left;
+  }
+
+  /* La página actual lleva la línea dibujada entera, sin necesitar el hover. */
+  .draw-link[aria-current]::after {
+    transform: scaleX(1);
+  }
+
+  /* Con movimiento reducido el módulo no anima: el efecto se aplica de golpe, sin dibujarse. */
+  @media (prefers-reduced-motion: reduce) {
+    .draw-link:hover,
+    .draw-link:focus-visible {
+      --draw-progress: 1;
+    }
+  }
+
+  /* En modo de alto contraste el color de recorte no se respeta: se usa el color de enlace del sistema. */
+  @media (forced-colors: active) {
+    .draw-link {
+      color: LinkText;
+      background: none;
+    }
   }
 
   /* Botón de menú: píldora roja con las tres rayas y el logotipo en blanco. */
@@ -194,6 +242,7 @@
     border-radius: 9999px;
     background-color: var(--color-erd-red);
     color: var(--color-white);
+    cursor: pointer;
     transition: background-color var(--duration-fast);
   }
 
@@ -249,27 +298,58 @@
     overflow-y: auto;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .menu[open] {
-      animation: menu-entrada var(--duration-base) ease both;
-    }
+  /* La cortina (modules/menu-curtain.js) revela el menú de arriba abajo. El fondo que pone el navegador
+     detrás de un <dialog> modal aparecería de golpe antes que la cortina: se quita. */
+  .menu::backdrop {
+    background: transparent;
   }
 
-  @keyframes menu-entrada {
-    from {
-      opacity: 0;
-      transform: translateY(-12px);
-    }
-  }
-
+  /* Botón de cierre: cruz blanca, del mismo trazo que la que forma el botón de menú. Al pasar el ratón,
+     modules/close-button.js dibuja el anillo y gira la cruz. El área de clic sigue siendo de 56 px. */
   .menu-close {
+    position: relative;
     display: grid;
     place-items: center;
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 9999px;
-    background-color: var(--color-white);
-    color: var(--color-erd-red);
+    color: var(--color-white);
+    cursor: pointer;
+  }
+
+  .menu-close-x {
+    width: 1.75rem;
+    height: 1.75rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+
+  /* El anillo empieza invisible (trazo sin dibujar) y arranca a las 12 en punto.
+     El círculo mide 100 (pathLength); el trazo y el desplazamiento valen 101 para que, sin dibujar,
+     no asome un resto de 1 unidad en la unión. */
+  .menu-close-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+
+  .menu-close-ring circle {
+    stroke-dasharray: 101;
+    stroke-dashoffset: 101;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  /* Sobre el fondo rojo del menú, el contorno de foco rojo de siempre no se vería. */
+  .menu :focus-visible {
+    outline-color: var(--color-white);
   }
 
   .menu-link {

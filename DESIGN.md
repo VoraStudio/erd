@@ -138,7 +138,7 @@ Píldoras de unos 47 px para secciones, sectores y estados cortos. Variantes (ma
 
 ### Navegación
 
-- Enlaces en Agrandir y en rojo. **Hover y página actual (web):** subrayado de 1,5 px en `erd-red`.
+- Enlaces en Agrandir y en rojo. **Hover (web):** la línea de 1,5 px en `erd-red-dark` se dibuja de izquierda a derecha y, a la vez, el texto pasa de `erd-red` a `erd-red-dark` con una máscara horizontal (línea y texto, el mismo color) (pieza reutilizable `.draw-link`). **Página actual (web):** la línea ya dibujada entera.
 - Botón de menú en píldora roja con el logotipo en blanco. Hover: `erd-red-dark`.
 - Enlaces del pie: subrayado al pasar el ratón. Migas de pan: pasan a rojo.
 
