@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projecte · ERD</title>
+  <meta name="description" content="Explicació breu del projecte i del tipus d'empresa.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/vendor/gsap.min.js"></script>
+  <script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+</head>
+<body class="bg-erd-flour font-body text-body-mobile text-erd-cacao lg:text-body">
+  <a class="sr-only focus:not-sr-only" href="#contingut">Salta al contingut</a>
+
+  <site-header class="block"></site-header>
+
+  <main id="contingut">
+    <section class="wrap">
+      <nav class="crumbs" aria-label="Camí de navegació">
+        <a href="/projectes/">Projectes</a> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>
+        <span aria-current="page">Nom del client</span>
+      </nav>
+      <div class="detail-top">
+        <div>
+          <span class="chip">Logística</span>
+          <h1 class="title-1 mt-4">Nom del client</h1>
+          <p class="lead mt-4" data-animacion="arriba">Explicació breu del projecte i del tipus d'empresa.</p>
+        </div>
+        <ol class="steps-list">
+          <li data-animacion="derecha">
+            <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            <div>
+              <b>El repte</b>
+              <p>Què li passava a l'empresa quan ens va trucar, explicat en dues o tres frases.</p>
+            </div>
+          </li>
+          <li data-animacion="derecha">
+            <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            <div>
+              <b>Què vam fer</b>
+              <p>Els passos principals del projecte: diagnòstic, pla i acompanyament.</p>
+            </div>
+          </li>
+          <li data-animacion="derecha">
+            <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+            <div>
+              <b>El resultat</b>
+              <p>El canvi mesurable: temps, errors, marge o caixa, abans i després.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="figure-grid">
+        <div class="figure-card" data-animacion="arriba">
+          <b>−00 %</b>
+          <span>Indicador 1 (pendent)</span>
+        </div>
+        <div class="figure-card" data-animacion="arriba">
+          <b>+00 %</b>
+          <span>Indicador 2 (pendent)</span>
+        </div>
+        <div class="figure-card" data-animacion="arriba">
+          <b>00 mesos</b>
+          <span>Durada del projecte</span>
+        </div>
+      </div>
+      <div class="detail-images">
+        <div data-animacion="fade">
+          <img src="/assets/img/photos/magatzem.jpg" alt="" width="1600" height="900" loading="lazy">
+        </div>
+        <div data-animacion="fade">
+          <img src="/assets/img/photos/equip.jpg" alt="" width="1600" height="900" loading="lazy">
+        </div>
+      </div>
+      <div class="detail-next">
+        <a class="btn btn-line" href="/projectes/">Tots els projectes</a>
+      </div>
+    </section>
+  </main>
+
+  <site-contact class="block"></site-contact>
+  <site-footer class="block"></site-footer>
+</body>
+</html>
