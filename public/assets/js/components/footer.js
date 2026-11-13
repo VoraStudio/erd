@@ -1,18 +1,59 @@
+import { PAGINAS, SERVEIS } from '/assets/js/modules/navigation.js';
+
 const NOMBRE_ETIQUETA = 'site-footer';
 
-// Componente sin Shadow DOM: pinta el pie dentro de la propia etiqueta <site-footer>.
+// Páginas legales que todavía no existen: abren el aviso «pendent».
+const LEGALES = [
+  { texto: 'Política de privadesa', aviso: 'Política de privadesa: pendent' },
+  { texto: 'Avís legal', aviso: 'Avís legal: pendent' },
+  { texto: 'Cookies', aviso: 'Cookies: pendent' },
+];
+
+function crearLista(enlaces) {
+  return enlaces
+    .map((enlace) => `<li><a class="hover:underline hover:underline-offset-3" href="${enlace.url}">${enlace.texto}</a></li>`)
+    .join('');
+}
+
+// Componente sin Shadow DOM: pinta el pie dentro de <site-footer>.
 class PieSitio extends HTMLElement {
   connectedCallback() {
     if (this.dataset.lista) {
       return;
     }
-    const anio = new Date().getFullYear();
-    this.innerHTML = `
-      <footer class="bg-erd-ink px-gutter-mobile py-12 text-white sm:px-gutter-tablet lg:px-gutter">
-        <p class="font-display text-title-3">Menys intuïció. Més resultats.</p>
-        <p class="mt-6 text-body-mobile lg:text-body">&copy; ${anio} ERD</p>
-      </footer>`;
+    this.innerHTML = this.crearHtml();
     this.dataset.lista = 'true';
+  }
+
+  crearHtml() {
+    const anio = new Date().getFullYear();
+    const legales = LEGALES.map(
+      (legal) => `<button class="hover:underline hover:underline-offset-3" type="button" data-soon="${legal.aviso}">${legal.texto}</button>`,
+    ).join('');
+
+    return `
+      <footer class="bg-erd-red pt-16 pb-9 text-white">
+        <div class="wrap">
+          <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <img class="w-30" src="/assets/img/logo/erd-white.svg" alt="ERD" width="120" height="51">
+              <p class="mt-4.5 max-w-[16ch] font-display text-subtitle-mobile font-light">Menys intuïció. Més resultats.</p>
+            </div>
+            <nav aria-labelledby="peu-navega">
+              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-navega">Navega</h2>
+              <ul class="grid gap-2 text-body-mobile">${crearLista(PAGINAS)}</ul>
+            </nav>
+            <nav class="lg:col-span-2" aria-labelledby="peu-serveis">
+              <h2 class="mb-3.5 text-eyebrow uppercase opacity-75" id="peu-serveis">Serveis</h2>
+              <ul class="grid gap-2 text-body-mobile lg:grid-cols-2 lg:gap-x-10">${crearLista(SERVEIS)}</ul>
+            </nav>
+          </div>
+          <div class="mt-14 flex flex-wrap justify-between gap-5 border-t border-erd-border-light pt-5.5 text-small">
+            <p>&copy; ${anio} ERD · Disseny i web: Vora Studio</p>
+            <nav class="flex flex-wrap gap-5.5" aria-label="Legal">${legales}</nav>
+          </div>
+        </div>
+      </footer>`;
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "erd",
   "private": true,
-  "description": "Web de ERD. Solo compila el CSS con Tailwind; el resto es PHP y JavaScript sin dependencias.",
+  "description": "Web de ERD. Compila el CSS con Tailwind y fija la versión de GSAP, que se copia a public/assets/js/vendor/.",
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
     "build": "tailwindcss -i src/css/main.css -o public/assets/css/styles.css --minify",
@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "4.1.11",
+    "gsap": "3.15.0",
     "tailwindcss": "4.1.11"
   }
 }
