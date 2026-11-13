@@ -6,6 +6,7 @@ import { iniciarAvisos } from '/assets/js/modules/toast.js';
 import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
 import { iniciarFiltros } from '/assets/js/modules/filters.js';
 import { iniciarAnimaciones } from '/assets/js/modules/animations.js';
+import { iniciarZoomDelHero } from '/assets/js/modules/hero-zoom.js';
 import { iniciarFrasePasante } from '/assets/js/modules/marquee.js';
 import { iniciarScrollHorizontal } from '/assets/js/modules/horizontal-scroll.js';
 import { iniciarImagenQueCrece } from '/assets/js/modules/grow-image.js';
@@ -18,6 +19,7 @@ definirPie();
 iniciarAvisos();
 iniciarAcordeones();
 iniciarFiltros();
+iniciarZoomDelHero();
 
 // Los efectos de scroll van al final, cuando la página ya tiene su forma definitiva.
 iniciarFrasePasante();

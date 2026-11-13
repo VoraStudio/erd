@@ -16,6 +16,21 @@
     @apply absolute inset-0 size-full object-cover;
   }
 
+  /* El logotipo ampliado no puede salirse del bloque del hero: así nunca tapa la cabecera
+     ni hace crecer la página mientras se anima. El bloque ocupa todo el ancho (el .wrap va dentro)
+     para que el recorte llegue a los bordes de la pantalla. */
+  .home-hero {
+    @apply overflow-clip;
+  }
+
+  /* Estado inicial del zoom. Solo si hay JavaScript (si no, nadie lo encogería) y no se pide menos movimiento.
+     Lo pone el CSS y no el JS para que no haya un parpadeo con el logotipo pequeño antes de ampliarse. */
+  @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+    .hero-logo[data-hero-zoom]:not(.is-settled) {
+      scale: var(--hero-zoom-scale);
+    }
+  }
+
   .hero-intro {
     @apply grid gap-5 pt-14 pb-16 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end lg:gap-16;
   }

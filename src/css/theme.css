@@ -192,4 +192,7 @@
 :root {
   --duration-fast: 0.2s;
   --duration-base: 0.3s;
+
+  /* Hero de la Home: el logotipo empieza ampliado a esta escala y se encoge hasta 1. */
+  --hero-zoom-scale: 3;
 }
