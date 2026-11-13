@@ -52,6 +52,9 @@ export function iniciarAnimaciones() {
   }
   gsap.registerPlugin(ScrollTrigger);
 
+  // Las fuentes y las fotos cambian la altura de la página al cargar: hay que recalcular las posiciones.
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+
   // Solo se anima si el visitante no ha pedido menos movimiento. Si lo pide, no se oculta nada.
   const medios = gsap.matchMedia();
   medios.add('(prefers-reduced-motion: no-preference)', () => {

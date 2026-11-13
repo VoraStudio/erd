@@ -3,12 +3,24 @@ import { definirCabecera } from '/assets/js/components/header.js';
 import { definirPie } from '/assets/js/components/footer.js';
 import { definirContacto } from '/assets/js/components/contact.js';
 import { iniciarAvisos } from '/assets/js/modules/toast.js';
+import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
+import { iniciarFiltros } from '/assets/js/modules/filters.js';
 import { iniciarAnimaciones } from '/assets/js/modules/animations.js';
+import { iniciarFrasePasante } from '/assets/js/modules/marquee.js';
+import { iniciarScrollHorizontal } from '/assets/js/modules/horizontal-scroll.js';
+import { iniciarImagenQueCrece } from '/assets/js/modules/grow-image.js';
 
-// Primero los componentes: las animaciones tienen que encontrar ya pintados sus data-animacion.
+// Primero los componentes: los módulos de debajo tienen que encontrar ya pintado su contenido.
 definirCabecera();
 definirContacto();
 definirPie();
 
 iniciarAvisos();
+iniciarAcordeones();
+iniciarFiltros();
+
+// Los efectos de scroll van al final, cuando la página ya tiene su forma definitiva.
+iniciarFrasePasante();
+iniciarScrollHorizontal();
+iniciarImagenQueCrece();
 iniciarAnimaciones();

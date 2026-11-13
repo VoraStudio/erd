@@ -63,7 +63,7 @@ Si el boceto choca con `DESIGN.md` o con estas reglas (por ejemplo, su CSS es de
 
 - **Compilación:** `npm run build` genera `public/assets/css/styles.css`. Ese archivo no se versiona: se compila en local antes de cada subida.
 - **Carpeta pública:** `public/` es lo único que se publica. Su raíz se mantiene limpia: `index.html`, `contact.php`, `.htaccess`, `robots.txt` y `sitemap.xml` (estos dos se rellenan a mano al lanzar), las páginas de error y `assets/`. Cada página nueva va en su propia carpeta: `public/<pagina>/index.html`.
-- **Portada provisional:** `public/index.html` es una página «Properament» (logotipo centrado). El trabajo real se hace en `public/index-v2.html`. Mientras dure la portada provisional no se suben al servidor `index-v2.html` ni `contact.php`. Al lanzar, `index-v2.html` pasa a ser `index.html` y se sube también `contact.php`.
+- **Portada provisional:** `public/index.html` es una página «Properament» (logotipo centrado). El trabajo real se hace en `public/index-v2.html`. Mientras dure la portada provisional no se suben al servidor `index-v2.html` ni `contact.php`. Al lanzar, `index-v2.html` pasa a ser `index.html`, la constante `URL_HOME` de `public/assets/js/modules/navigation.js` vuelve a `'/'` y se sube también `contact.php`.
 - **Fuera de la carpeta pública:** `src/` (`Env`, `Config` y `ContactForm`) y `tests/`. En el servidor, `public/` es `/web` y `src/` cuelga de la raíz del FTP, junto a `/web`.
 - **Recursos:** `public/assets/css/` (solo el `styles.css` compilado), `public/assets/js/` (`main.js`, `components/` y `modules/`), `fonts/` e `img/` (con los logotipos en `img/logo/`).
 - **Estilos:** el código fuente está en `src/css/` (`theme.css` y la entrada `main.css`), fuera de `public/`.
