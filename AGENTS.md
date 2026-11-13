@@ -4,14 +4,22 @@
 
 ERD es la web corporativa de una consultoría de empresa con más de 20 años de oficio, que trabaja en ocho ámbitos de servicio, de la logística a las finanzas. La construye Vora Studio (VoraData).
 
-**Cómo llega el diseño.** VoraStudio entrega el diseño ya hecho: una web HTML navegable (15 páginas y una versión interactiva), un manual de estilo y un brandboard en PDF, y los logotipos. Todo está en `sdd-local/brand/ERD/`, que no se sube a git.
+**Cómo llega el diseño.** VoraStudio entrega un manual de estilo y un brandboard en PDF, los logotipos y un boceto de la web en HTML. Todo está en `sdd-local/brand/ERD/`, que no se sube a git. El boceto está en `sdd-local/brand/ERD/02 Web/`: 15 páginas, una versión interactiva (`Web ERD.html`), capturas, fuentes y fotos de muestra.
 
 **De dónde salen los tokens de marca.**
 
 1. Primero, los PDFs (manual de estilo y brandboard).
-2. Lo que los PDFs no digan, lo cubre la web HTML.
+2. Lo que los PDFs no digan, lo cubre el boceto HTML.
 
-**Qué se construye.** La web se reescribe a partir del HTML entregado: mobile first y en archivos separados, sin reinterpretar el diseño.
+**Qué se construye.** El boceto HTML es una idea de partida, no el resultado: aporta la estructura de las páginas, los contenidos y los efectos. La web se construye mejor que el boceto, mobile first y en archivos separados.
+
+**Qué manda, en este orden:**
+
+1. `DESIGN.md` y `theme.css`.
+2. Las reglas de este archivo.
+3. El boceto HTML.
+
+Si el boceto choca con `DESIGN.md` o con estas reglas (por ejemplo, su CSS es desktop first), se sigue `DESIGN.md` y estas reglas.
 
 **Discrepancias conocidas** (no se resuelven sin preguntar):
 

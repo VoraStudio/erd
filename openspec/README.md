@@ -17,7 +17,7 @@ openspec/decisiones/<categoria>/NNN.md
 | `css` | Tailwind, `theme.css` y cómo se implementan los estilos |
 | `js` | Componentes y módulos de JavaScript |
 | `php` | Lógica de servidor (carpeta preparada; todavía no se usa) |
-| `diseno` | Decisiones de interfaz y de diseño, tokens de marca y fidelidad al diseño de VoraStudio |
+| `diseno` | Decisiones de interfaz y de diseño, tokens de marca y cómo se aprovecha y se mejora el boceto de VoraStudio |
 | `animacion` | Animaciones de entrada y de salida con GSAP, y animaciones de scroll |
 
 Los nombres de carpeta van en ASCII, sin tildes ni `ñ`, porque se corrompen al pasar entre sistemas (macOS, Windows, FTP).
