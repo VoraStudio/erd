@@ -11,6 +11,7 @@ import { iniciarElevacionAlPasarElRaton } from '/assets/js/modules/hover-lift.js
 import { iniciarAnimacionesDeLaCabecera } from '/assets/js/modules/header-animations.js';
 import { iniciarAnimacionesDelPie } from '/assets/js/modules/footer-animations.js';
 import { iniciarAnimacionesDelHero } from '/assets/js/modules/hero-animations.js';
+import { iniciarAnimacionesDelProceso } from '/assets/js/modules/process-animations.js';
 import { iniciarFrasePasante } from '/assets/js/modules/marquee.js';
 import { iniciarScrollHorizontal } from '/assets/js/modules/horizontal-scroll.js';
 import { iniciarImagenQueCrece } from '/assets/js/modules/grow-image.js';
@@ -33,4 +34,5 @@ iniciarFrasePasante();
 iniciarScrollHorizontal();
 iniciarImagenQueCrece();
 iniciarAnimaciones();
+iniciarAnimacionesDelProceso();
 iniciarAnimacionesDelPie();

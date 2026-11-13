@@ -39,6 +39,13 @@
     }
   }
 
+  /* Máscara de cada palabra del título «Així treballem» (la crea SplitText): mismo relleno que la del hero,
+     para que las colas de letras como la «q» o la «g» no se corten. */
+  .process-word-mask {
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
   /* Máscara de cada línea del titular (la crea SplitText). Con el interlineado ajustado, la cola de letras como
      la «y» sobresale por debajo de la línea y la máscara la cortaría: el relleno de abajo le deja sitio y el
      margen negativo lo compensa, así que el diseño no se mueve. */
