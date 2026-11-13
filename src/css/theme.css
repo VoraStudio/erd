@@ -92,6 +92,23 @@
   --text-body-mobile--line-height: 1.6;
   --text-body-mobile--font-weight: 400;
 
+  /* Tamaños de interfaz que el manual no recoge (web) */
+  --text-subtitle: 1.875rem;
+  --text-subtitle--line-height: 1.2;
+  --text-subtitle--font-weight: 400;
+
+  --text-subtitle-mobile: 1.375rem;
+  --text-subtitle-mobile--line-height: 1.3;
+  --text-subtitle-mobile--font-weight: 400;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.12em;
+  --text-eyebrow--font-weight: 600;
+
   /* Maquetación (web): 1280 px de contenido más 2 × 64 px de margen */
   --container-site: 88rem;
   --spacing-gutter: 4rem;

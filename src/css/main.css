@@ -1,3 +1,5 @@
-/* Entrada del CSS: Tailwind más los tokens de diseño. Se compila a public/assets/css/styles.css. */
+/* Entrada del CSS: Tailwind, los tokens de diseño, las fuentes y las piezas comunes. Se compila a public/assets/css/styles.css. */
 @import "tailwindcss";
 @import "./theme.css";
+@import "./fonts.css";
+@import "./components.css";
