@@ -24,7 +24,7 @@
         </div>
         <div class="hero-intro">
           <h1 class="title-1" data-hero-titular>Menys intuïció. <br>Més resultats.</h1>
-          <p class="text-soft" data-hero-texto>El creixement del teu negoci comença amb decisions basades en dades, no en intuïcions.</p>
+          <p class="hero-text" data-hero-texto>El creixement del teu negoci comença amb decisions basades en dades, no en intuïcions.</p>
         </div>
       </div>
     </section>
@@ -46,41 +46,41 @@
     <section class="section">
       <div class="wrap">
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <article class="accordion-card" data-animacion="arriba">
-            <h3><button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="tarja-1">20 anys d'ofici</button></h3>
+          <article class="accordion-card" data-animacion="arriba" data-ritmo="lento">
+            <h3 id="tarja-1-titol">20 anys d'ofici</h3>
             <div class="accordion-panel" id="tarja-1">
               <div>
                 <p>Més de 20 anys d'experiència oferint consell pràctic i a mida, per a start-ups, micro-empreses, pimes i grans corporacions.</p>
               </div>
             </div>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <button class="plus" type="button" aria-expanded="false" aria-controls="tarja-1" aria-labelledby="tarja-1-titol" data-acordeon-boton><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </article>
-          <article class="accordion-card" data-animacion="arriba">
-            <h3><button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="tarja-2">Dades, no intuïció</button></h3>
+          <article class="accordion-card" data-animacion="arriba" data-ritmo="lento">
+            <h3 id="tarja-2-titol">Dades, no intuïció</h3>
             <div class="accordion-panel" id="tarja-2">
               <div>
                 <p>Treballem amb dades, no amb sensacions. Tot allò que no es pot mesurar, no es pot millorar.</p>
               </div>
             </div>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <button class="plus" type="button" aria-expanded="false" aria-controls="tarja-2" aria-labelledby="tarja-2-titol" data-acordeon-boton><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </article>
-          <article class="accordion-card" data-animacion="arriba">
-            <h3><button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="tarja-3">Vuit camins, un objectiu</button></h3>
+          <article class="accordion-card" data-animacion="arriba" data-ritmo="lento">
+            <h3 id="tarja-3-titol">Vuit camins, un objectiu</h3>
             <div class="accordion-panel" id="tarja-3">
               <div>
                 <p>8 àmbits per fer créixer el teu negoci: des de l'estratègia fins a les finances.</p>
               </div>
             </div>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <button class="plus" type="button" aria-expanded="false" aria-controls="tarja-3" aria-labelledby="tarja-3-titol" data-acordeon-boton><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </article>
-          <article class="accordion-card" data-animacion="arriba">
-            <h3><button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="tarja-4">Resultats</button></h3>
+          <article class="accordion-card" data-animacion="arriba" data-ritmo="lento">
+            <h3 id="tarja-4-titol">Resultats</h3>
             <div class="accordion-panel" id="tarja-4">
               <div>
                 <p>Empreses reals, reptes reals. Descobreix com hem ajudat altres negocis com el teu.</p>
               </div>
             </div>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <button class="plus" type="button" aria-expanded="false" aria-controls="tarja-4" aria-labelledby="tarja-4-titol" data-acordeon-boton><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
           </article>
         </div>
       </div>
@@ -89,8 +89,8 @@
     <section class="section pt-0">
       <div class="wrap">
         <div class="section-head">
-          <h2 class="title-2" data-proceso-titulo>Així treballem</h2>
-          <a class="btn btn-line btn-sm" href="/sobre-erd/" data-elevar data-proceso-boton>Sobre ERD<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" data-proceso-flecha><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <h2 class="title-2" data-titulo-palabras>Així treballem</h2>
+          <a class="btn btn-line btn-sm" href="/sobre-erd/" data-elevar data-proceso-boton>Sobre ERD<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
         <div class="stair">
           <figure data-proceso-foto>
@@ -111,25 +111,25 @@
 
     <section class="what">
       <div class="wrap process">
-        <h2 data-animacion="arriba">Com és el teu <mark>procés de</mark> creixement amb ERD</h2>
-        <ol class="steps-list">
-          <li data-animacion="derecha">
+        <h2 data-titulo-pildora><span>Com és el teu</span><br><mark>procés de</mark> <span>creixement</span><br><span>amb ERD</span></h2>
+        <ol class="steps-list" data-pasos>
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Primera hora, gratuïta</b>
               <p>Ens expliques el teu negoci i els teus reptes. Sense compromís, sense lletra petita: és el nostre punt de partida amb tots els clients.</p>
             </div>
           </li>
-          <li data-animacion="derecha">
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Diagnòstic amb dades reals</b>
               <p>Analitzem el teu negoci amb xifres, no amb sensacions, i identifiquem els àmbits on més marge de millora hi ha.</p>
             </div>
           </li>
-          <li data-animacion="derecha">
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Pla d'acció i acompanyament</b>
               <p>T'entreguem un pla concret i t'acompanyem a aplicar-lo, pas a pas, dins la teva empresa.</p>
             </div>
@@ -141,37 +141,37 @@
     <section class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2 class="title-2" data-animacion="arriba">Recursos per al teu negoci</h2>
+          <h2 class="title-2" data-titulo-palabras>Recursos per al teu negoci</h2>
         </div>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <article class="resource-card" data-animacion="arriba">
+          <article class="resource-card" data-entrada="izquierda" data-ritmo="secuencia">
             <div class="resource-card-image">
               <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-sand"></rect><path d="M-10 40 C380 40 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 92 C380 92 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 144 C380 144 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 196 C380 196 520 230 830 230" fill="none" stroke-width="7" stroke-linecap="round" class="stroke-erd-red"></path><path d="M-10 248 C380 248 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 300 C380 300 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 352 C380 352 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 404 C380 404 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><circle cx="840" cy="230" r="18" class="fill-erd-red"></circle></svg>
             </div>
             <div class="resource-card-body">
               <b>Guia dels 8 àmbits</b>
               <p>Un document breu amb els 8 àmbits on treballem i els senyals que indiquen que la teva empresa hi necessita ajuda.</p>
-              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més</button>
+              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
             </div>
           </article>
-          <article class="resource-card" data-animacion="arriba">
+          <article class="resource-card" data-entrada="arriba" data-ritmo="secuencia">
             <div class="resource-card-image">
               <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-sand"></rect><path d="M50 330 C110 150 170 420 230 220 S320 110 300 330" fill="none" stroke-width="5" stroke-linecap="round" class="stroke-erd-muted/40"></path><path d="M470 360 H560 L760 160 H860" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" class="stroke-erd-red"></path><circle cx="860" cy="160" r="15" class="fill-erd-red"></circle></svg>
             </div>
             <div class="resource-card-body">
               <b>Casos d'èxit</b>
               <p>Reptes reals d'empreses reals, i com els vam resoldre treballant amb dades.</p>
-              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més</button>
+              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
             </div>
           </article>
-          <article class="resource-card" data-animacion="arriba">
+          <article class="resource-card" data-entrada="derecha" data-ritmo="secuencia">
             <div class="resource-card-image">
               <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-red"></rect><path d="M-10 330 H300 L480 150 H910" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="stroke-white"></path><path d="M-10 380 H340 L520 200 H910" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="stroke-erd-line"></path></svg>
             </div>
             <div class="resource-card-body">
               <b>Actualitat</b>
               <p>Articles curts i pràctics sobre gestió, vendes i estratègia, sense fum ni teoria buida.</p>
-              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més</button>
+              <button class="btn btn-sm" type="button" data-soon="Recurs pendent">Llegir més<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
             </div>
           </article>
         </div>

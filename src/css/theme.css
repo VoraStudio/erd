@@ -165,8 +165,8 @@
   --text-figure-mobile--line-height: 1;
   --text-figure-mobile--font-weight: 300;
 
-  /* Maquetación (web): 1280 px de contenido más 2 × 64 px de margen */
-  --container-site: 88rem;
+  /* Maquetación (web): 1640 px de contenido más 2 × 64 px de margen (el boceto tenía 1280) */
+  --container-site: 110.5rem;
   --spacing-gutter: 4rem;
   --spacing-gutter-tablet: 2rem;
   --spacing-gutter-mobile: 1.25rem;

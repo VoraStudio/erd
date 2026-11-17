@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-// Gestor del formulario de contacto: recibe el POST, valida y envía el correo.
+// Gestor del formulario de contacto: recibe el POST de contact.js y responde JSON.
+// Toda la lógica está en src/ (ContactHandler); aquí solo se prepara el entorno y se usa.
 // Los errores de PHP no se muestran al visitante: quedan en el registro del servidor.
 ini_set('display_errors', '0');
 
@@ -12,70 +13,58 @@ $raiz = dirname(__DIR__);
 require $raiz . '/src/Env.php';
 require $raiz . '/src/Config.php';
 require $raiz . '/src/ContactForm.php';
+require $raiz . '/src/ContactSecurity.php';
+require $raiz . '/src/Recaptcha.php';
+require $raiz . '/src/SmtpTransport.php';
+require $raiz . '/src/SmtpSocket.php';
+require $raiz . '/src/SmtpMailer.php';
+require $raiz . '/src/ContactHandler.php';
+require $raiz . '/src/Http.php';
 
 Env::cargar($raiz, dirname($raiz));
 
-/** Pinta una página mínima con el resultado y termina. Los textos son fijos: nunca se repite lo que escribió el visitante. */
-function responder(int $codigo, string $titulo, string $mensaje): never
-{
-    http_response_code($codigo);
-    header('Content-Type: text/html; charset=UTF-8');
-
-    $pagina = <<<'HTML'
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex">
-    <title>{{titulo}}</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
-</head>
-<body class="bg-erd-flour font-body text-erd-cacao">
-    <main>
-        <h1 class="font-display text-title-1-mobile sm:text-title-1-tablet lg:text-title-1 text-erd-ink">{{titulo}}</h1>
-        <p>{{mensaje}}</p>
-        <p><a href="/">Tornar a l'inici</a></p>
-    </main>
-</body>
-</html>
-HTML;
-
-    echo str_replace(
-        ['{{titulo}}', '{{mensaje}}'],
-        [htmlspecialchars($titulo, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), htmlspecialchars($mensaje, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')],
-        $pagina
-    );
-    exit;
-}
-
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     header('Allow: POST');
-    responder(405, 'Mètode no permès', 'Aquesta adreça només accepta els enviaments del formulari.');
-}
-
-$entrada = $_POST;
-
-// Un robot rellena el campo trampa: se responde como si todo fuese bien, pero no se envía nada.
-if (ContactForm::esSpam($entrada)) {
-    responder(200, 'Missatge enviat', 'Gràcies! Et respondrem aviat.');
+    Http::responderJson(405, ['ok' => false, 'message' => 'Aquesta adreça només accepta els enviaments del formulari.']);
 }
 
 $destinatario = Config::obtener('MAIL_RECIPIENT');
 $remitente = Config::obtener('MAIL_SENDER');
 if ($destinatario === null || $remitente === null) {
-    responder(503, 'Servei no disponible', 'Ara mateix no podem rebre missatges. Torna-ho a provar més tard.');
+    Http::responderJson(503, ['ok' => false, 'message' => 'Ara mateix no podem rebre missatges. Torna-ho a provar més tard.']);
 }
 
-$resultado = ContactForm::validar($entrada);
-if ($resultado['errores'] !== []) {
-    responder(422, 'Revisa el formulari', 'Hi ha dades que no són correctes. Torna enrere i revisa el formulari.');
+// Con ERD_SMTP_HOST en el .env el correo sale por SMTP autenticado; sin él, por mail() del hosting.
+$enviarCorreo = SmtpMailer::estaActivo()
+    ? static fn (array $correo): bool => SmtpMailer::enviarConConfiguracion($correo, $remitente)
+    : static fn (array $correo): bool => mail(
+        $correo['para'],
+        $correo['asunto'],
+        $correo['cuerpo'],
+        implode("\r\n", $correo['cabeceras'])
+    );
+
+$verificarRecaptcha = null;
+if (Recaptcha::estaActivo()) {
+    $anfitrion = (string) ($_SERVER['HTTP_HOST'] ?? '');
+    $verificarRecaptcha = static fn (string $respuesta): string => Recaptcha::verificar(
+        $respuesta,
+        $anfitrion,
+        static fn (string $r): ?array => Recaptcha::consultarGoogle($r)
+    );
 }
 
-$correo = ContactForm::construirCorreo($resultado['datos'], $destinatario, $remitente);
-$seHaEnviado = mail($correo['para'], $correo['asunto'], $correo['cuerpo'], implode("\r\n", $correo['cabeceras']));
-if (!$seHaEnviado) {
-    responder(500, 'Error en l\'enviament', 'No hem pogut enviar el missatge. Torna-ho a provar més tard.');
-}
+ContactSecurity::iniciarSesion($_SERVER);
 
-responder(200, 'Missatge enviat', 'Gràcies! Et respondrem aviat.');
+$resultado = ContactHandler::procesar(
+    $_POST,
+    $_SERVER,
+    $_SESSION,
+    microtime(true),
+    $destinatario,
+    $remitente,
+    $enviarCorreo,
+    $verificarRecaptcha
+);
+
+Http::responderJson($resultado['codigo'], $resultado['cuerpo']);

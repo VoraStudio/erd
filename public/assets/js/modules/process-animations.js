@@ -1,13 +1,27 @@
 // Animaciones de la sección «Així treballem» de la Home, con GSAP, SplitText y ScrollTrigger:
 //   1. El título: SplitText parte el texto en palabras (no en líneas), cada una dentro de una máscara,
-//      y las palabras suben desde abajo una detrás de otra (stagger).
+//      y las palabras suben desde abajo una detrás de otra (stagger). Se aplica a cualquier título que lleve
+//      data-titulo-palabras.
+//      El título de la sección roja «Com és el teu procés de creixement» (data-titulo-pildora) hace lo mismo con las
+//      palabras de fuera de la píldora, y la píldora «procés de» se levanta del suelo en 3D (ver más abajo).
+//      Los tres pasos de la sección roja (data-pasos) entran de lado con un fundido, uno detrás de otro y despacio.
 //   2. Las tres fotos aparecen con una cortina vertical, de abajo hacia arriba: primero una, luego otra y luego otra.
-//   3. El botón «Sobre ERD»: aparece con un fundido cuando ya está apareciendo la segunda cortina y, al pasar el
-//      ratón, sale una flecha dentro del botón. La elevación del botón la hace hover-lift.js (lleva data-elevar).
+//   3. El botón «Sobre ERD»: aparece con un fundido cuando ya está apareciendo la segunda cortina. La flecha del botón
+//      y su elevación al pasar el ratón no son de este módulo: el giro es CSS (.btn .icon) y la elevación la hace
+//      hover-lift.js (lleva data-elevar).
 // Las dos primeras se reproducen al entrar en pantalla, se ocultan al salir y se repiten al volver, como el resto de la web.
 
 const SEGUNDOS_PALABRA = 1.3;
 const ESCALONADO_PALABRAS = 0.12;
+
+// La píldora «procés de» se levanta del suelo: parte tumbada (girada 90° sobre su borde de abajo) y se pone de pie.
+// Es el efecto «Inferior» del Despliegue Cinemático 3D de la galería de efectos (rotationX 90, transformOrigin
+// bottom center, 1,4 s, power3.out).
+const SEGUNDOS_PILDORA = 1.9;
+const GIRO_PILDORA_GRADOS = 90;
+const PERSPECTIVA_PILDORA = 1200;
+// Empieza cuando ya han entrado las palabras de la primera línea.
+const RETRASO_PILDORA = 0.5;
 
 // Cada cortina dura 1,4 s y la siguiente arranca a los 0,4 s: se solapan y parece una sola ola.
 const SEGUNDOS_FOTO = 1.4;
@@ -23,7 +37,9 @@ const FOTOS_EN_COLUMNAS = '(min-width: 40rem)';
 const CORTINA_RECOGIDA = 'inset(100% 0% 0% 0%)';
 const CORTINA_EXTENDIDA = 'inset(0% 0% 0% 0%)';
 
-const SEGUNDOS_FLECHA = 0.35;
+const SEGUNDOS_PASO = 1.2;
+const ESCALONADO_PASOS = 0.4;
+const DESPLAZAMIENTO_PASO = 40;
 
 // Reproducir al entrar, rebobinar al salir hacia arriba y volver a reproducir al volver a bajar.
 const AL_HACER_SCROLL = 'play reverse play reverse';
@@ -122,36 +138,78 @@ function animarFotos(gsap, ScrollTrigger, fotos, boton) {
   }
 }
 
-function prepararFlechaDelBoton(gsap, boton) {
-  const flecha = boton.querySelector('[data-proceso-flecha]');
-  if (!flecha) {
+// Título con una píldora (<mark>). El texto de fuera de la píldora va en <span>: SplitText parte solo esos tramos
+// en palabras y las sube con máscara, como en «Así treballem». La píldora no se parte: entera, con su fondo, se
+// levanta del suelo. Todo va en una timeline con un solo disparador de scroll, así se rebobina junto.
+function animarTituloConPildora(gsap, SplitText, titulo) {
+  const pildora = titulo.querySelector('mark');
+  const tramos = titulo.querySelectorAll(':scope > span');
+  if (!pildora || tramos.length === 0) {
     return;
   }
 
-  // La flecha parte sin anchura y con un margen negativo que anula el hueco (gap) del botón: así,
-  // en reposo, el botón no tiene ningún espacio de más y crece al aparecer la flecha.
-  const anchoFlecha = flecha.getBoundingClientRect().width;
-  const hueco = parseFloat(getComputedStyle(boton).columnGap);
-  gsap.set(flecha, { width: 0, marginLeft: -hueco, autoAlpha: 0 });
+  // La clase de cada máscara es la de su palabra + «-mask»: aquí, process-word-mask (ver pages.css).
+  const division = SplitText.create(tramos, { type: 'words', mask: 'words', wordsClass: 'process-word' });
 
-  const efecto = gsap.timeline({ paused: true, defaults: { duration: SEGUNDOS_FLECHA, ease: 'power2.out' } });
-  // (La aparición del botón la controla animarFotos con autoAlpha; aquí solo se anima la flecha.)
-  efecto.to(flecha, { width: anchoFlecha, marginLeft: 0, autoAlpha: 1 });
-
-  // Solo con ratón: en pantallas táctiles no hay hover y la flecha se quedaría puesta tras el toque.
-  boton.addEventListener('pointerenter', (evento) => {
-    if (evento.pointerType !== 'mouse') {
-      return;
-    }
-    efecto.play();
+  const entrada = gsap.timeline({
+    scrollTrigger: { trigger: titulo, start: 'top 85%', toggleActions: AL_HACER_SCROLL },
   });
-  boton.addEventListener('pointerleave', () => efecto.reverse());
+
+  // Baja 130 % (y no 100 %): la máscara tiene un relleno por abajo y la palabra tiene que quedar fuera de él.
+  entrada.from(
+    division.words,
+    { yPercent: 130, duration: SEGUNDOS_PALABRA, ease: 'power3.out', stagger: ESCALONADO_PALABRAS },
+    0,
+  );
+
+  // transformPerspective da profundidad 3D a este elemento sin tocar el CSS del título.
+  // Se usa fromTo y no from: con from, GSAP también animaría la perspectiva desde 1200 hasta el valor actual (0),
+  // y al final la píldora se deformaría de golpe. Con fromTo la perspectiva queda fija en los dos extremos.
+  entrada.fromTo(
+    pildora,
+    {
+      opacity: 0,
+      rotationX: GIRO_PILDORA_GRADOS,
+      transformOrigin: 'bottom center',
+      transformPerspective: PERSPECTIVA_PILDORA,
+    },
+    {
+      opacity: 1,
+      rotationX: 0,
+      transformPerspective: PERSPECTIVA_PILDORA,
+      duration: SEGUNDOS_PILDORA,
+      ease: 'power3.out',
+    },
+    RETRASO_PILDORA,
+  );
+}
+
+// Pasos de la sección roja: entran desde la derecha con un fundido. Un solo disparador sobre la lista y un stagger
+// real entre los pasos: así la espera entre uno y otro no depende de la velocidad del scroll (si cada paso tuviera
+// su propio disparador, entrarían casi a la vez). data-espera y data-escalonado en la lista cambian cuándo empiezan
+// y cuánto tardan en entrar uno tras otro.
+function animarPasos(gsap, lista) {
+  gsap.from(lista.children, {
+    x: DESPLAZAMIENTO_PASO,
+    autoAlpha: 0,
+    duration: SEGUNDOS_PASO,
+    delay: Number(lista.dataset.espera || 0),
+    ease: 'power2.out',
+    stagger: Number(lista.dataset.escalonado || ESCALONADO_PASOS),
+    scrollTrigger: { trigger: lista, start: 'top 85%', toggleActions: AL_HACER_SCROLL },
+  });
 }
 
 export function iniciarAnimacionesDelProceso() {
   const { gsap, ScrollTrigger, SplitText } = window;
-  const titulo = document.querySelector('[data-proceso-titulo]');
-  if (!gsap || !ScrollTrigger || !SplitText || !titulo) {
+  if (!gsap || !ScrollTrigger || !SplitText) {
+    return;
+  }
+
+  const titulosPorPalabras = gsap.utils.toArray('[data-titulo-palabras]');
+  const titulosConPildora = gsap.utils.toArray('[data-titulo-pildora]');
+  const listasDePasos = gsap.utils.toArray('[data-pasos]');
+  if (titulosPorPalabras.length === 0 && titulosConPildora.length === 0 && listasDePasos.length === 0) {
     return;
   }
 
@@ -162,9 +220,23 @@ export function iniciarAnimacionesDelProceso() {
 
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  const boton = document.querySelector('[data-proceso-boton]');
+  for (const titulo of titulosPorPalabras) {
+    animarTitulo(gsap, SplitText, titulo);
+  }
 
-  animarTitulo(gsap, SplitText, titulo);
-  animarFotos(gsap, ScrollTrigger, gsap.utils.toArray('[data-proceso-foto]'), boton);
-  prepararFlechaDelBoton(gsap, boton);
+  for (const titulo of titulosConPildora) {
+    animarTituloConPildora(gsap, SplitText, titulo);
+  }
+
+  for (const lista of listasDePasos) {
+    animarPasos(gsap, lista);
+  }
+
+  const fotos = gsap.utils.toArray('[data-proceso-foto]');
+  const boton = document.querySelector('[data-proceso-boton]');
+  if (fotos.length === 0 || !boton) {
+    return;
+  }
+
+  animarFotos(gsap, ScrollTrigger, fotos, boton);
 }

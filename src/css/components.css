@@ -69,6 +69,7 @@
     letter-spacing: var(--text-button--letter-spacing);
     text-align: center;
     text-transform: uppercase;
+    cursor: pointer;
     white-space: nowrap;
     transition:
       background-color var(--duration-fast),
@@ -78,6 +79,19 @@
 
   .btn:hover {
     background-color: var(--color-erd-red-dark);
+  }
+
+  /* Flecha del botón (↗): siempre visible; al pasar el ratón solo cambia de dirección y queda horizontal (→).
+     Se gira el icono con «rotate»: GSAP anima el botón (elevación, entradas), no el icono. */
+  .btn .icon {
+    transition: rotate var(--duration-base) ease-out;
+  }
+
+  @media (hover: hover) {
+    .btn:hover .icon,
+    .btn:focus-visible .icon {
+      rotate: 45deg;
+    }
   }
 
   .btn-white {
@@ -93,6 +107,12 @@
     background-color: transparent;
     color: var(--color-erd-red);
     box-shadow: inset 0 0 0 1.5px var(--color-erd-red);
+    /* El texto y la flecha cambian de rojo a blanco de golpe a mitad del relleno. Con una transición de color,
+       a mitad de camino todo queda rosa sobre rosa y la flecha casi desaparece mientras gira. */
+    transition:
+      background-color var(--duration-fast),
+      color 0s linear calc(var(--duration-fast) / 4),
+      box-shadow var(--duration-fast);
   }
 
   .btn-line:hover {
@@ -163,6 +183,31 @@
     height: 1.25rem;
     margin-top: 0.0625rem;
     accent-color: var(--color-erd-red);
+  }
+
+  /* ---------- Resultado del envío (modules/contact-form.js) ---------- */
+  .field-error,
+  .form-status {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+  }
+
+  .field-error,
+  .form-status[data-estado='error'] {
+    color: var(--color-erd-red);
+  }
+
+  .form-status[data-estado='ok'] {
+    color: var(--color-erd-ink);
+    font-weight: 500;
+  }
+
+  .field-input[aria-invalid='true'] {
+    border-color: var(--color-erd-red);
+  }
+
+  .check input[aria-invalid='true'] {
+    outline: 2px solid var(--color-erd-red);
   }
 
   /* Enlace dentro de un texto que todavía no tiene destino (abre el aviso «pendent»). */

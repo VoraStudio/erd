@@ -6,7 +6,8 @@
 //   2. Cruz del botón de menú: las tres rayas se vuelven una cruz al pasar el ratón.
 //   3. Cortina del menú: cae de arriba abajo y sus elementos aparecen escalonados (se exporta, la usa el componente).
 //   4. Botón de cierre: un anillo se dibuja alrededor de la cruz y la cruz gira.
-//   5. Flechas de los servicios: la flecha se pone horizontal y el texto se desplaza.
+//   5. Flechas con texto (servicios del menú y pasos de la sección roja de la Home): la flecha se pone horizontal y
+//      el texto se desplaza. Se activa con data-flecha en el elemento y data-flecha-texto en el texto que se mueve.
 
 const SEGUNDOS_ENTRADA = 0.8;
 const DESPLAZAMIENTO_ENTRADA = 40;

@@ -7,7 +7,7 @@
 // El estado inicial (logotipo ampliado, titular oculto) lo pone el CSS para evitar parpadeos; aquí GSAP hace
 // todo el movimiento.
 
-const SEGUNDOS_ZOOM = 2.2;
+const SEGUNDOS_ZOOM = 1.2;
 const ESPERA_MAXIMA_FOTO_MS = 2500;
 
 const SEGUNDOS_LINEA = 0.9;

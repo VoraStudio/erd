@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <script defer src="/assets/js/vendor/gsap.min.js"></script>
   <script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="/assets/js/vendor/SplitText.min.js"></script>
   <script type="module" src="/assets/js/main.js"></script>
 </head>
 <body class="bg-erd-flour font-body text-body-mobile text-erd-cacao lg:text-body">
@@ -24,7 +25,7 @@
       <div class="detail-top">
         <div>
           <span class="chip">Logística</span>
-          <h1 class="title-1 mt-4">Nom del client</h1>
+          <h1 class="title-1 mt-4" data-titulo-palabras>Nom del client</h1>
           <p class="lead mt-4" data-animacion="arriba">Explicació breu del projecte i del tipus d'empresa.</p>
         </div>
         <ol class="steps-list">
@@ -74,7 +75,7 @@
         </div>
       </div>
       <div class="detail-next">
-        <a class="btn btn-line" href="/projectes/">Tots els projectes</a>
+        <a class="btn btn-line" href="/projectes/">Tots els projectes<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       </div>
     </section>
   </main>

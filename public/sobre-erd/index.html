@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <script defer src="/assets/js/vendor/gsap.min.js"></script>
   <script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="/assets/js/vendor/SplitText.min.js"></script>
   <script type="module" src="/assets/js/main.js"></script>
 </head>
 <body class="bg-erd-flour font-body text-body-mobile text-erd-cacao lg:text-body">
@@ -17,43 +18,43 @@
 
   <main id="contingut">
     <section class="wrap about-hero">
-      <h1 class="title-1">El teu negoci,<br>la nostra prioritat</h1>
+      <h1 class="title-1" data-titulo-palabras>El teu negoci,<br>la nostra prioritat</h1>
       <div>
         <p data-animacion="arriba">Més de 20 anys ajudant negocis a créixer: des de start-ups i micro-empreses fins a grans corporacions.</p>
         <div class="about-hero-actions">
-          <a class="btn" href="/serveis/">Serveis</a>
-          <a class="btn btn-line" href="#contacte">Contacte</a>
+          <a class="btn" href="/serveis/" data-animacion="arriba" data-ritmo="lento" data-espera="0.3">Serveis<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="btn btn-line" href="#contacte" data-animacion="arriba" data-ritmo="lento" data-espera="0.3">Contacte<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
       </div>
     </section>
 
     <section class="section section-sand help">
-      <img class="help-mark" src="/assets/img/logo/erd-red.svg" alt="" width="620" height="266">
+      <img class="help-mark" data-marca-fondo src="/assets/img/logo/erd-red.svg" alt="" width="620" height="266">
       <div class="wrap steps">
         <div>
-          <h2 class="title-2" data-animacion="arriba">Com t'ajudem a créixer</h2>
-          <p class="help-text" data-animacion="arriba">Fa més de 20 anys que ajudem negocis a créixer: des de start-ups i micro-empreses fins a pimes i grans corporacions. Ho fem des de la Bisbal d'Empordà, però treballem amb empreses d'arreu.</p>
+          <h2 class="title-2" data-titulo-palabras>Com t'ajudem a créixer</h2>
+          <p class="help-text" data-lineas data-espera="0.5" data-escalonado="0.25" data-segundos="1.2">Fa més de 20 anys que ajudem negocis a créixer: des de start-ups i micro-empreses fins a pimes i grans corporacions. Ho fem des de la Bisbal d'Empordà, però treballem amb empreses d'arreu.</p>
         </div>
-        <ol class="steps-list">
-          <li data-animacion="derecha">
+        <ol class="steps-list" data-pasos data-espera="1" data-escalonado="0.6">
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Primera hora, gratuïta</b>
-              <p>Ens expliques el teu negoci i els teus reptes. Sense compromís, sense lletra petita: és el nostre punt de partida amb tots els clients.</p>
+              <p data-lineas data-espera="1.6" data-escalonado="0.15">Ens expliques el teu negoci i els teus reptes. Sense compromís, sense lletra petita: és el nostre punt de partida amb tots els clients.</p>
             </div>
           </li>
-          <li data-animacion="derecha">
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Diagnòstic amb dades reals</b>
-              <p>Analitzem el teu negoci amb xifres, no amb sensacions, i identifiquem els àmbits on més marge de millora hi ha.</p>
+              <p data-lineas data-espera="2.2" data-escalonado="0.15">Analitzem el teu negoci amb xifres, no amb sensacions, i identifiquem els àmbits on més marge de millora hi ha.</p>
             </div>
           </li>
-          <li data-animacion="derecha">
+          <li data-flecha>
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-            <div>
+            <div data-flecha-texto>
               <b>Pla d'acció i acompanyament</b>
-              <p>T'entreguem un pla concret i t'acompanyem a aplicar-lo, pas a pas, dins la teva empresa.</p>
+              <p data-lineas data-espera="2.8" data-escalonado="0.15">T'entreguem un pla concret i t'acompanyem a aplicar-lo, pas a pas, dins la teva empresa.</p>
             </div>
           </li>
         </ol>
@@ -105,11 +106,11 @@
     <section class="section">
       <div class="wrap">
         <div class="section-head">
-          <h2 class="title-2" data-animacion="arriba">Actualitat</h2>
-          <a class="btn btn-line btn-sm" href="/actualitat/">Descobreix totes les novetats</a>
+          <h2 class="title-2" data-titulo-palabras>Actualitat</h2>
+          <a class="btn btn-line btn-sm" href="/actualitat/" data-entrada="derecha" data-ritmo="lento" data-espera="0.3">Descobreix totes les novetats<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <article class="project-card" data-animacion="arriba">
+          <article class="project-card" data-animacion="arriba" data-ritmo="lento">
             <div class="project-card-image">
               <img src="/assets/img/photos/magatzem.jpg" alt="" width="1600" height="900" loading="lazy">
             </div>
@@ -118,7 +119,7 @@
             <p>Cinc indicadors per mirar abans de demanar més espai o més gent.</p>
             <button class="more-link" type="button" data-soon="Article pendent">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
           </article>
-          <article class="project-card" data-animacion="arriba">
+          <article class="project-card" data-animacion="arriba" data-ritmo="lento">
             <div class="project-card-image">
               <img src="/assets/img/photos/film.jpg" alt="" width="1600" height="900" loading="lazy">
             </div>
@@ -127,7 +128,7 @@
             <p>Com anticipar-te als forats de caixa i negociar amb el banc a temps.</p>
             <button class="more-link" type="button" data-soon="Article pendent">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
           </article>
-          <article class="project-card" data-animacion="arriba">
+          <article class="project-card" data-animacion="arriba" data-ritmo="lento">
             <div class="project-card-image">
               <img src="/assets/img/photos/cuina.jpg" alt="" width="1600" height="900" loading="lazy">
             </div>

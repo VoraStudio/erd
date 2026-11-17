@@ -165,10 +165,10 @@
   /* Tarjeta de servicio de la página Serveis: se rellena de rojo al pasar el ratón. */
   .service-card {
     @apply relative flex flex-col gap-3 rounded-card bg-erd-sand p-6.5 text-erd-red lg:min-h-60;
+    /* Sin transform: una transición de transform atrasaría la entrada de GSAP, que mueve la tarjeta en cada fotograma. */
     transition:
       background-color var(--duration-base),
-      color var(--duration-base),
-      transform var(--duration-base);
+      color var(--duration-base);
   }
 
   .service-card .index {
@@ -204,6 +204,17 @@
   .service-card:hover .plus,
   .service-card:focus-visible .plus {
     @apply bg-white text-erd-red;
+  }
+
+  /* La flecha (↗) gira 45° al pasar el ratón y queda horizontal (→). Se gira el icono con «rotate»: GSAP solo
+     anima la tarjeta, no el icono, así que no anula este giro. */
+  .service-card .plus .icon {
+    transition: rotate var(--duration-base) ease-out;
+  }
+
+  .service-card:hover .plus .icon,
+  .service-card:focus-visible .plus .icon {
+    rotate: 45deg;
   }
 
   /* Botón circular de la esquina de una tarjeta. */
@@ -322,7 +333,9 @@
 
   /* Etiqueta (chip) de sector o categoría. */
   .chip {
-    @apply inline-flex h-7.5 items-center self-start rounded-full bg-erd-red px-3.5 text-eyebrow text-white uppercase;
+    /* pt-px: las mayúsculas no tienen descendentes, así que el hueco bajo la línea base queda vacío y el texto se
+       veía medio píxel alto. 1 px más de padding arriba centra ópticamente las letras (el de abajo no se toca). */
+    @apply inline-flex h-7.5 items-center self-start rounded-full bg-erd-red px-3.5 pt-px text-eyebrow text-white uppercase;
   }
 
   .chip-sand {
@@ -336,9 +349,8 @@
   /* Tarjeta de recurso: sube y proyecta sombra al pasar el ratón (DESIGN.md). */
   .resource-card {
     @apply flex flex-col overflow-hidden rounded-card bg-erd-sand;
-    transition:
-      transform var(--duration-base),
-      box-shadow var(--duration-base);
+    /* Solo la sombra: una transición de transform atrasaría la entrada de GSAP, que mueve la tarjeta en cada fotograma. */
+    transition: box-shadow var(--duration-base);
   }
 
   .resource-card:hover {

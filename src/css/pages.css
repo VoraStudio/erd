@@ -58,6 +58,11 @@
     @apply grid gap-5 pt-14 pb-16 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-end lg:gap-16;
   }
 
+  /* Texto de la derecha del hero: más grande que el texto suave, con el token lead */
+  .hero-text {
+    @apply text-lead-mobile text-erd-muted lg:self-center lg:text-lead;
+  }
+
   /* ---------- Home: frase que pasa sola ---------- */
   .marquee {
     @apply overflow-hidden border-y border-erd-border py-4 font-display text-marquee-mobile whitespace-nowrap text-erd-red sm:py-5.5 lg:text-marquee;
@@ -73,21 +78,11 @@
 
   /* ---------- Home: tarjetas que se abren ---------- */
   .accordion-card {
-    @apply relative flex min-h-50 flex-col rounded-card bg-erd-sand px-6.5 py-7 sm:min-h-75;
+    @apply flex min-h-50 flex-col rounded-card bg-erd-sand px-6.5 py-7 sm:min-h-75;
   }
 
   .accordion-card h3 {
     @apply font-display text-subtitle-mobile text-erd-red sm:text-card;
-  }
-
-  .accordion-trigger {
-    @apply text-left;
-  }
-
-  /* La tarjeta entera es clicable: el pseudoelemento del botón cubre toda la tarjeta. */
-  .accordion-trigger::after {
-    content: '';
-    @apply absolute inset-0 rounded-card;
   }
 
   /* Cerrada, la tarjeta oculta su texto también a los lectores de pantalla (visibility), no solo a la vista. */
@@ -104,21 +99,30 @@
   }
 
   .accordion-panel p {
-    @apply pt-4 text-body-mobile text-erd-muted-sand;
+    @apply pt-4 pb-6 text-body-mobile text-erd-muted-sand sm:pb-0 sm:text-body;
   }
 
+  /* Solo el botón rojo es clicable, no la tarjeta entera. */
   .accordion-card .plus {
     @apply mt-auto;
+    cursor: pointer;
+  }
+
+  /* Flecha más gruesa que el trazo base (1,8) para que se vea mejor sobre el círculo rojo. */
+  .accordion-card .plus .icon {
+    @apply stroke-[2.8];
+  }
+
+  /* Con la tarjeta abierta la flecha apunta hacia abajo. Se gira el botón y no la flecha: GSAP anima la flecha y
+     pone «rotate: none» en línea sobre lo que anima, lo que anularía este giro. */
+  .accordion-card .plus[aria-expanded='true'] {
+    rotate: 180deg;
   }
 
   .accordion-card:has([aria-expanded='true']) .accordion-panel {
     @apply visible;
     grid-template-rows: 1fr;
     transition-delay: 0s;
-  }
-
-  .accordion-card:has([aria-expanded='true']) .plus {
-    @apply rotate-45;
   }
 
   /* ---------- Home: escala de fotos ---------- */
@@ -163,7 +167,7 @@
   }
 
   .process h2 {
-    @apply mb-0 font-display text-title-2-mobile text-erd-cacao sm:text-title-2-tablet lg:text-display;
+    @apply mb-0 font-display text-title-2-mobile leading-tight text-erd-cacao sm:text-title-2-tablet lg:text-display;
   }
 
   .process mark {

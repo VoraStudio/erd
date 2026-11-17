@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <script defer src="/assets/js/vendor/gsap.min.js"></script>
   <script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="/assets/js/vendor/SplitText.min.js"></script>
   <script type="module" src="/assets/js/main.js"></script>
 </head>
 <body class="bg-erd-flour font-body text-body-mobile text-erd-cacao lg:text-body">
@@ -21,74 +22,74 @@
         <svg viewBox="0 0 1440 150" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><path d="M-10 10.0 C700 10.0 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 28.5 C700 28.5 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 47.0 C700 47.0 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 65.5 C700 65.5 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 84.0 C700 84.0 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 102.5 C700 102.5 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 121.0 C700 121.0 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 139.5 C700 139.5 980 75 1392 75" fill="none" stroke-width="2" stroke-linecap="round" class="stroke-erd-line"></path><circle cx="1400" cy="75" r="12" class="fill-erd-red"></circle></svg>
       </div>
       <div class="wrap">
-        <h1 class="title-1">Vuit camins, un objectiu</h1>
+        <h1 class="title-1" data-titulo-palabras>Vuit camins, un objectiu</h1>
       </div>
     </section>
 
-    <section class="wrap pt-6 lg:pt-10" data-animacion="arriba">
+    <section class="wrap pt-6 lg:pt-10" data-animacion="arriba" data-ritmo="suave" data-espera="0.5">
       <p class="lead">No et donem consells genèrics. Analitzem el teu negoci amb dades reals i triem, junts, per on val la pena començar.</p>
     </section>
 
     <section class="section">
       <div class="wrap">
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <a class="service-card" href="/serveis/logistica-emmagatzematge/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/logistica-emmagatzematge/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">01</span>
             <h3>Logística i emmagatzematge</h3>
             <p>Magatzems àgils, comandes sense errors.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/organitzacio-industrial/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/organitzacio-industrial/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">02</span>
             <h3>Organització industrial</h3>
             <p>Producció ordenada, del taller a la direcció.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/operacions-restauracio/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/operacions-restauracio/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">03</span>
             <h3>Operacions de restauració</h3>
             <p>Del rebost al plat, amb el marge cuidat.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/finances-operatives-nof/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/finances-operatives-nof/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">04</span>
             <h3>Finances operatives (NOF)</h3>
             <p>Una empresa rendible també ha de ser líquida.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/control-anticipacio/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/control-anticipacio/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">05</span>
             <h3>Control i anticipació</h3>
             <p>Dades per decidir avui i anticipar demà.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/compravenda-negocis/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/compravenda-negocis/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">06</span>
             <h3>Compravenda de negocis</h3>
             <p>Comprar o vendre un negoci, ben fet.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/marqueting-comunicacio/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/marqueting-comunicacio/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">07</span>
             <h3>Màrqueting &amp; comunicació</h3>
             <p>Comunicació amb propòsit, amb Vora Studio.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
-          <a class="service-card" href="/serveis/comercial/" data-animacion="arriba">
+          <a class="service-card" href="/serveis/comercial/" data-entrada="arriba" data-ritmo="lento">
             <span class="index" aria-hidden="true">08</span>
             <h3>Comercial</h3>
             <p>Vendre més i millor, amb mètode i equip.</p>
-            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="plus" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
           </a>
         </div>
         <div class="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-          <article class="ia-card" data-animacion="arriba">
+          <article class="ia-card" data-entrada="izquierda" data-ritmo="pausado">
             <h3><b>Vols saber on et pot ajudar la IA?</b><br>Comencem amb una sessió de diagnòstic.</h3>
-            <a class="btn" href="/serveis/estrategia-ia/">Estratègia IA</a>
+            <a class="btn" href="/serveis/estrategia-ia/">Estratègia IA<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </article>
-          <div class="cta-card" data-animacion="arriba">
+          <div class="cta-card" data-entrada="derecha" data-ritmo="pausado">
             <p>No cal que sàpigues per on començar. Reserva la teva primera hora de consultoria gratuïta i ho mirem junts.</p>
-            <a class="btn" href="#contacte">Reserva la teva hora gratuïta</a>
+            <a class="btn" href="#contacte">Reserva la teva hora gratuïta<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           </div>
         </div>
       </div>

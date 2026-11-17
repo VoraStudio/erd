@@ -51,6 +51,30 @@ final class ContactForm
         ];
     }
 
+    /**
+     * Un mensaje fijo por cada campo con error, para pintarlo junto al campo.
+     * Son textos fijos: nunca se repite lo que escribió el visitante.
+     *
+     * @param list<string> $campos nombres de campo con error, tal como los devuelve validar()
+     * @return array<string, string>
+     */
+    public static function mensajesDeError(array $campos): array
+    {
+        $mensajes = [
+            'nom' => 'Escriu el teu nom (màxim ' . self::LONGITUD_MAXIMA_NOMBRE . ' caràcters).',
+            'correu' => 'Escriu un correu electrònic vàlid.',
+            'missatge' => 'El missatge és massa llarg (màxim ' . self::LONGITUD_MAXIMA_MENSAJE . ' caràcters).',
+            'privadesa' => 'Cal acceptar la política de privadesa.',
+        ];
+
+        $resultado = [];
+        foreach ($campos as $campo) {
+            $resultado[$campo] = $mensajes[$campo] ?? 'Revisa aquest camp.';
+        }
+
+        return $resultado;
+    }
+
     /** Campo trampa: un visitante real no lo ve ni lo rellena; los robots sí. */
     public static function esSpam(array $entrada): bool
     {
