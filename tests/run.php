@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-// Ejecutor de pruebas sin dependencias para Env, Config, ContactForm, ContactSecurity y ContactHandler. Uso: php tests/run.php
+// Ejecutor de pruebas sin dependencias para Env, Config, ContactForm, ContactSecurity, ContactHandler, CmsClient y CmsProjectes. Uso: php tests/run.php
 
 error_reporting(E_ALL);
 set_error_handler(static function (int $gravedad, string $mensaje, string $archivo, int $linea): bool {
@@ -17,6 +17,8 @@ require __DIR__ . '/../src/Recaptcha.php';
 require __DIR__ . '/../src/SmtpTransport.php';
 require __DIR__ . '/../src/SmtpMailer.php';
 require __DIR__ . '/../src/ContactHandler.php';
+require __DIR__ . '/../src/CmsClient.php';
+require __DIR__ . '/../src/CmsProjectes.php';
 
 $fallos = 0;
 $total = 0;
@@ -520,6 +522,212 @@ $caido = procesarEnvio(crearEntrada($token), crearServidor(), $sesion, 110.0, $e
 comprobar('si Google no responde, 503 sin enviar', $caido['codigo'] === 503 && $enviados === []);
 $sinRespuesta = procesarEnvio(crearEntrada($token), crearServidor(), $sesion, 110.0, $enviarBien, static fn (string $respuesta): string => $respuesta === '' ? 'rechazado' : 'ok');
 comprobar('sin respuesta del navegador se verifica una cadena vacía', $sinRespuesta['codigo'] === 403);
+
+echo "Cliente del CMS\n";
+$carpetaDelCms = crearDirectorioTemporal();
+$archivoDeToken = $carpetaDelCms . '/' . CmsClient::NOMBRE_DE_LA_CACHE;
+$urlDelToken = 'https://cms.test/api/public/token';
+$urlDeLaSeccion = 'https://cms.test/api/projectes_erd';
+$llamadasAlCms = [];
+$respuestasDelCms = [];
+
+// Servidor del CMS falso: devuelve en orden las respuestas preparadas para cada URL y apunta cada llamada.
+$cmsFalso = static function (string $url, array $cabeceras) use (&$llamadasAlCms, &$respuestasDelCms): array {
+    $llamadasAlCms[] = ['url' => $url, 'cabeceras' => $cabeceras];
+    $cola = $respuestasDelCms[$url] ?? [];
+    $respuesta = array_shift($cola) ?? ['codigo' => 0, 'cuerpo' => ''];
+    $respuestasDelCms[$url] = $cola;
+    return $respuesta;
+};
+$crearClienteDelCms = static fn (): CmsClient => new CmsClient('https://cms.test', 'https://erd.cat', $carpetaDelCms, $cmsFalso);
+$reiniciarCms = static function () use (&$llamadasAlCms, &$respuestasDelCms, $archivoDeToken): void {
+    $llamadasAlCms = [];
+    $respuestasDelCms = [];
+    if (is_file($archivoDeToken)) {
+        unlink($archivoDeToken);
+    }
+};
+
+function respuestaJson(int $codigo, array $cuerpo): array
+{
+    return ['codigo' => $codigo, 'cuerpo' => (string) json_encode($cuerpo)];
+}
+
+function contarLlamadas(array $llamadas, string $url): int
+{
+    return count(array_filter($llamadas, static fn (array $llamada): bool => $llamada['url'] === $url));
+}
+
+function cabeceraEnviada(array $llamada, string $cabecera): bool
+{
+    return in_array($cabecera, $llamada['cabeceras'], true);
+}
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'TOKEN-UNO'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(200, ['data' => [['id' => 1]]])];
+$entradasLeidas = $crearClienteDelCms()->leerSeccion('projectes_erd');
+comprobar('lee las entradas de una sección', $entradasLeidas === [['id' => 1]]);
+comprobar('el token se pide con el Origin de la web', $llamadasAlCms[0]['url'] === $urlDelToken && cabeceraEnviada($llamadasAlCms[0], 'Origin: https://erd.cat'));
+comprobar('la sección se pide con el token y el Origin', cabeceraEnviada($llamadasAlCms[1], 'Authorization: Bearer TOKEN-UNO') && cabeceraEnviada($llamadasAlCms[1], 'Origin: https://erd.cat'));
+
+$llamadasAlCms = [];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(200, ['data' => []])];
+$crearClienteDelCms()->leerSeccion('projectes_erd');
+comprobar('el token guardado se reutiliza sin volver a pedirlo', contarLlamadas($llamadasAlCms, $urlDelToken) === 0);
+
+$llamadasAlCms = [];
+touch($archivoDeToken, time() - CmsClient::SEGUNDOS_DE_CACHE - 60);
+clearstatcache(); // dentro de un mismo proceso PHP recuerda la fecha antigua del archivo
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'TOKEN-DOS'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(200, ['data' => []])];
+$crearClienteDelCms()->leerSeccion('projectes_erd');
+comprobar('un token caducado se vuelve a pedir', contarLlamadas($llamadasAlCms, $urlDelToken) === 1);
+
+$reiniciarCms();
+file_put_contents($archivoDeToken, 'TOKEN-VIEJO');
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'TOKEN-NUEVO'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(401, ['error' => 'caducado']), respuestaJson(200, ['data' => [['id' => 7]]])];
+$trasReintento = $crearClienteDelCms()->leerSeccion('projectes_erd');
+comprobar('con un 401 pide un token nuevo y reintenta una vez', $trasReintento === [['id' => 7]] && contarLlamadas($llamadasAlCms, $urlDelToken) === 1);
+comprobar('el reintento usa el token nuevo', cabeceraEnviada($llamadasAlCms[2], 'Authorization: Bearer TOKEN-NUEVO'));
+comprobar('el token nuevo queda guardado', trim((string) file_get_contents($archivoDeToken)) === 'TOKEN-NUEVO');
+
+$reiniciarCms();
+file_put_contents($archivoDeToken, 'TOKEN-VIEJO');
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'TOKEN-NUEVO'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(401, []), respuestaJson(401, [])];
+comprobar('si el reintento también da 401, devuelve null', $crearClienteDelCms()->leerSeccion('projectes_erd') === null);
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [respuestaJson(403, ['error' => 'Domini no autoritzat'])];
+comprobar('si el dominio no está autorizado, devuelve null sin pedir la sección', $crearClienteDelCms()->leerSeccion('projectes_erd') === null && contarLlamadas($llamadasAlCms, $urlDeLaSeccion) === 0);
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [['codigo' => 0, 'cuerpo' => '']];
+comprobar('si el CMS no responde al pedir el token, devuelve null', $crearClienteDelCms()->leerSeccion('projectes_erd') === null);
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'T'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(500, [])];
+comprobar('un error del CMS devuelve null', $crearClienteDelCms()->leerSeccion('projectes_erd') === null);
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'T'])];
+$respuestasDelCms[$urlDeLaSeccion] = [['codigo' => 200, 'cuerpo' => '<html>no es json']];
+comprobar('una respuesta que no es JSON devuelve null', $crearClienteDelCms()->leerSeccion('projectes_erd') === null);
+
+$reiniciarCms();
+$respuestasDelCms[$urlDelToken] = [respuestaJson(200, ['token' => 'T'])];
+$respuestasDelCms[$urlDeLaSeccion] = [respuestaJson(200, ['otra' => 'cosa'])];
+comprobar('una respuesta sin «data» devuelve null', $crearClienteDelCms()->leerSeccion('projectes_erd') === null);
+
+$reiniciarCms();
+foreach (['', '../admin', 'a/b', 'Projectes ERD', 'a?b=1'] as $slugRaro) {
+    $crearClienteDelCms()->leerSeccion($slugRaro);
+}
+comprobar('un slug con caracteres raros no llega a pedirse al CMS', $llamadasAlCms === []);
+$reiniciarCms();
+borrarDirectorio($carpetaDelCms);
+
+echo "Proyectos del CMS\n";
+$cms = 'https://cms.test';
+$entradaCompleta = [
+    'id' => 77,
+    'status' => 'published',
+    'tipus' => 'Logística',
+    'titol' => 'VoraData',
+    'subtitol' => 'LA IA a Girona',
+    'descripcio_breu' => 'Resum del projecte',
+    'imatges' => [['url' => '/uploads/a.png', 'formats' => ['small' => ['url' => '/uploads/a-small.png']]]],
+];
+$proyectos = CmsProjectes::transformar([$entradaCompleta], $cms);
+comprobar('una entrada completa se convierte en una tarjeta', $proyectos === [[
+    'id' => 77,
+    'sector' => 'Logística',
+    'titol' => 'VoraData',
+    'resum' => 'Resum del projecte',
+    'imatge' => 'https://cms.test/uploads/a-small.png',
+]]);
+
+$sinFormato = CmsProjectes::transformar([array_merge($entradaCompleta, ['imatges' => [['url' => '/uploads/b.png']]])], $cms);
+comprobar('sin formato pequeño se usa la imagen original', $sinFormato[0]['imatge'] === 'https://cms.test/uploads/b.png');
+$imagenAbsoluta = CmsProjectes::transformar([array_merge($entradaCompleta, ['imatges' => [['url' => 'https://cdn.test/c.png']]])], $cms);
+comprobar('una imagen con dirección completa se respeta', $imagenAbsoluta[0]['imatge'] === 'https://cdn.test/c.png');
+$imagenPeligrosa = CmsProjectes::transformar([array_merge($entradaCompleta, ['imatges' => [['url' => 'javascript:alert(1)']]])], $cms);
+comprobar('una dirección que no es http ni ruta del CMS se descarta', $imagenPeligrosa[0]['imatge'] === null);
+$sinImagen = CmsProjectes::transformar([array_merge($entradaCompleta, ['imatges' => []])], $cms);
+comprobar('sin imágenes la tarjeta no lleva imagen', $sinImagen[0]['imatge'] === null);
+$sinCampoDeImagenes = $entradaCompleta;
+unset($sinCampoDeImagenes['imatges']);
+comprobar('sin el campo de imágenes tampoco', CmsProjectes::transformar([$sinCampoDeImagenes], $cms)[0]['imatge'] === null);
+
+$sinTitulo = CmsProjectes::transformar([array_merge($entradaCompleta, ['titol' => '  '])], $cms);
+comprobar('una entrada sin título no se muestra', $sinTitulo === []);
+comprobar('lo que no es una entrada se ignora', CmsProjectes::transformar(['texto', 5, null, $entradaCompleta], $cms) !== [] && count(CmsProjectes::transformar(['texto', 5, null, $entradaCompleta], $cms)) === 1);
+$camposRaros = CmsProjectes::transformar([array_merge($entradaCompleta, ['tipus' => ['x'], 'descripcio_breu' => 12])], $cms);
+comprobar('un campo que no es texto queda vacío', $camposRaros[0]['sector'] === '' && $camposRaros[0]['resum'] === '');
+$conEspacios = CmsProjectes::transformar([array_merge($entradaCompleta, ['titol' => '  VoraData  '])], $cms);
+comprobar('los textos se recortan', $conEspacios[0]['titol'] === 'VoraData');
+comprobar('la dirección del CMS puede acabar en barra', CmsProjectes::transformar([$entradaCompleta], 'https://cms.test/')[0]['imatge'] === 'https://cms.test/uploads/a-small.png');
+
+echo "Detalle de un proyecto del CMS\n";
+$entradaConDetalle = array_merge($entradaCompleta, [
+    'el_repte' => 'Dades disperses',
+    'que_vam_fer' => 'Ordenar-les',
+    'el_resultat' => 'Tot a mà',
+    'recuadre_1_numero' => '−40 %',
+    'recuadre_1_text' => 'Menys temps',
+    'recuadre_2_numero' => '+25 %',
+    'recuadre_2_text' => 'Més marge',
+    'recuadre_3_numero' => '6 mesos',
+    'recuadre_3_text' => 'Durada',
+    'imatges' => [
+        ['url' => '/uploads/a.png', 'formats' => ['small' => ['url' => '/uploads/a-small.png']]],
+        ['url' => '/uploads/b.png'],
+    ],
+]);
+$otraEntrada = array_merge($entradaCompleta, ['id' => 5, 'titol' => 'Una altra']);
+
+$detalle = CmsProjectes::detallar([$otraEntrada, $entradaConDetalle], 77, $cms);
+comprobar('el detalle recoge todos los campos de la entrada pedida', $detalle === [
+    'id' => 77,
+    'sector' => 'Logística',
+    'titol' => 'VoraData',
+    'resum' => 'Resum del projecte',
+    'repte' => 'Dades disperses',
+    'que_vam_fer' => 'Ordenar-les',
+    'resultat' => 'Tot a mà',
+    'recuadres' => [
+        ['valor' => '−40 %', 'text' => 'Menys temps'],
+        ['valor' => '+25 %', 'text' => 'Més marge'],
+        ['valor' => '6 mesos', 'text' => 'Durada'],
+    ],
+    'imatges' => ['https://cms.test/uploads/a.png', 'https://cms.test/uploads/b.png'],
+]);
+comprobar('un id que no existe devuelve null', CmsProjectes::detallar([$entradaConDetalle], 999, $cms) === null);
+comprobar('sin entradas devuelve null', CmsProjectes::detallar([], 77, $cms) === null);
+comprobar('una entrada sin título no tiene detalle', CmsProjectes::detallar([array_merge($entradaConDetalle, ['titol' => ''])], 77, $cms) === null);
+
+$recuadroVacio = CmsProjectes::detallar([array_merge($entradaConDetalle, ['recuadre_2_numero' => '', 'recuadre_2_text' => ' '])], 77, $cms);
+comprobar('un recuadro vacío se omite y se respeta el orden', $recuadroVacio['recuadres'] === [
+    ['valor' => '−40 %', 'text' => 'Menys temps'],
+    ['valor' => '6 mesos', 'text' => 'Durada'],
+]);
+$recuadroMedio = CmsProjectes::detallar([array_merge($entradaConDetalle, ['recuadre_2_numero' => '', 'recuadre_2_text' => 'Només text'])], 77, $cms);
+comprobar('un recuadro con solo uno de los dos textos se conserva', count($recuadroMedio['recuadres']) === 3 && $recuadroMedio['recuadres'][1] === ['valor' => '', 'text' => 'Només text']);
+
+$imagenesMezcladas = CmsProjectes::detallar([array_merge($entradaConDetalle, ['imatges' => [['url' => 'javascript:alert(1)'], ['url' => '/uploads/ok.png'], 'texto']])], 77, $cms);
+comprobar('en el detalle se descartan las imágenes no válidas', $imagenesMezcladas['imatges'] === ['https://cms.test/uploads/ok.png']);
+$sinGaleria = $entradaConDetalle;
+unset($sinGaleria['imatges']);
+comprobar('sin galería el detalle no lleva imágenes', CmsProjectes::detallar([$sinGaleria], 77, $cms)['imatges'] === []);
+$sinRecuadros = CmsProjectes::detallar([array_merge($entradaCompleta, ['id' => 77])], 77, $cms);
+comprobar('sin recuadros ni textos largos el detalle queda vacío en esos campos', $sinRecuadros['recuadres'] === [] && $sinRecuadros['repte'] === '' && $sinRecuadros['resultat'] === '');
+$detalleRaro = CmsProjectes::detallar([array_merge($entradaConDetalle, ['el_repte' => ['x'], 'recuadre_1_numero' => 40])], 77, $cms);
+comprobar('un campo que no es texto queda vacío también en el detalle', $detalleRaro['repte'] === '' && $detalleRaro['recuadres'][0]['valor'] === '');
+$idComoTexto = CmsProjectes::detallar([array_merge($entradaConDetalle, ['id' => '77'])], 77, $cms);
+comprobar('el id del CMS puede llegar como texto', $idComoTexto !== null && $idComoTexto['id'] === 77);
 
 reiniciarEstado();
 borrarDirectorio($directorio);
