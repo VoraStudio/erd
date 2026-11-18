@@ -508,4 +508,60 @@
     background-color: var(--color-erd-red);
     color: var(--color-white);
   }
+
+  /* ---------- Páginas legales (privadesa, avís legal y cookies) ---------- */
+  .legal-head {
+    @apply mx-auto max-w-190 pt-10 pb-8 lg:pt-18 lg:pb-12;
+  }
+
+  .legal-body {
+    @apply mx-auto max-w-190 pb-section-mobile sm:pb-section-tablet lg:pb-section;
+  }
+
+  .legal-body h2 {
+    @apply mt-12 font-display text-subtitle-mobile text-erd-ink first:mt-0 sm:text-subtitle;
+  }
+
+  .legal-body p,
+  .legal-body ul {
+    @apply mt-4;
+  }
+
+  .legal-body p,
+  .legal-body li {
+    @apply text-body-mobile text-erd-cacao lg:text-body;
+  }
+
+  .legal-body ul {
+    @apply list-disc space-y-2 pl-6;
+  }
+
+  .legal-body li b {
+    @apply font-semibold;
+  }
+
+  .legal-body a {
+    @apply text-erd-red underline underline-offset-3;
+    transition: color var(--duration-fast);
+  }
+
+  .legal-body a:hover {
+    @apply text-erd-red-dark;
+  }
+
+  .legal-body code {
+    @apply rounded-field bg-erd-sand px-1.5 py-0.5 text-small text-erd-cacao;
+  }
+
+  /* Dato de la empresa que todavía no está en el .env: se resalta para que no se pase por alto. */
+  .legal-pending {
+    @apply rounded-field bg-erd-sand px-1 font-semibold text-erd-red;
+  }
+
+  /* Máscara de cada línea de texto (la crea SplitText): relleno abajo para que las colas de letras como la «g» o la «y»
+     no se corten, y margen negativo que lo compensa para que el diseño no se mueva. */
+  .legal-line-mask {
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
 }

@@ -5,6 +5,8 @@ import { definirContacto } from '/assets/js/components/contact.js';
 import { iniciarAvisos } from '/assets/js/modules/toast.js';
 import { iniciarFormularioDeContacto } from '/assets/js/modules/contact-form.js';
 import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
+import { cargarDatosDeLaEmpresa } from '/assets/js/modules/company.js';
+import { iniciarAnimacionesLegales } from '/assets/js/modules/legal-animations.js';
 import { cargarProyectos, cargarProyecto } from '/assets/js/modules/projects.js';
 import { iniciarVideosLentos } from '/assets/js/modules/slow-video.js';
 import { iniciarFiltros } from '/assets/js/modules/filters.js';
@@ -27,9 +29,9 @@ definirCabecera();
 definirContacto();
 definirPie();
 
-// Las tarjetas y el detalle de Projectes vienen del CMS: tienen que existir antes de que los módulos de debajo los busquen.
-await cargarProyectos();
-await cargarProyecto();
+// Los datos de la empresa y los proyectos vienen del servidor: tienen que estar pintados antes de que
+// los módulos de debajo los busquen. Cada función no hace nada si la página no tiene su hueco, y van en paralelo.
+await Promise.all([cargarDatosDeLaEmpresa(), cargarProyectos(), cargarProyecto()]);
 
 iniciarVideosLentos();
 iniciarAvisos();
@@ -49,5 +51,6 @@ iniciarAnimaciones();
 iniciarAnimacionesDelProceso();
 iniciarTextosPorLineas();
 iniciarAnimacionesDeSobreErd();
+iniciarAnimacionesLegales();
 iniciarAnimacionesDelContacto();
 iniciarAnimacionesDelPie();

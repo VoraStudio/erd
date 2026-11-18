@@ -1,5 +1,54 @@
 const NOMBRE_ETIQUETA = 'site-contact';
 
+// Iconos de trazo de 24 × 24, del mismo estilo que las flechas de la web: sin relleno y con el grosor de .icon.
+const ICONOS = {
+  telefono: '<path d="M6.6 3.5h3l1.4 4-2 1.3a11.5 11.5 0 0 0 5.2 5.2l1.3-2 4 1.4v3a2 2 0 0 1-2.1 2A15.6 15.6 0 0 1 4.6 5.6 2 2 0 0 1 6.6 3.5z"/>',
+  correo: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  ubicacion: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/>',
+  horario: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+};
+
+// Un dato de contacto: icono + etiqueta (dt) y su valor (dd). Los huecos data-empresa se rellenan con el .env
+// (modules/company.js); lo que va dentro es el texto de reserva mientras el dato no esté. Con opcional, la fila
+// entera desaparece si el dato no existe.
+function crearDato({ icono, etiqueta, valor, opcional = '' }) {
+  const atributoOpcional = opcional ? ` data-empresa-opcional="${opcional}"` : '';
+
+  return `
+                <div class="contact-dato" data-contacto-dato${atributoOpcional}>
+                  <dt>
+                    <span class="contact-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24">${ICONOS[icono]}</svg></span>
+                    <span data-dato-etiqueta>${etiqueta}</span>
+                  </dt>
+                  <dd>${valor}</dd>
+                </div>`;
+}
+
+const DATOS_DE_CONTACTO = [
+  crearDato({
+    icono: 'telefono',
+    etiqueta: 'Telèfon',
+    valor: '<span data-empresa="telefono" data-empresa-enlace>Pendent de confirmar</span>',
+  }),
+  crearDato({
+    icono: 'correo',
+    etiqueta: 'Correu',
+    valor: '<span data-empresa="correo" data-empresa-enlace>Pendent de confirmar</span>',
+  }),
+  crearDato({
+    icono: 'ubicacion',
+    etiqueta: 'On som',
+    valor: `<span class="font-display text-subtitle-mobile text-erd-red" data-empresa="poblacion">La Bisbal d'Empordà</span>
+                    <span class="mt-1 block text-small" data-empresa="direccion" data-empresa-opcional="direccion"></span>`,
+  }),
+  crearDato({
+    icono: 'horario',
+    etiqueta: 'Horari',
+    valor: '<span data-empresa="horario"></span>',
+    opcional: 'horario',
+  }),
+].join('');
+
 // Componente sin Shadow DOM: pinta el bloque de contacto (#contacte) que cierra todas las páginas.
 // El formulario lo procesa /contact.php; los nombres de campo son los que espera src/ContactForm.php.
 // El envío con fetch, los errores por campo y el estado los gestiona modules/contact-form.js: aquí solo
@@ -23,19 +72,7 @@ class ContactoSitio extends HTMLElement {
                 <span class="block">Parlem del teu negoci.</span>
                 <span class="mt-1.5 block text-subtitle-mobile sm:text-subtitle">La primera hora, va per nosaltres.</span>
               </h2>
-              <dl class="grid gap-3.5">
-                <div class="grid gap-0.5">
-                  <dt class="text-eyebrow text-erd-muted uppercase">Telèfon</dt>
-                  <dd class="text-erd-muted">Pendent de confirmar</dd>
-                </div>
-                <div class="grid gap-0.5">
-                  <dt class="text-eyebrow text-erd-muted uppercase">Correu</dt>
-                  <dd class="text-erd-muted">Pendent de confirmar</dd>
-                </div>
-                <div class="grid gap-0.5">
-                  <dt class="text-eyebrow text-erd-muted uppercase">On som</dt>
-                  <dd class="font-display text-subtitle-mobile text-erd-red">La Bisbal d'Empordà</dd>
-                </div>
+              <dl class="grid gap-5">${DATOS_DE_CONTACTO}
               </dl>
             </div>
 
@@ -67,7 +104,7 @@ class ContactoSitio extends HTMLElement {
 
               <label class="check">
                 <input type="checkbox" name="privadesa" required>
-                <span>He llegit i accepto la <button class="link-pending" type="button" data-soon="Política de privadesa: pendent">política de privadesa</button>.</span>
+                <span>He llegit i accepto la <a class="underline underline-offset-3 hover:text-erd-red" href="/privadesa/" target="_blank" rel="noopener">política de privadesa</a>.</span>
               </label>
               <p class="field-error" id="error-privadesa" data-error="privadesa" hidden></p>
 

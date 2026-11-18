@@ -2,11 +2,11 @@ import { PAGINAS, SERVEIS } from '/assets/js/modules/navigation.js';
 
 const NOMBRE_ETIQUETA = 'site-footer';
 
-// Páginas legales que todavía no existen: abren el aviso «pendent».
+// Páginas legales del pie.
 const LEGALES = [
-  { texto: 'Política de privadesa', aviso: 'Política de privadesa: pendent' },
-  { texto: 'Avís legal', aviso: 'Avís legal: pendent' },
-  { texto: 'Cookies', aviso: 'Cookies: pendent' },
+  { texto: 'Política de privadesa', url: '/privadesa/' },
+  { texto: 'Avís legal', url: '/avis-legal/' },
+  { texto: 'Cookies', url: '/cookies/' },
 ];
 
 function crearLista(enlaces) {
@@ -28,7 +28,7 @@ class PieSitio extends HTMLElement {
   crearHtml() {
     const anio = new Date().getFullYear();
     const legales = LEGALES.map(
-      (legal) => `<button class="hover:underline hover:underline-offset-3" type="button" data-soon="${legal.aviso}">${legal.texto}</button>`,
+      (legal) => `<a class="hover:underline hover:underline-offset-3" href="${legal.url}">${legal.texto}</a>`,
     ).join('');
 
     return `

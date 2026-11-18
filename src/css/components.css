@@ -210,11 +210,42 @@
     outline: 2px solid var(--color-erd-red);
   }
 
-  /* Enlace dentro de un texto que todavía no tiene destino (abre el aviso «pendent»). */
-  .link-pending {
+  /* ---------- Datos de contacto con icono (bloque #contacte) ---------- */
+  .contact-dato dt {
+    @apply flex items-center gap-3.5 text-eyebrow text-erd-muted uppercase;
+  }
+
+  /* El valor queda alineado con la etiqueta: el icono mide 2,75 rem y el hueco entre el icono y el texto, 0,875 rem. */
+  .contact-dato dd {
+    @apply mt-1.5 pl-14.5 text-erd-muted;
+  }
+
+  /* Burbuja de color arena con el icono en rojo, como la de las flechas de los pasos. */
+  .contact-icon {
+    @apply grid size-11 flex-none place-items-center rounded-full bg-erd-sand text-erd-red;
+  }
+
+  .contact-icon .icon {
+    @apply size-5.5;
+    stroke-width: 1.6;
+  }
+
+  /* Máscara de cada letra de un dato (la crea SplitText): relleno abajo para las colas de letras como la «g» o la «y»,
+     y margen negativo que lo compensa para que el diseño no se mueva. */
+  .contact-char-mask {
+    padding-bottom: 0.15em;
+    margin-bottom: -0.15em;
+  }
+
+  /* Los datos de la empresa que son enlaces (teléfono y correo) se subrayan al pasar el ratón. */
+  [data-empresa-enlace] a {
+    transition: color var(--duration-fast);
+  }
+
+  [data-empresa-enlace] a:hover {
+    color: var(--color-erd-red);
     text-decoration: underline;
     text-underline-offset: 3px;
-    cursor: pointer;
   }
 
   /* ---------- Enlace que se dibuja ---------- */

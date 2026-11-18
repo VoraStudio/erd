@@ -18,6 +18,7 @@ require __DIR__ . '/../src/SmtpTransport.php';
 require __DIR__ . '/../src/SmtpMailer.php';
 require __DIR__ . '/../src/ContactHandler.php';
 require __DIR__ . '/../src/CmsClient.php';
+require __DIR__ . '/../src/Empresa.php';
 require __DIR__ . '/../src/CmsProjectes.php';
 
 $fallos = 0;
@@ -728,6 +729,55 @@ $detalleRaro = CmsProjectes::detallar([array_merge($entradaConDetalle, ['el_rept
 comprobar('un campo que no es texto queda vacío también en el detalle', $detalleRaro['repte'] === '' && $detalleRaro['recuadres'][0]['valor'] === '');
 $idComoTexto = CmsProjectes::detallar([array_merge($entradaConDetalle, ['id' => '77'])], 77, $cms);
 comprobar('el id del CMS puede llegar como texto', $idComoTexto !== null && $idComoTexto['id'] === 77);
+
+echo "Datos de la empresa\n";
+$empresaCompleta = [
+    'nombre' => 'ERD',
+    'razon_social' => 'ERD Consultoria, S.L.',
+    'nif' => 'B12345678',
+    'direccion' => 'Carrer Major, 12',
+    'codigo_postal' => '17100',
+    'poblacion' => 'La Bisbal d\'Empordà',
+    'provincia' => 'Girona',
+    'telefono' => '+34 972 64 00 00',
+    'correo' => 'info@erd.cat',
+    'registro_mercantil' => 'Registre Mercantil de Girona, tom 1, foli 2, full GI-3',
+    'dpd' => 'dpd@erd.cat',
+];
+$empresa = Empresa::componer($empresaCompleta);
+comprobar('los datos completos se entregan tal cual', $empresa['nombre'] === 'ERD' && $empresa['nif'] === 'B12345678' && $empresa['poblacion'] === 'La Bisbal d\'Empordà' && $empresa['dpd'] === 'dpd@erd.cat');
+comprobar('la dirección completa se compone en orden', $empresa['direccion_completa'] === 'Carrer Major, 12, 17100 La Bisbal d\'Empordà (Girona)');
+comprobar('el teléfono lleva su enlace tel: sin espacios', $empresa['telefono'] === '+34 972 64 00 00' && $empresa['telefono_enlace'] === 'tel:+34972640000');
+comprobar('el correo lleva su enlace mailto:', $empresa['correo_enlace'] === 'mailto:info@erd.cat');
+comprobar('el horario se entrega como texto', Empresa::componer(['horario' => 'De dilluns a divendres, de 9 a 18 h'])['horario'] === 'De dilluns a divendres, de 9 a 18 h');
+comprobar('sin datos no sale nada', Empresa::componer([]) === []);
+comprobar('un valor vacío o solo de espacios cuenta como ausente', Empresa::componer(['nif' => '   ', 'nombre' => '']) === []);
+comprobar('lo que no es texto se ignora', Empresa::componer(['nif' => ['x'], 'nombre' => 5, 'poblacion' => null]) === []);
+comprobar('una clave desconocida no se entrega', !array_key_exists('secreto', Empresa::componer(['secreto' => 'x', 'nif' => 'B1'])));
+comprobar('los saltos de línea se convierten en espacios', Empresa::componer(['direccion' => "Carrer\nMajor\r\n12"])['direccion'] === 'Carrer Major 12');
+comprobar('un valor muy largo se recorta', mb_strlen(Empresa::componer(['nombre' => str_repeat('a', 500)])['nombre']) === Empresa::LONGITUD_MAXIMA);
+comprobar('el HTML no se interpreta: se conserva como texto', Empresa::componer(['nombre' => '<b>ERD</b>'])['nombre'] === '<b>ERD</b>');
+
+$soloCorreoMalo = Empresa::componer(['correo' => 'no-es-un-correo']);
+comprobar('un correo inválido no se entrega ni con enlace', !isset($soloCorreoMalo['correo']) && !isset($soloCorreoMalo['correo_enlace']));
+$soloTelefonoMalo = Empresa::componer(['telefono' => 'truca\'ns']);
+comprobar('un teléfono sin cifras no se entrega ni con enlace', !isset($soloTelefonoMalo['telefono']) && !isset($soloTelefonoMalo['telefono_enlace']));
+comprobar('un teléfono con puntos y paréntesis se limpia para el enlace', Empresa::componer(['telefono' => '(972) 64.00.00'])['telefono_enlace'] === 'tel:972640000');
+
+comprobar('la dirección completa sin provincia', Empresa::componer(['direccion' => 'Carrer Major, 12', 'codigo_postal' => '17100', 'poblacion' => 'La Bisbal'])['direccion_completa'] === 'Carrer Major, 12, 17100 La Bisbal');
+comprobar('la dirección completa sin calle', Empresa::componer(['poblacion' => 'La Bisbal d\'Empordà', 'provincia' => 'Girona'])['direccion_completa'] === 'La Bisbal d\'Empordà (Girona)');
+comprobar('la provincia no se repite si coincide con la población', Empresa::componer(['poblacion' => 'Girona', 'provincia' => 'Girona'])['direccion_completa'] === 'Girona');
+comprobar('solo con provincia no hay dirección completa', !isset(Empresa::componer(['provincia' => 'Girona'])['direccion_completa']));
+
+putenv('ERD_EMPRESA_NIF=B99999999');
+putenv('ERD_EMPRESA_CORREO=hola@erd.cat');
+Env::reiniciar();
+$desdeElEntorno = Empresa::leer();
+comprobar('los datos se leen del .env con el prefijo ERD_EMPRESA_', ($desdeElEntorno['nif'] ?? null) === 'B99999999' && ($desdeElEntorno['correo_enlace'] ?? null) === 'mailto:hola@erd.cat');
+putenv('ERD_EMPRESA_NIF');
+putenv('ERD_EMPRESA_CORREO');
+Env::reiniciar();
+comprobar('sin variables definidas no sale nada del .env', Empresa::leer() === []);
 
 reiniciarEstado();
 borrarDirectorio($directorio);
