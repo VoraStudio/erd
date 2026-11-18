@@ -28,7 +28,6 @@
 
     <section class="wrap pt-6 lg:pt-10" data-animacion="arriba">
       <p class="lead">Empreses reals, reptes reals. Així hem ajudat altres negocis com el teu.</p>
-      <span class="pending-tag mt-4">Contingut pendent: casos reals d'ERD</span>
     </section>
 
     <section class="section">
@@ -42,62 +41,19 @@
           <button class="filter-chip" type="button" data-filtre="Comercial" aria-pressed="false">Comercial</button>
           <button class="filter-chip" type="button" data-filtre="Compravenda" aria-pressed="false">Compravenda</button>
         </div>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <article class="project-card" data-sector="Logística" data-animacion="arriba">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-projectes></div>
+        <p class="lead" data-projectes-buit hidden>Ara mateix no hi ha projectes per mostrar.</p>
+        <template data-plantilla-projecte>
+          <article class="project-card" data-animacion="arriba">
             <div class="project-card-image">
-              <img src="/assets/img/photos/magatzem.jpg" alt="" width="1600" height="900" loading="lazy">
+              <img data-campo="imatge" alt="" width="1600" height="900" loading="lazy">
             </div>
-            <span class="chip chip-sand">Logística</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+            <span class="chip chip-sand" data-campo="sector"></span>
+            <h3 data-campo="titol"></h3>
+            <p data-campo="resum"></p>
+            <a class="more-link" data-campo="enlace" href="/projectes/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
           </article>
-          <article class="project-card" data-sector="Indústria" data-animacion="arriba">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/planta.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Indústria</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          </article>
-          <article class="project-card" data-sector="Restauració" data-animacion="arriba">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/cuina.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Restauració</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          </article>
-          <article class="project-card" data-sector="Finances" data-animacion="arriba">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/equip.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Finances</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          </article>
-          <article class="project-card" data-sector="Comercial" data-animacion="arriba">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/escaner.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Comercial</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          </article>
-          <article class="project-card" data-sector="Compravenda" data-animacion="arriba">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/botiga.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Compravenda</span>
-            <h3>Nom del client</h3>
-            <p>Resum del repte i del resultat, en dues línies.</p>
-            <a class="more-link" href="/projectes/projecte/">Veure el projecte <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          </article>
-        </div>
+        </template>
       </div>
     </section>
   </main>

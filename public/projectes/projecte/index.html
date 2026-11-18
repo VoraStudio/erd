@@ -17,67 +17,64 @@
   <site-header class="block"></site-header>
 
   <main id="contingut">
-    <section class="wrap">
+    <section class="wrap" data-projecte-detall hidden>
       <nav class="crumbs" aria-label="Camí de navegació">
         <a href="/projectes/">Projectes</a> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>
-        <span aria-current="page">Nom del client</span>
+        <span aria-current="page" data-campo="titol"></span>
       </nav>
       <div class="detail-top">
         <div>
-          <span class="chip">Logística</span>
-          <h1 class="title-1 mt-4" data-titulo-palabras>Nom del client</h1>
-          <p class="lead mt-4" data-animacion="arriba">Explicació breu del projecte i del tipus d'empresa.</p>
+          <span class="chip" data-campo="sector"></span>
+          <h1 class="title-1 mt-4" data-titulo-palabras data-campo="titol"></h1>
+          <p class="lead mt-4" data-animacion="arriba" data-campo="resum"></p>
         </div>
         <ol class="steps-list">
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>El repte</b>
-              <p>Què li passava a l'empresa quan ens va trucar, explicat en dues o tres frases.</p>
+              <p data-campo="repte"></p>
             </div>
           </li>
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>Què vam fer</b>
-              <p>Els passos principals del projecte: diagnòstic, pla i acompanyament.</p>
+              <p data-campo="que_vam_fer"></p>
             </div>
           </li>
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>El resultat</b>
-              <p>El canvi mesurable: temps, errors, marge o caixa, abans i després.</p>
+              <p data-campo="resultat"></p>
             </div>
           </li>
         </ol>
       </div>
-      <div class="figure-grid">
-        <div class="figure-card" data-animacion="arriba">
-          <b>−00 %</b>
-          <span>Indicador 1 (pendent)</span>
-        </div>
-        <div class="figure-card" data-animacion="arriba">
-          <b>+00 %</b>
-          <span>Indicador 2 (pendent)</span>
-        </div>
-        <div class="figure-card" data-animacion="arriba">
-          <b>00 mesos</b>
-          <span>Durada del projecte</span>
-        </div>
-      </div>
-      <div class="detail-images">
-        <div data-animacion="fade">
-          <img src="/assets/img/photos/magatzem.jpg" alt="" width="1600" height="900" loading="lazy">
-        </div>
-        <div data-animacion="fade">
-          <img src="/assets/img/photos/equip.jpg" alt="" width="1600" height="900" loading="lazy">
-        </div>
-      </div>
+      <div class="figure-grid" data-recuadres></div>
+      <div class="detail-images" data-imatges></div>
       <div class="detail-next">
         <a class="btn btn-line" href="/projectes/">Tots els projectes<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       </div>
     </section>
+    <section class="wrap" data-projecte-error hidden>
+      <p class="lead">No hem trobat aquest projecte.</p>
+      <div class="detail-next">
+        <a class="btn btn-line" href="/projectes/">Tots els projectes<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </section>
+    <template data-plantilla-recuadre>
+      <div class="figure-card" data-animacion="arriba">
+        <b data-campo="valor"></b>
+        <span data-campo="text"></span>
+      </div>
+    </template>
+    <template data-plantilla-imatge>
+      <div data-animacion="fade">
+        <img data-campo="imatge" alt="" width="1600" height="900" loading="lazy">
+      </div>
+    </template>
   </main>
 
   <site-contact class="block"></site-contact>

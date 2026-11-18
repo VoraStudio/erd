@@ -5,6 +5,7 @@ import { definirContacto } from '/assets/js/components/contact.js';
 import { iniciarAvisos } from '/assets/js/modules/toast.js';
 import { iniciarFormularioDeContacto } from '/assets/js/modules/contact-form.js';
 import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
+import { cargarProyectos, cargarProyecto } from '/assets/js/modules/projects.js';
 import { iniciarFiltros } from '/assets/js/modules/filters.js';
 import { iniciarAnimaciones } from '/assets/js/modules/animations.js';
 import { iniciarEnlacesQueSeDibujan } from '/assets/js/modules/draw-link.js';
@@ -24,6 +25,10 @@ import { iniciarImagenQueCrece } from '/assets/js/modules/grow-image.js';
 definirCabecera();
 definirContacto();
 definirPie();
+
+// Las tarjetas y el detalle de Projectes vienen del CMS: tienen que existir antes de que los módulos de debajo los busquen.
+await cargarProyectos();
+await cargarProyecto();
 
 iniciarAvisos();
 iniciarFormularioDeContacto();
