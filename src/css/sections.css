@@ -57,6 +57,11 @@
     @apply size-full;
   }
 
+  /* El vídeo ocupa la banda como la ilustración: cubre el espacio y se alinea a la derecha, donde está el punto rojo. */
+  .page-hero-art video {
+    @apply size-full object-cover object-right;
+  }
+
   .page-hero-lead {
     @apply grid gap-4 pt-7 pb-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start lg:gap-14 lg:pt-10 lg:pb-18;
   }

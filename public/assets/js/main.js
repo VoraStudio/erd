@@ -6,6 +6,7 @@ import { iniciarAvisos } from '/assets/js/modules/toast.js';
 import { iniciarFormularioDeContacto } from '/assets/js/modules/contact-form.js';
 import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
 import { cargarProyectos, cargarProyecto } from '/assets/js/modules/projects.js';
+import { iniciarVideosLentos } from '/assets/js/modules/slow-video.js';
 import { iniciarFiltros } from '/assets/js/modules/filters.js';
 import { iniciarAnimaciones } from '/assets/js/modules/animations.js';
 import { iniciarEnlacesQueSeDibujan } from '/assets/js/modules/draw-link.js';
@@ -30,6 +31,7 @@ definirPie();
 await cargarProyectos();
 await cargarProyecto();
 
+iniciarVideosLentos();
 iniciarAvisos();
 iniciarFormularioDeContacto();
 iniciarAcordeones();
