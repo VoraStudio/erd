@@ -51,6 +51,22 @@
     }
   }
 
+  /* ---------- Páginas que esperan datos del servidor ---------- */
+  /* Las páginas con contenido del CMS llevan data-cms-pendiente en <main> hasta que main.js lo quita. Mientras tanto,
+     el bloque de contacto y el pie van ocultos: así no se ven antes que el contenido ni se mueven cuando éste llega.
+     Seguro: si por algún fallo nadie quitase el atributo, a los 6 segundos se muestran igualmente. */
+  main[data-cms-pendiente] ~ site-contact,
+  main[data-cms-pendiente] ~ site-footer {
+    visibility: hidden;
+    animation: mostrar-pasado-un-tiempo 0s linear 6s forwards;
+  }
+
+  @keyframes mostrar-pasado-un-tiempo {
+    to {
+      visibility: visible;
+    }
+  }
+
   /* ---------- Botones (DESIGN.md: 45 px, píldora) ---------- */
   .btn {
     display: inline-flex;

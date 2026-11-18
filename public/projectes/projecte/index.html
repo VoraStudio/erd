@@ -16,38 +16,38 @@
 
   <site-header class="block"></site-header>
 
-  <main id="contingut">
+  <main id="contingut" data-cms-pendiente>
     <section class="wrap" data-projecte-detall hidden>
-      <nav class="crumbs" aria-label="Camí de navegació">
+      <nav class="crumbs" aria-label="Camí de navegació" data-animacion="fade">
         <a href="/projectes/">Projectes</a> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>
         <span aria-current="page" data-campo="titol"></span>
       </nav>
       <div class="detail-top">
         <div>
-          <span class="chip" data-campo="sector"></span>
+          <span class="chip" data-animacion="arriba" data-campo="sector"></span>
           <h1 class="title-1 mt-4" data-titulo-palabras data-campo="titol"></h1>
-          <p class="lead mt-4" data-animacion="arriba" data-campo="resum"></p>
+          <p class="lead mt-4" data-lineas data-espera="0.35" data-campo="resum"></p>
         </div>
         <ol class="steps-list">
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>El repte</b>
-              <p data-campo="repte"></p>
+              <p data-lineas data-espera="0.3" data-campo="repte"></p>
             </div>
           </li>
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>Què vam fer</b>
-              <p data-campo="que_vam_fer"></p>
+              <p data-lineas data-espera="0.3" data-campo="que_vam_fer"></p>
             </div>
           </li>
           <li data-animacion="derecha">
             <span class="step-arrow" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
             <div>
               <b>El resultat</b>
-              <p data-campo="resultat"></p>
+              <p data-lineas data-espera="0.3" data-campo="resultat"></p>
             </div>
           </li>
         </ol>
@@ -58,7 +58,7 @@
         <a class="btn btn-line" href="/projectes/">Tots els projectes<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       </div>
     </section>
-    <section class="wrap" data-projecte-error hidden>
+    <section class="wrap pt-10 lg:pt-18" data-projecte-error hidden>
       <p class="lead">No hem trobat aquest projecte.</p>
       <div class="detail-next">
         <a class="btn btn-line" href="/projectes/">Tots els projectes<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
@@ -66,12 +66,12 @@
     </section>
     <template data-plantilla-recuadre>
       <div class="figure-card" data-animacion="arriba">
-        <b data-campo="valor"></b>
+        <b data-campo="valor" data-cifra></b>
         <span data-campo="text"></span>
       </div>
     </template>
     <template data-plantilla-imatge>
-      <div data-animacion="fade">
+      <div data-cortina-lateral>
         <img data-campo="imatge" alt="" width="1600" height="900" loading="lazy">
       </div>
     </template>

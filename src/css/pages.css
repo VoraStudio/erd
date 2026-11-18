@@ -341,6 +341,13 @@
     @apply block font-display text-figure-mobile text-erd-red lg:text-figure;
   }
 
+  /* Máscara de cada letra de una cifra (la crea SplitText): relleno arriba y abajo para que no se corten las letras
+     con la interlínea ajustada, y margen negativo que lo compensa para que el diseño no se mueva. */
+  .figure-char-mask {
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+
   .figure-card span {
     @apply mt-3 block text-body-mobile text-erd-muted-sand;
   }
