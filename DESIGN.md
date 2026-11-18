@@ -71,6 +71,7 @@ La paleta por defecto de Tailwind está desactivada: solo existen los tokens de 
 | `--text-display` | Título grande del bloque rojo «Com és el teu procés». Agrandir Regular (web). |
 | `--text-marquee` | Frase que pasa sola en la Home. Agrandir Light (web). Variante `-mobile`. |
 | `--text-figure` | Cifra grande de la ficha de proyecto. Agrandir Light (web). Variante `-mobile`. |
+| `--text-photo` | Título de la foto grande de Actualitat: casi el doble de un título 2, en tres líneas. Agrandir Regular (web). Variantes `-tablet` y `-mobile`. Decisión de Pau, no sale del manual. |
 | `--text-index` | Número de orden (01, 02…) de filas y tarjetas. Agrandir Light (web). |
 | `--text-small` | Texto secundario, notas y etiquetas de campo. Inter (web). |
 | `--text-eyebrow` | Rótulo corto en mayúsculas sobre un título o un texto. Inter seminegrita (web). |

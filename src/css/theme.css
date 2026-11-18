@@ -165,6 +165,22 @@
   --text-figure-mobile--line-height: 1;
   --text-figure-mobile--font-weight: 300;
 
+  /* Título de la foto grande de Actualitat: casi el doble de un título 2. Decisión de Pau, no sale del manual. */
+  --text-photo: 6.25rem;
+  --text-photo--line-height: 1.02;
+  --text-photo--letter-spacing: -0.02em;
+  --text-photo--font-weight: 400;
+
+  --text-photo-tablet: 4.5rem;
+  --text-photo-tablet--line-height: 1.02;
+  --text-photo-tablet--letter-spacing: -0.02em;
+  --text-photo-tablet--font-weight: 400;
+
+  --text-photo-mobile: 3rem;
+  --text-photo-mobile--line-height: 1.02;
+  --text-photo-mobile--letter-spacing: -0.02em;
+  --text-photo-mobile--font-weight: 400;
+
   /* Maquetación (web): 1640 px de contenido más 2 × 64 px de margen (el boceto tenía 1280) */
   --container-site: 110.5rem;
   --spacing-gutter: 4rem;

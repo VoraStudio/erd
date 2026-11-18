@@ -457,11 +457,55 @@
     @apply flex flex-col items-end;
   }
 
+  /* El título, casi el doble de grande que un título 2. El ancho máximo se mide en «em»: sigue al tamaño de la
+     letra y el texto queda en tres líneas en escritorio (en móvil, que es más estrecho, baja a más). */
   .grow-content h2 {
-    @apply max-w-[16ch] text-right font-display text-title-2-mobile sm:text-title-2;
+    @apply text-right font-display text-photo-mobile sm:text-photo-tablet lg:text-photo;
+    max-width: min(12.5em, 100%);
   }
 
+  /* El botón de esta foto, también casi el doble: se escala todo a partir de las medidas del botón normal
+     (alto, relleno, letra, hueco y flecha). Mobile first: un poco más grande en móvil y casi el doble desde sm. */
   .grow-content .btn {
-    @apply mt-5;
+    @apply mt-6 sm:mt-8;
+    min-height: calc(2.8125rem * 1.4);
+    padding-inline: calc(1.75rem * 1.4);
+    gap: calc(0.625rem * 1.4);
+    font-size: calc(var(--text-button) * 1.3);
+  }
+
+  .grow-content .btn .icon {
+    width: calc(1.25rem * 1.4);
+    height: calc(1.25rem * 1.4);
+  }
+
+  @media (min-width: 40rem) {
+    .grow-content .btn {
+      min-height: calc(2.8125rem * 1.8);
+      padding-inline: calc(1.75rem * 1.8);
+      gap: calc(0.625rem * 1.8);
+      font-size: calc(var(--text-button) * 1.7);
+    }
+
+    .grow-content .btn .icon {
+      width: calc(1.25rem * 1.8);
+      height: calc(1.25rem * 1.8);
+    }
+  }
+
+  /* Al pasar el ratón, el botón blanco se pone rojo con el texto y la flecha en blanco, como el resto de botones
+     (la flecha ya gira por la regla de .btn). Solo en esta foto: en otras bandas rojas, un botón rojo desaparecería.
+     El color del texto cambia de golpe a un cuarto de la transición, como en .btn-line: a medio camino, rojo
+     sobre rojo, el texto no se vería. */
+  .grow-content .btn-white {
+    transition:
+      background-color var(--duration-fast),
+      color 0s linear calc(var(--duration-fast) / 4),
+      box-shadow var(--duration-fast);
+  }
+
+  .grow-content .btn-white:hover {
+    background-color: var(--color-erd-red);
+    color: var(--color-white);
   }
 }
