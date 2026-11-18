@@ -22,78 +22,33 @@
       <p data-animacion="arriba">Fa més de 20 anys que ajudem negocis a créixer: des de start-ups i micro-empreses fins a pimes i grans corporacions. Aquí compartim el que aprenem pel camí.</p>
     </section>
 
+    <section class="wrap">
+      <div class="filters justify-center" role="group" aria-label="Categories" data-filtres>
+        <button class="filter-chip" type="button" data-filtre="" aria-pressed="true">Tots</button>
+        <button class="filter-chip" type="button" data-filtre="Logística" aria-pressed="false">Logística</button>
+        <button class="filter-chip" type="button" data-filtre="Finances" aria-pressed="false">Finances</button>
+        <button class="filter-chip" type="button" data-filtre="Restauració" aria-pressed="false">Restauració</button>
+        <button class="filter-chip" type="button" data-filtre="Estratègia IA" aria-pressed="false">Estratègia IA</button>
+      </div>
+    </section>
+
     <section class="blog">
       <div class="wrap">
-        <ul class="blog-list">
+        <ul class="blog-list" data-articles></ul>
+        <p class="lead mt-8 text-white" data-articles-buit hidden>Encara no hi ha articles.</p>
+        <p class="lead mt-8 text-white" data-filtre-buit hidden>Encara no hi ha articles.</p>
+        <template data-plantilla-article>
           <li>
-            <button class="blog-row" type="button" data-soon="Article pendent" data-animacion="arriba">
+            <a class="blog-row" data-campo="enlace" href="/actualitat/" data-animacion="arriba">
               <span>
-              <small>Logística</small>
-              <b>Com saber si el teu magatzem et fa perdre diners</b>
-              <span>Cinc indicadors per mirar abans de demanar més espai o més gent.</span>
+                <small data-campo="categoria"></small>
+                <b data-campo="titol"></b>
+                <span data-campo="entradeta"></span>
               </span>
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-            </button>
+            </a>
           </li>
-          <li>
-            <button class="blog-row" type="button" data-soon="Article pendent" data-animacion="arriba">
-              <span>
-              <small>Finances</small>
-              <b>Tresoreria: senyals que cal actuar abans que sigui urgent</b>
-              <span>Com anticipar-te als forats de caixa i negociar amb el banc a temps.</span>
-              </span>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-            </button>
-          </li>
-          <li>
-            <button class="blog-row" type="button" data-soon="Article pendent" data-animacion="arriba">
-              <span>
-              <small>Restauració</small>
-              <b>L'escandall: el marge que no veus</b>
-              <span>Per què cada plat ha de tenir un cost real i com calcular-lo.</span>
-              </span>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-            </button>
-          </li>
-          <li>
-            <button class="blog-row" type="button" data-soon="Article pendent" data-animacion="arriba">
-              <span>
-              <small>Estratègia IA</small>
-              <b>IA a la pime: per on començar</b>
-              <span>Primer el procés, després l'eina: com triar les primeres iniciatives.</span>
-              </span>
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
-            </button>
-          </li>
-        </ul>
-        <div class="mt-16">
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <article class="project-card" data-animacion="arriba">
-              <div class="project-card-image">
-                <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-sand"></rect><path d="M-10 40 C380 40 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 92 C380 92 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 144 C380 144 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 196 C380 196 520 230 830 230" fill="none" stroke-width="7" stroke-linecap="round" class="stroke-erd-red"></path><path d="M-10 248 C380 248 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 300 C380 300 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 352 C380 352 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><path d="M-10 404 C380 404 520 230 830 230" fill="none" stroke-width="3" stroke-linecap="round" class="stroke-erd-line"></path><circle cx="840" cy="230" r="18" class="fill-erd-red"></circle></svg>
-              </div>
-              <span class="chip chip-sand">Guia dels 8 àmbits</span>
-              <p>Un document breu amb els 8 àmbits on treballem i els senyals que indiquen que la teva empresa hi necessita ajuda.</p>
-              <button class="more-link" type="button" data-soon="Article pendent">Llegir més <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-            </article>
-            <article class="project-card" data-animacion="arriba">
-              <div class="project-card-image">
-                <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-sand"></rect><path d="M50 330 C110 150 170 420 230 220 S320 110 300 330" fill="none" stroke-width="5" stroke-linecap="round" class="stroke-erd-muted/40"></path><path d="M470 360 H560 L760 160 H860" fill="none" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" class="stroke-erd-red"></path><circle cx="860" cy="160" r="15" class="fill-erd-red"></circle></svg>
-              </div>
-              <span class="chip chip-sand">Casos d'èxit</span>
-              <p>Reptes reals d'empreses reals, i com els vam resoldre treballant amb dades.</p>
-              <button class="more-link" type="button" data-soon="Article pendent">Llegir més <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-            </article>
-            <article class="project-card" data-animacion="arriba">
-              <div class="project-card-image">
-                <svg viewBox="0 0 900 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="100%" height="100%" class="fill-erd-red"></rect><path d="M-10 330 H300 L480 150 H910" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="stroke-white"></path><path d="M-10 380 H340 L520 200 H910" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="stroke-erd-line"></path></svg>
-              </div>
-              <span class="chip chip-sand">Actualitat</span>
-              <p>Articles curts i pràctics sobre gestió, vendes i estratègia, sense fum ni teoria buida.</p>
-              <button class="more-link" type="button" data-soon="Article pendent">Llegir més <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-            </article>
-          </div>
-        </div>
+        </template>
       </div>
     </section>
 

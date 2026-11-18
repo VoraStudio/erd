@@ -357,8 +357,9 @@
     @apply absolute inset-0 size-full object-cover;
   }
 
+  /* El relleno de abajo separa el botón de la franja roja de contacto, que viene justo después. */
   .detail-next {
-    @apply mt-10 flex justify-end;
+    @apply mt-10 flex justify-end pb-14 lg:pb-20;
   }
 
   /* ---------- Actualitat ---------- */
@@ -406,20 +407,6 @@
 
   .blog-row:hover .icon {
     @apply translate-x-1 -translate-y-1;
-  }
-
-  .blog .project-card h3,
-  .blog .project-card p,
-  .blog .more-link {
-    @apply text-white;
-  }
-
-  .blog .chip {
-    @apply bg-white text-erd-red;
-  }
-
-  .blog .project-card-image {
-    box-shadow: 0 0 0 1px var(--color-erd-border-light);
   }
 
   /* Imagen que crece al bajar: GSAP anima el recorte (clip-path), sin tocar el layout. */
@@ -563,5 +550,85 @@
   .legal-line-mask {
     padding-bottom: 0.2em;
     margin-bottom: -0.2em;
+  }
+
+  /* ---------- Artículo de Actualitat ---------- */
+  /* Arriba, una fila con el mismo ancho que la portada y la galería. En móvil van una debajo de otra (primero los
+     títulos y luego la descripción). Desde escritorio, dos columnas iguales: los títulos y demás a la izquierda y, a su
+     lado, a la derecha, la descripción (el texto del artículo). */
+  .article-top {
+    @apply grid gap-10 pt-6 pb-12 lg:grid-cols-2 lg:items-start lg:gap-16 lg:pb-16;
+  }
+
+  .article-head {
+    @apply lg:col-start-1 lg:row-start-1;
+  }
+
+  .article-meta {
+    @apply mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-small text-erd-muted;
+  }
+
+  /* Un punto entre autor, fecha y tiempo de lectura (si falta alguno, el punto desaparece con él). */
+  .article-meta li + li::before {
+    content: '·';
+    @apply mr-3;
+  }
+
+  /* La portada va a todo el ancho del contenedor; GSAP anima el recorte del marco al bajar. El relleno de abajo
+     la separa de la galería. */
+  .article-cover {
+    @apply pb-10 lg:pb-14;
+  }
+
+  .article-cover-frame {
+    @apply overflow-hidden rounded-card;
+  }
+
+  .article-cover-frame > img {
+    @apply block aspect-[16/9] w-full object-cover;
+  }
+
+  .article-cover figcaption {
+    @apply mx-auto mt-3 max-w-190 text-small text-erd-muted;
+  }
+
+  .article-body {
+    @apply lg:col-start-2 lg:row-start-1;
+  }
+
+  .article-body > * + * {
+    @apply mt-6;
+  }
+
+  .article-body p {
+    @apply text-body-mobile text-erd-cacao lg:text-body;
+  }
+
+  .article-body h2 {
+    @apply mt-12 font-display text-subtitle-mobile text-erd-red first:mt-0 sm:text-subtitle;
+  }
+
+  /* La cita destacada: grande, con una línea roja a la izquierda. */
+  .article-body blockquote {
+    @apply my-10 border-l-2 border-erd-red pl-6 font-display text-title-2-mobile text-erd-ink sm:text-title-2-tablet lg:pl-8;
+  }
+
+  /* Galería: la primera foto ocupa toda la fila y las demás van de dos en dos.
+     Si la última queda sola, también ocupa la fila entera. */
+  .article-gallery {
+    @apply grid gap-4 sm:grid-cols-2 lg:gap-6;
+  }
+
+  .article-gallery > figure {
+    @apply relative aspect-[4/3] overflow-hidden rounded-card;
+  }
+
+  .article-gallery > figure:first-child,
+  .article-gallery > figure:last-child:nth-child(even) {
+    @apply sm:col-span-2 sm:aspect-[16/9];
+  }
+
+  .article-gallery img {
+    @apply absolute inset-0 size-full object-cover;
   }
 }

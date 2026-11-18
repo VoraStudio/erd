@@ -2,22 +2,9 @@
 // Todo se clona de las <template> de la página y se rellena con textContent: nunca con innerHTML,
 // así un texto del CMS no puede colar código en la web.
 
+import { pedirDatos, escribirTexto, leerIdDeLaDireccion } from '/assets/js/modules/cms.js';
+
 const DIRECCION_DE_LOS_PROYECTOS = '/cms/projectes.php';
-const MILISEGUNDOS_DE_ESPERA = 5000;
-
-async function pedirDatos(direccion) {
-  try {
-    const respuesta = await fetch(direccion, { signal: AbortSignal.timeout(MILISEGUNDOS_DE_ESPERA) });
-    if (!respuesta.ok) {
-      return null;
-    }
-
-    return await respuesta.json();
-  } catch {
-    // Sin red, con el servidor caído o sin respuesta a tiempo: la página enseña su aviso.
-    return null;
-  }
-}
 
 async function pedirProyectos() {
   const datos = await pedirDatos(DIRECCION_DE_LOS_PROYECTOS);
@@ -35,12 +22,6 @@ async function pedirProyecto(id) {
   }
 
   return datos.projecte;
-}
-
-function escribirTexto(raiz, campo, texto) {
-  for (const elemento of raiz.querySelectorAll(`[data-campo="${campo}"]`)) {
-    elemento.textContent = texto;
-  }
 }
 
 /* ===== Listado de Projectes ===== */
@@ -83,16 +64,6 @@ export async function cargarProyectos() {
 }
 
 /* ===== Detalle de un proyecto ===== */
-
-// El id viene de la dirección (?id=77): solo se acepta si son cifras.
-function leerIdDeLaDireccion() {
-  const id = new URLSearchParams(window.location.search).get('id');
-  if (id === null || !/^\d+$/.test(id)) {
-    return null;
-  }
-
-  return id;
-}
 
 function pintarRecuadros(detalle, recuadros) {
   const contenedor = detalle.querySelector('[data-recuadres]');
@@ -152,6 +123,8 @@ export async function cargarProyecto() {
   const id = leerIdDeLaDireccion();
   const proyecto = id === null ? null : await pedirProyecto(id);
   if (proyecto === null) {
+    // Se quita el detalle vacío: así ninguna animación se engancha a elementos sin contenido.
+    detalle.remove();
     avisoNoEncontrado.hidden = false;
     return;
   }

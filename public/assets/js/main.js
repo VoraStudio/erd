@@ -8,6 +8,8 @@ import { iniciarAcordeones } from '/assets/js/modules/accordion.js';
 import { cargarDatosDeLaEmpresa } from '/assets/js/modules/company.js';
 import { iniciarAnimacionesLegales } from '/assets/js/modules/legal-animations.js';
 import { cargarProyectos, cargarProyecto } from '/assets/js/modules/projects.js';
+import { cargarArticulos, cargarArticulo, cargarUltimosArticulos } from '/assets/js/modules/articles.js';
+import { iniciarAnimacionesDelArticulo } from '/assets/js/modules/article-animations.js';
 import { iniciarVideosLentos } from '/assets/js/modules/slow-video.js';
 import { iniciarFiltros } from '/assets/js/modules/filters.js';
 import { iniciarAnimaciones } from '/assets/js/modules/animations.js';
@@ -29,9 +31,16 @@ definirCabecera();
 definirContacto();
 definirPie();
 
-// Los datos de la empresa y los proyectos vienen del servidor: tienen que estar pintados antes de que
+// Los datos de la empresa, los proyectos y los artículos vienen del servidor: tienen que estar pintados antes de que
 // los módulos de debajo los busquen. Cada función no hace nada si la página no tiene su hueco, y van en paralelo.
-await Promise.all([cargarDatosDeLaEmpresa(), cargarProyectos(), cargarProyecto()]);
+await Promise.all([
+  cargarDatosDeLaEmpresa(),
+  cargarProyectos(),
+  cargarProyecto(),
+  cargarArticulos(),
+  cargarArticulo(),
+  cargarUltimosArticulos(),
+]);
 
 iniciarVideosLentos();
 iniciarAvisos();
@@ -51,6 +60,7 @@ iniciarAnimaciones();
 iniciarAnimacionesDelProceso();
 iniciarTextosPorLineas();
 iniciarAnimacionesDeSobreErd();
+iniciarAnimacionesDelArticulo();
 iniciarAnimacionesLegales();
 iniciarAnimacionesDelContacto();
 iniciarAnimacionesDelPie();

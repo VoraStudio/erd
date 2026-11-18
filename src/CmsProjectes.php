@@ -26,18 +26,18 @@ final class CmsProjectes
                 continue;
             }
 
-            $titulo = self::comoTexto($entrada['titol'] ?? null);
+            $titulo = CmsCampos::texto($entrada['titol'] ?? null);
             if ($titulo === '') {
                 continue;
             }
 
-            $imagenes = self::direccionesDeLasImagenes($entrada['imatges'] ?? null, $urlDelCms, true);
+            $imagenes = CmsCampos::direccionesDeImagenes($entrada['imatges'] ?? null, $urlDelCms, true);
 
             $tarjetas[] = [
                 'id' => (int) ($entrada['id'] ?? 0),
-                'sector' => self::comoTexto($entrada['tipus'] ?? null),
+                'sector' => CmsCampos::texto($entrada['tipus'] ?? null),
                 'titol' => $titulo,
-                'resum' => self::comoTexto($entrada['descripcio_breu'] ?? null),
+                'resum' => CmsCampos::texto($entrada['descripcio_breu'] ?? null),
                 'imatge' => $imagenes[0] ?? null,
             ];
         }
@@ -58,31 +58,25 @@ final class CmsProjectes
                 continue;
             }
 
-            $titulo = self::comoTexto($entrada['titol'] ?? null);
+            $titulo = CmsCampos::texto($entrada['titol'] ?? null);
             if ($titulo === '') {
                 return null;
             }
 
             return [
                 'id' => $id,
-                'sector' => self::comoTexto($entrada['tipus'] ?? null),
+                'sector' => CmsCampos::texto($entrada['tipus'] ?? null),
                 'titol' => $titulo,
-                'resum' => self::comoTexto($entrada['descripcio_breu'] ?? null),
-                'repte' => self::comoTexto($entrada['el_repte'] ?? null),
-                'que_vam_fer' => self::comoTexto($entrada['que_vam_fer'] ?? null),
-                'resultat' => self::comoTexto($entrada['el_resultat'] ?? null),
+                'resum' => CmsCampos::texto($entrada['descripcio_breu'] ?? null),
+                'repte' => CmsCampos::texto($entrada['el_repte'] ?? null),
+                'que_vam_fer' => CmsCampos::texto($entrada['que_vam_fer'] ?? null),
+                'resultat' => CmsCampos::texto($entrada['el_resultat'] ?? null),
                 'recuadres' => self::recuadres($entrada),
-                'imatges' => self::direccionesDeLasImagenes($entrada['imatges'] ?? null, $urlDelCms, false),
+                'imatges' => CmsCampos::direccionesDeImagenes($entrada['imatges'] ?? null, $urlDelCms, false),
             ];
         }
 
         return null;
-    }
-
-    /** Un valor que no es texto (el CMS cambió un tipo, por ejemplo) cuenta como vacío. */
-    private static function comoTexto(mixed $valor): string
-    {
-        return is_string($valor) ? trim($valor) : '';
     }
 
     /**
@@ -96,8 +90,8 @@ final class CmsProjectes
         $recuadros = [];
 
         for ($numero = 1; $numero <= self::NUMERO_DE_RECUADROS; $numero++) {
-            $valor = self::comoTexto($entrada['recuadre_' . $numero . '_numero'] ?? null);
-            $texto = self::comoTexto($entrada['recuadre_' . $numero . '_text'] ?? null);
+            $valor = CmsCampos::texto($entrada['recuadre_' . $numero . '_numero'] ?? null);
+            $texto = CmsCampos::texto($entrada['recuadre_' . $numero . '_text'] ?? null);
             if ($valor === '' && $texto === '') {
                 continue;
             }
@@ -106,55 +100,5 @@ final class CmsProjectes
         }
 
         return $recuadros;
-    }
-
-    /**
-     * Las direcciones de las imágenes de la galería, ya completas. La tarjeta usa la versión pequeña;
-     * el detalle, la original. Lo que no es una imagen válida se descarta.
-     *
-     * @return list<string>
-     */
-    private static function direccionesDeLasImagenes(mixed $imagenes, string $urlDelCms, bool $versionPequena): array
-    {
-        if (!is_array($imagenes)) {
-            return [];
-        }
-
-        $direcciones = [];
-
-        foreach ($imagenes as $imagen) {
-            if (!is_array($imagen)) {
-                continue;
-            }
-
-            $direccion = $imagen['url'] ?? null;
-            if ($versionPequena && is_string($imagen['formats']['small']['url'] ?? null)) {
-                $direccion = $imagen['formats']['small']['url'];
-            }
-            if (!is_string($direccion)) {
-                continue;
-            }
-
-            $completa = self::hacerAbsoluta($direccion, $urlDelCms);
-            if ($completa !== null) {
-                $direcciones[] = $completa;
-            }
-        }
-
-        return $direcciones;
-    }
-
-    /** El CMS devuelve rutas como «/uploads/a.png». Solo se aceptan rutas suyas o direcciones https/http completas. */
-    private static function hacerAbsoluta(string $direccion, string $urlDelCms): ?string
-    {
-        if (preg_match('#^https?://#i', $direccion) === 1) {
-            return $direccion;
-        }
-
-        if (str_starts_with($direccion, '/') && !str_starts_with($direccion, '//')) {
-            return rtrim($urlDelCms, '/') . $direccion;
-        }
-
-        return null;
     }
 }

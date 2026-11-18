@@ -109,35 +109,19 @@
           <h2 class="title-2" data-titulo-palabras>Actualitat</h2>
           <a class="btn btn-line btn-sm" href="/actualitat/" data-entrada="derecha" data-ritmo="lento" data-espera="0.3">Descobreix totes les novetats<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
         </div>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-ultims-articles></div>
+        <p class="lead" data-ultims-buit hidden>Encara no hi ha articles.</p>
+        <template data-plantilla-ultim-article>
           <article class="project-card" data-animacion="arriba" data-ritmo="lento">
             <div class="project-card-image">
-              <img src="/assets/img/photos/magatzem.jpg" alt="" width="1600" height="900" loading="lazy">
+              <img data-campo="imatge" alt="" width="1600" height="900" loading="lazy">
             </div>
-            <span class="chip chip-sand">Logística</span>
-            <h3>Com saber si el teu magatzem et fa perdre diners</h3>
-            <p>Cinc indicadors per mirar abans de demanar més espai o més gent.</p>
-            <button class="more-link" type="button" data-soon="Article pendent">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+            <span class="chip chip-sand" data-campo="categoria"></span>
+            <h3 data-campo="titol"></h3>
+            <p data-campo="entradeta"></p>
+            <a class="more-link" data-campo="enlace" href="/actualitat/">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
           </article>
-          <article class="project-card" data-animacion="arriba" data-ritmo="lento">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/film.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Finances</span>
-            <h3>Tresoreria: senyals que cal actuar abans que sigui urgent</h3>
-            <p>Com anticipar-te als forats de caixa i negociar amb el banc a temps.</p>
-            <button class="more-link" type="button" data-soon="Article pendent">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-          </article>
-          <article class="project-card" data-animacion="arriba" data-ritmo="lento">
-            <div class="project-card-image">
-              <img src="/assets/img/photos/cuina.jpg" alt="" width="1600" height="900" loading="lazy">
-            </div>
-            <span class="chip chip-sand">Restauració</span>
-            <h3>L'escandall: el marge que no veus</h3>
-            <p>Per què cada plat ha de tenir un cost real i com calcular-lo.</p>
-            <button class="more-link" type="button" data-soon="Article pendent">Llegir l'article <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
-          </article>
-        </div>
+        </template>
       </div>
     </section>
   </main>

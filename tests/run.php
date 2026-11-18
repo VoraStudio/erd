@@ -19,7 +19,9 @@ require __DIR__ . '/../src/SmtpMailer.php';
 require __DIR__ . '/../src/ContactHandler.php';
 require __DIR__ . '/../src/CmsClient.php';
 require __DIR__ . '/../src/Empresa.php';
+require __DIR__ . '/../src/CmsCampos.php';
 require __DIR__ . '/../src/CmsProjectes.php';
+require __DIR__ . '/../src/CmsArticulos.php';
 
 $fallos = 0;
 $total = 0;
@@ -778,6 +780,95 @@ putenv('ERD_EMPRESA_NIF');
 putenv('ERD_EMPRESA_CORREO');
 Env::reiniciar();
 comprobar('sin variables definidas no sale nada del .env', Empresa::leer() === []);
+
+echo "Campos del CMS\n";
+comprobar('un texto se recorta', CmsCampos::texto('  hola  ') === 'hola');
+comprobar('lo que no es texto cuenta como vacío', CmsCampos::texto(['x']) === '' && CmsCampos::texto(5) === '' && CmsCampos::texto(null) === '');
+comprobar('una fecha con hora se queda en el día', CmsCampos::fecha('2026-11-18T11:07:00') === '2026-11-18');
+comprobar('una fecha sin hora se respeta', CmsCampos::fecha('2026-11-18') === '2026-11-18');
+comprobar('una fecha inventada queda vacía', CmsCampos::fecha('2026-13-45') === '' && CmsCampos::fecha('ayer') === '' && CmsCampos::fecha(null) === '');
+
+echo "Lector del texto de un artículo\n";
+$parrafo = static fn (string $texto): array => ['tipus' => 'parrafo', 'text' => $texto];
+$subtitulo = static fn (string $texto): array => ['tipus' => 'subtitulo', 'text' => $texto];
+$cita = static fn (string $texto): array => ['tipus' => 'cita', 'text' => $texto];
+
+comprobar('un texto vacío no tiene bloques', CmsArticulos::separarBloques('') === [] && CmsArticulos::separarBloques("\n \n\n") === []);
+comprobar('una línea en blanco separa párrafos', CmsArticulos::separarBloques("Primer\n\nSegon") === [$parrafo('Primer'), $parrafo('Segon')]);
+comprobar('las líneas seguidas forman un solo párrafo', CmsArticulos::separarBloques("Una línia\nuna altra\nuna tercera") === [$parrafo('Una línia una altra una tercera')]);
+comprobar('varias líneas en blanco cuentan como una', CmsArticulos::separarBloques("A\n\n\n\nB") === [$parrafo('A'), $parrafo('B')]);
+comprobar('«## » abre un subtítulo', CmsArticulos::separarBloques('## Un subtítol') === [$subtitulo('Un subtítol')]);
+comprobar('un subtítulo corta el párrafo aunque no haya línea en blanco', CmsArticulos::separarBloques("Abans\n## Títol\nDesprés") === [$parrafo('Abans'), $subtitulo('Títol'), $parrafo('Després')]);
+comprobar('«> » abre una cita', CmsArticulos::separarBloques('> Una frase destacada') === [$cita('Una frase destacada')]);
+comprobar('las líneas de cita seguidas forman una sola', CmsArticulos::separarBloques("> Una\n> frase") === [$cita('Una frase')]);
+comprobar('una cita corta el párrafo anterior', CmsArticulos::separarBloques("Text\n> Cita\nMés text") === [$parrafo('Text'), $cita('Cita'), $parrafo('Més text')]);
+comprobar('los saltos de línea de Windows se entienden', CmsArticulos::separarBloques("A\r\n\r\n## B\r\nC") === [$parrafo('A'), $subtitulo('B'), $parrafo('C')]);
+comprobar('sin espacio detrás de «##» es texto normal', CmsArticulos::separarBloques('##sense espai') === [$parrafo('##sense espai')]);
+comprobar('un subtítulo vacío se ignora', CmsArticulos::separarBloques("## \nText") === [$parrafo('Text')]);
+comprobar('los espacios sobrantes se recortan', CmsArticulos::separarBloques("   Hola   \t món  ") === [$parrafo('Hola món')]);
+comprobar('el HTML no se interpreta: se conserva como texto', CmsArticulos::separarBloques('<b>negreta</b> <script>x</script>') === [$parrafo('<b>negreta</b> <script>x</script>')]);
+
+echo "Artículos del CMS\n";
+$entradaArticulo = [
+    'id' => 76,
+    'status' => 'published',
+    'tipus' => 'Estratègia IA',
+    'titol' => 'VoraData',
+    'entradeta' => 'Entradeta de l\'article',
+    'autor' => 'Pau',
+    'data' => '2026-11-18T11:07:00',
+    'portada' => [['url' => '/uploads/p.png', 'formats' => ['small' => ['url' => '/uploads/p-small.png']]]],
+    'peu_de_foto' => 'Peu de la portada',
+    'cos' => "Primer paràgraf.\n\n## Subtítol\n\n> Cita\n\nÚltim paràgraf.",
+    'galeria' => [['url' => '/uploads/g1.png'], ['url' => '/uploads/g2.png', 'formats' => ['small' => ['url' => '/uploads/g2-small.png']]]],
+];
+
+comprobar('la lista de artículos lleva lo que necesita cada fila', CmsArticulos::transformar([$entradaArticulo], $cms) === [[
+    'id' => 76,
+    'categoria' => 'Estratègia IA',
+    'titol' => 'VoraData',
+    'entradeta' => 'Entradeta de l\'article',
+    'imatge' => 'https://cms.test/uploads/p-small.png',
+]]);
+$sinPortadaConGaleria = $entradaArticulo;
+unset($sinPortadaConGaleria['portada']);
+comprobar('sin portada, la imagen de la fila es la primera de la galería', CmsArticulos::transformar([$sinPortadaConGaleria], $cms)[0]['imatge'] === 'https://cms.test/uploads/g1.png');
+$portadaDanada = array_merge($entradaArticulo, ['portada' => [['url' => '2026-11-21T09:19,220']]]);
+comprobar('una portada dañada tampoco vale: se usa la galería', CmsArticulos::transformar([$portadaDanada], $cms)[0]['imatge'] === 'https://cms.test/uploads/g1.png');
+$sinNingunaImagen = $entradaArticulo;
+unset($sinNingunaImagen['portada'], $sinNingunaImagen['galeria']);
+comprobar('sin portada ni galería, la fila no lleva imagen', CmsArticulos::transformar([$sinNingunaImagen], $cms)[0]['imatge'] === null);
+comprobar('un artículo sin título no sale en la lista', CmsArticulos::transformar([array_merge($entradaArticulo, ['titol' => ''])], $cms) === []);
+comprobar('lo que no es una entrada se ignora en la lista', count(CmsArticulos::transformar([7, null, $entradaArticulo], $cms)) === 1);
+
+$articulo = CmsArticulos::detallar([$entradaArticulo], 76, $cms);
+comprobar('el detalle recoge los datos del artículo', $articulo !== null
+    && $articulo['id'] === 76
+    && $articulo['categoria'] === 'Estratègia IA'
+    && $articulo['titol'] === 'VoraData'
+    && $articulo['entradeta'] === 'Entradeta de l\'article'
+    && $articulo['autor'] === 'Pau'
+    && $articulo['data'] === '2026-11-18');
+comprobar('la portada del detalle es la imagen original con su pie', $articulo['portada'] === ['url' => 'https://cms.test/uploads/p.png', 'peu' => 'Peu de la portada']);
+comprobar('el cuerpo se separa en bloques', $articulo['blocs'] === [$parrafo('Primer paràgraf.'), $subtitulo('Subtítol'), $cita('Cita'), $parrafo('Últim paràgraf.')]);
+comprobar('la galería lleva las imágenes originales', $articulo['galeria'] === ['https://cms.test/uploads/g1.png', 'https://cms.test/uploads/g2.png']);
+comprobar('un texto corto se lee en un minuto', $articulo['minuts'] === 1);
+$textoLargo = trim(str_repeat('paraula ', 450));
+comprobar('el tiempo de lectura sale de las palabras (200 por minuto)', CmsArticulos::detallar([array_merge($entradaArticulo, ['cos' => $textoLargo])], 76, $cms)['minuts'] === 3);
+comprobar('un id que no existe devuelve null', CmsArticulos::detallar([$entradaArticulo], 5, $cms) === null && CmsArticulos::detallar([], 76, $cms) === null);
+comprobar('un artículo sin título no tiene detalle', CmsArticulos::detallar([array_merge($entradaArticulo, ['titol' => ' '])], 76, $cms) === null);
+
+$sinPortada = $entradaArticulo;
+unset($sinPortada['portada'], $sinPortada['peu_de_foto'], $sinPortada['galeria'], $sinPortada['cos'], $sinPortada['autor'], $sinPortada['data']);
+$articuloMinimo = CmsArticulos::detallar([$sinPortada], 76, $cms);
+comprobar('sin portada, galería, cuerpo, autor ni fecha el detalle sigue funcionando', $articuloMinimo['portada'] === null
+    && $articuloMinimo['galeria'] === []
+    && $articuloMinimo['blocs'] === []
+    && $articuloMinimo['autor'] === ''
+    && $articuloMinimo['data'] === ''
+    && $articuloMinimo['minuts'] === 1);
+$portadaPeligrosa = CmsArticulos::detallar([array_merge($entradaArticulo, ['portada' => [['url' => 'javascript:alert(1)']]])], 76, $cms);
+comprobar('una portada con dirección no válida se descarta', $portadaPeligrosa['portada'] === null);
 
 reiniciarEstado();
 borrarDirectorio($directorio);

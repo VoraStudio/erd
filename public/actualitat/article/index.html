@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Article · ERD</title>
+  <meta name="description" content="Article d'Actualitat d'ERD.">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/vendor/gsap.min.js"></script>
+  <script defer src="/assets/js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="/assets/js/vendor/SplitText.min.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+</head>
+<body class="bg-erd-flour font-body text-body-mobile text-erd-cacao lg:text-body">
+  <a class="sr-only focus:not-sr-only" href="#contingut">Salta al contingut</a>
+
+  <site-header class="block"></site-header>
+
+  <main id="contingut" data-cms-pendiente>
+    <article data-article-detall hidden>
+      <div class="wrap article-top">
+        <header class="article-head">
+          <nav class="crumbs" aria-label="Camí de navegació">
+            <a href="/actualitat/">Actualitat</a> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"></path></svg>
+            <span aria-current="page" data-campo="titol"></span>
+          </nav>
+          <span class="chip chip-sand" data-campo="categoria"></span>
+          <h1 class="title-1 mt-4" data-lineas data-campo="titol"></h1>
+          <p class="lead mt-5.5" data-lineas data-espera="0.35" data-campo="entradeta"></p>
+          <ul class="article-meta" data-animacion="arriba">
+            <li data-campo="autor"></li>
+            <li><time data-campo="data"></time></li>
+            <li data-campo="lectura"></li>
+          </ul>
+        </header>
+
+        <div class="article-body" data-article-cos></div>
+      </div>
+
+      <figure class="wrap article-cover" data-article-portada>
+        <div class="article-cover-frame">
+          <img data-campo="portada" alt="" width="1600" height="900">
+        </div>
+        <figcaption data-campo="peu"></figcaption>
+      </figure>
+
+      <div class="wrap">
+        <div class="article-gallery" data-article-galeria></div>
+        <div class="detail-next">
+          <a class="btn btn-line" href="/actualitat/">Tornar a Actualitat<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        </div>
+      </div>
+    </article>
+
+    <section class="wrap pt-10 lg:pt-18" data-article-error hidden>
+      <p class="lead">No hem trobat aquest article.</p>
+      <div class="detail-next">
+        <a class="btn btn-line" href="/actualitat/">Tornar a Actualitat<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </section>
+
+    <template data-plantilla-galeria>
+      <figure>
+        <img data-campo="imatge" alt="" width="1600" height="900" loading="lazy">
+      </figure>
+    </template>
+  </main>
+
+  <site-contact class="block"></site-contact>
+  <site-footer class="block"></site-footer>
+</body>
+</html>
