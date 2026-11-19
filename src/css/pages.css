@@ -6,8 +6,11 @@
 
 @layer components {
   /* ---------- Home: logotipo recortado con la foto ---------- */
+  /* El ancho se limita por la altura de la pantalla (130svh): el logotipo mide 2,33 veces más de ancho que de alto,
+     así que su altura nunca pasa del 56 % de la pantalla y el texto de debajo se ve sin hacer scroll. */
   .hero-logo {
-    @apply relative mt-2 aspect-[2556/1096] w-full bg-erd-red;
+    @apply relative mx-auto mt-8 aspect-[2556/1096] bg-erd-red;
+    width: min(100%, 130svh);
     -webkit-mask: url('/assets/img/logo/erd-white.svg') center / contain no-repeat;
     mask: url('/assets/img/logo/erd-white.svg') center / contain no-repeat;
   }
