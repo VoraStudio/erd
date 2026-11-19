@@ -279,6 +279,18 @@
     @apply grid h-8 w-11.5 flex-none place-items-center rounded-full bg-erd-sand text-erd-red;
   }
 
+  /* Lista con giro de flecha (Estratègia IA): al pasar el ratón por un sub-bloque, la flecha (↗) gira 45° y queda
+     horizontal (→), como en las tarjetas de servicio. Se gira el icono con «rotate»: GSAP solo mueve el sub-bloque. */
+  .steps-list-arrow .step-arrow .icon {
+    transition: rotate var(--duration-base) ease-out;
+  }
+
+  @media (hover: hover) {
+    .steps-list-arrow li:hover .step-arrow .icon {
+      rotate: 45deg;
+    }
+  }
+
   .section-sand .step-arrow,
   .what .step-arrow {
     @apply bg-white;

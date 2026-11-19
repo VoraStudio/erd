@@ -51,6 +51,14 @@
     }
   }
 
+  /* ---------- Textos que suben desde una máscara (data-lineas-mascara, modules/text-lines.js) ---------- */
+  /* Máscara de cada línea (la crea SplitText). El relleno de abajo deja sitio a las colas de letras como la «y» o la
+     «g», que la máscara cortaría; el margen negativo lo compensa y el diseño no se mueve. */
+  .text-mask-line-mask {
+    padding-bottom: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
   /* ---------- Páginas que esperan datos del servidor ---------- */
   /* Las páginas con contenido del CMS llevan data-cms-pendiente en <main> hasta que main.js lo quita. Mientras tanto,
      el bloque de contacto y el pie van ocultos: así no se ven antes que el contenido ni se mueven cuando éste llega.
