@@ -49,7 +49,11 @@ class PieSitio extends HTMLElement {
             </nav>
           </div>
           <div class="mt-14 flex flex-wrap justify-between gap-5 border-t border-erd-border-light pt-5.5 text-small">
-            <p data-pie-legal>&copy; ${anio} ERD · Disseny i web: Vora Studio</p>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-2" data-pie-legal>
+              <p>&copy; ${anio} ERD</p>
+              <span aria-hidden="true">·</span>
+              <a class="inline-flex items-center gap-2 hover:underline hover:underline-offset-3" href="https://vorastudio.cat/" target="_blank" rel="noopener">Desenvolupada per <img class="h-8 w-auto" src="/assets/img/logo/vora-white.svg" alt="Vora Studio" width="112" height="32"></a>
+            </div>
             <nav class="flex flex-wrap gap-5.5" aria-label="Legal" data-pie-legal>${legales}</nav>
           </div>
         </div>
