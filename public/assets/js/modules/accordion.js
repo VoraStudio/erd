@@ -1,5 +1,7 @@
 // Tarjetas que se abren (Home). Cada tarjeta tiene un botón rojo (data-acordeon-boton) con aria-expanded: es lo único
-// clicable, y el CSS (:has) abre y cierra el panel.
+// que las abre, y el CSS (:has) abre y cierra el panel.
+// Con ratón, pasar por encima del botón abre la tarjeta y salir de la tarjeta la cierra. El clic la fija abierta
+// (sigue abierta aunque salga el ratón) y otro clic la cierra. Sin ratón (táctil) o con teclado solo funciona el clic.
 // Con GSAP y SplitText se añaden dos efectos:
 //   1. Con el ratón encima del botón, la flecha del botón rojo sube 5 px y baja, sin parar y con suavidad.
 //      Al quitar el ratón vuelve a su sitio también con suavidad.
@@ -74,6 +76,21 @@ function prepararAparicionDelTexto(gsap, SplitText, tarjeta) {
   };
 }
 
+function estaAbierta(boton) {
+  return boton.getAttribute('aria-expanded') === 'true';
+}
+
+function abrirTarjeta(boton, mostrarTexto) {
+  boton.setAttribute('aria-expanded', 'true');
+  if (mostrarTexto) {
+    mostrarTexto();
+  }
+}
+
+function cerrarTarjeta(boton) {
+  boton.setAttribute('aria-expanded', 'false');
+}
+
 export function iniciarAcordeones() {
   const tarjetas = document.querySelectorAll('.accordion-card');
   const { gsap, SplitText } = window;
@@ -99,12 +116,37 @@ export function iniciarAcordeones() {
       animarFlechaAlPasarElRaton(gsap, boton);
     }
 
-    boton.addEventListener('click', () => {
-      const estaAbierto = boton.getAttribute('aria-expanded') === 'true';
-      boton.setAttribute('aria-expanded', String(!estaAbierto));
+    // Fijada: el clic la deja abierta aunque el ratón se vaya.
+    let fijada = false;
 
-      if (!estaAbierto && mostrarTexto) {
-        mostrarTexto();
+    if (hayRaton) {
+      boton.addEventListener('mouseenter', () => {
+        if (estaAbierta(boton)) {
+          return;
+        }
+        abrirTarjeta(boton, mostrarTexto);
+      });
+
+      // Se cierra al salir de la tarjeta y no del botón: al abrirse, la tarjeta puede crecer y mover el botón
+      // bajo el ratón, y se abriría y cerraría sin parar.
+      tarjeta.addEventListener('mouseleave', () => {
+        if (fijada) {
+          return;
+        }
+        cerrarTarjeta(boton);
+      });
+    }
+
+    boton.addEventListener('click', () => {
+      if (fijada) {
+        fijada = false;
+        cerrarTarjeta(boton);
+        return;
+      }
+
+      fijada = true;
+      if (!estaAbierta(boton)) {
+        abrirTarjeta(boton, mostrarTexto);
       }
     });
   }
