@@ -60,6 +60,11 @@
   /* El vídeo ocupa la banda como la ilustración: cubre el espacio y se alinea a la derecha, donde está el punto rojo. */
   .page-hero-art video {
     @apply size-full object-cover object-right;
+    /* El fondo del vídeo no coincide exactamente con el de la web y, según el navegador y la pantalla, se ve el borde
+       de arriba y el de abajo como un recuadro tenue. Un difuminado mínimo en esos bordes lo esconde. Solo cuenta la
+       transparencia de la máscara, no su color. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
   }
 
   .page-hero-lead {
