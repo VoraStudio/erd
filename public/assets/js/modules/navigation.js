@@ -1,12 +1,8 @@
 // Mapa del sitio: una sola lista para la cabecera, el menú y el pie.
 // Las rutas son las carpetas de public/ (una carpeta por página).
 
-// TEMPORAL: mientras la portada pública sea «Properament», la Home real está en index-v2.html.
-// Al lanzar, index-v2.html pasa a ser index.html y esta constante vuelve a '/'.
-const URL_HOME = '/index-v2.html';
-
 export const PAGINAS = [
-  { texto: 'Home', url: URL_HOME },
+  { texto: 'Home', url: '/' },
   { texto: 'Serveis', url: '/serveis/' },
   { texto: 'Sobre ERD', url: '/sobre-erd/' },
   { texto: 'Projectes', url: '/projectes/' },

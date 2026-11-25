@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Sustituir al publicar: añadir un <url> por cada página pública con URLs absolutas, por ejemplo
-     <url><loc>https://dominio/</loc></url>
-     Una web estática no tiene ejecución en el servidor, así que este archivo se rellena a mano. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://erd.cat/</loc></url>
+  <url><loc>https://erd.cat/serveis/</loc></url>
+  <url><loc>https://erd.cat/serveis/comercial/</loc></url>
+  <url><loc>https://erd.cat/serveis/compravenda-negocis/</loc></url>
+  <url><loc>https://erd.cat/serveis/control-anticipacio/</loc></url>
+  <url><loc>https://erd.cat/serveis/estrategia-ia/</loc></url>
+  <url><loc>https://erd.cat/serveis/finances-operatives-nof/</loc></url>
+  <url><loc>https://erd.cat/serveis/logistica-emmagatzematge/</loc></url>
+  <url><loc>https://erd.cat/serveis/marqueting-comunicacio/</loc></url>
+  <url><loc>https://erd.cat/serveis/operacions-restauracio/</loc></url>
+  <url><loc>https://erd.cat/serveis/organitzacio-industrial/</loc></url>
+  <url><loc>https://erd.cat/sobre-erd/</loc></url>
+  <url><loc>https://erd.cat/projectes/</loc></url>
+  <url><loc>https://erd.cat/actualitat/</loc></url>
+  <url><loc>https://erd.cat/privadesa/</loc></url>
+  <url><loc>https://erd.cat/avis-legal/</loc></url>
+  <url><loc>https://erd.cat/cookies/</loc></url>
 </urlset>

@@ -62,8 +62,8 @@ Si el boceto choca con `DESIGN.md` o con estas reglas (por ejemplo, su CSS es de
 | Servidor | PHP plano, sin Composer ni framework, solo donde hace falta: el gestor del formulario de contacto (`public/contact.php`). La conexión al CMS queda para más adelante y, si su API necesita un token, se hará desde el servidor |
 
 - **Compilación:** `npm run build` genera `public/assets/css/styles.css`. Ese archivo no se versiona: se compila en local antes de cada subida.
-- **Carpeta pública:** `public/` es lo único que se publica. Su raíz se mantiene limpia: `index.html`, `contact.php`, `.htaccess`, `robots.txt` y `sitemap.xml` (estos dos se rellenan a mano al lanzar), las páginas de error y `assets/`. Cada página nueva va en su propia carpeta: `public/<pagina>/index.html`.
-- **Portada provisional:** `public/index.html` es una página «Properament» (logotipo centrado). El trabajo real se hace en `public/index-v2.html`. Mientras dure la portada provisional no se suben al servidor `index-v2.html` ni `contact.php`. Al lanzar, `index-v2.html` pasa a ser `index.html`, la constante `URL_HOME` de `public/assets/js/modules/navigation.js` vuelve a `'/'` y se sube también `contact.php`.
+- **Carpeta pública:** `public/` es lo único que se publica. Su raíz se mantiene limpia: `index.html`, `contact.php`, `.htaccess`, `robots.txt` y `sitemap.xml` (el mapa del sitio se mantiene a mano: una `<url>` por página pública), las páginas de error y `assets/`. Cada página nueva va en su propia carpeta: `public/<pagina>/index.html`.
+- **Web publicada:** la web ya es pública. `public/index.html` es la Home real y no hay vista previa protegida: el `.htaccess` no lleva Basic Auth.
 - **Fuera de la carpeta pública:** `src/` (`Env`, `Config` y `ContactForm`) y `tests/`. En el servidor, `public/` es `/web` y `src/` cuelga de la raíz del FTP, junto a `/web`.
 - **Recursos:** `public/assets/css/` (solo el `styles.css` compilado), `public/assets/js/` (`main.js`, `components/` y `modules/`), `fonts/` e `img/` (con los logotipos en `img/logo/`).
 - **Estilos:** el código fuente está en `src/css/` (`theme.css` y la entrada `main.css`), fuera de `public/`.
@@ -99,6 +99,6 @@ Dos hooks, activos:
 
 Lo que imponen las tecnologías se queda como está: etiquetas y atributos HTML, propiedades CSS, clases de Tailwind, APIs de GSAP y JavaScript, y los nombres estándar de archivo.
 
-**Despliegue.** Manual: lo hace Pau por FTP, sin GitHub Actions ni Secrets. El hosting solo ofrece FTP sin cifrar (no admite FTPS). Antes de subir: `npm run build` y `php tests/run.php`. Se sube `public/` a `/web` y `src/` a la raíz del FTP, junto a `/web`. Nunca se sobrescribe ni se borra el `.env` del servidor, y no se suben `index-v2.html` ni `contact.php` mientras la portada sea provisional. Las credenciales del FTP no se guardan en el repo ni se pegan en el chat.
+**Despliegue.** Manual: lo hace Pau por FTP, sin GitHub Actions ni Secrets. El hosting solo ofrece FTP sin cifrar (no admite FTPS). Antes de subir: `npm run build` y `php tests/run.php`. Se sube `public/` a `/web` y `src/` a la raíz del FTP, junto a `/web`. Nunca se sobrescribe ni se borra el `.env` del servidor. Las credenciales del FTP no se guardan en el repo ni se pegan en el chat.
 
 **Memoria.** Engram guarda el contexto entre sesiones y OpenSpec guarda las decisiones en git.

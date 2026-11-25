@@ -16,19 +16,3 @@ ErrorDocument 500 /500.html
 <FilesMatch "^\.|\.md$">
     Require all denied
 </FilesMatch>
-
-# ===== VISTA PREVIA PROTEGIDA: quitar este bloque entero al lanzar la web =====
-# Todo el sitio pide usuario y contraseña, salvo la portada provisional y lo que necesita para verse.
-AuthType Basic
-AuthName "Vista previa ERD"
-AuthUserFile /usr/home/erd.cat/.htpasswd
-
-<RequireAny>
-    # Con usuario y contraseña se ve todo el sitio
-    Require valid-user
-    # Abierto a todo el mundo: la portada provisional (/ y /index.html) y sus recursos
-    Require expr "%{REQUEST_URI} =~ m#^/(index\.html)?$#"
-    Require expr "%{REQUEST_URI} =~ m#^/assets/(css/styles\.css$|fonts/|img/logo/erd-white\.svg$)#"
-    Require expr "%{REQUEST_URI} == '/robots.txt'"
-</RequireAny>
-# ===== fin de la vista previa protegida =====
